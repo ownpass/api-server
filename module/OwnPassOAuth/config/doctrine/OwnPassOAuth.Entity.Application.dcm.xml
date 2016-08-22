@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="OwnPassOAuth\Entity\Application" table="oauth_application">
+        <id name="clientId" type="string" />
+
+        <field name="createdOn" type="datetime">
+            <gedmo:timestampable on="create" />
+        </field>
+
+        <field name="clientSecret" type="string" length="80" nullable="true" />
+        <field name="name" type="string" />
+        <field name="description" type="string" nullable="true" />
+        <field name="homepage" type="string" nullable="true" />
+        <field name="redirectUri" type="string" nullable="true" length="2000" />
+
+        <many-to-one target-entity="OwnPassUser\Entity\Account" field="account">
+            <join-column on-delete="CASCADE" nullable="true" />
+        </many-to-one>
+    </entity>
+</doctrine-mapping>
