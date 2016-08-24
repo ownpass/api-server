@@ -18,7 +18,7 @@ class AccessToken
      * @var string
      */
     private $accessToken;
-    
+
     /**
      * @var Application
      */

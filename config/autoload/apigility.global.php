@@ -60,13 +60,13 @@ return [
     ],
     'zf-oauth2' => [
         'allow_implicit' => true,
-        'grant_types' => array(
+        'grant_types' => [
             'client_credentials' => true,
             'authorization_code' => true,
             'password' => true,
             'refresh_token' => true,
             'jwt' => false,
-        ),
+        ],
         'options' => [
             'always_issue_new_refresh_token' => true,
         ],

@@ -46,5 +46,5 @@ abstract class AbstractProxy extends Paginator
         return $result;
     }
 
-    protected abstract function build($key, $value);
+    abstract protected function build($key, $value);
 }

@@ -57,7 +57,7 @@ class Storage implements
     {
         try {
             $result = $this->entityManager->find(Application::class, $id);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $result = null;
         }
 

@@ -50,7 +50,7 @@ class AccountResource extends AbstractResourceListener
     public function create($data)
     {
         $response = $this->validateScope('admin');
-        if ($response ) {
+        if ($response) {
             return $response;
         }
 
@@ -74,7 +74,7 @@ class AccountResource extends AbstractResourceListener
     public function delete($id)
     {
         $response = $this->validateScope('admin');
-        if ($response ) {
+        if ($response) {
             return $response;
         }
 
@@ -104,7 +104,7 @@ class AccountResource extends AbstractResourceListener
     public function fetch($id)
     {
         $response = $this->validateScope('admin');
-        if ($response ) {
+        if ($response) {
             return $response;
         }
 
@@ -131,7 +131,7 @@ class AccountResource extends AbstractResourceListener
     public function fetchAll($params = [])
     {
         $response = $this->validateScope('admin');
-        if ($response ) {
+        if ($response) {
             return $response;
         }
 
@@ -152,7 +152,7 @@ class AccountResource extends AbstractResourceListener
     public function update($id, $data)
     {
         $response = $this->validateScope('admin');
-        if ($response ) {
+        if ($response) {
             return $response;
         }
 
