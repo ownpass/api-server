@@ -1,8 +1,8 @@
 {
     "name": "ownpass/ownpass",
-    "description": "The OwnPass application acting as the contorl panel for your accounts.",
+    "description": "The OwnPass application providing an API and interface to manage credentials.",
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "proprietary",
     "keywords": [
         "api",
         "password",
