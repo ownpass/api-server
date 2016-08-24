@@ -1,65 +1,30 @@
-# CONTRIBUTING
+# Contributing
 
-Apigility and related modules (of which this is one) are open source and licensed
-as [BSD-3-Clause](http://opensource.org/licenses/BSD-3-Clause). Contributions
-are welcome in the form of issue reports and pull requests.
+Contributions are **welcome** and will be fully **credited**.
 
-All pull requests should include unit tests when applicable, and should follow
-our coding standards (more on these below); failure to do so may result in
-rejection of the pull request. If you need help writing tests, please ask on the
-developer mailing list and/or in IRC.
+We accept contributions via Pull Requests on [Github](https://github.com/ownpass/ownpass).
 
-## RESOURCES
 
-If you wish to contribute to Apigility modules, please be sure to
-read/subscribe to the following resources:
+## Pull Requests
 
- -  [Coding Standards](https://github.com/zendframework/zf2/wiki/Coding-Standards)
- -  [ZF Git Guide](https://github.com/zendframework/zf2/blob/master/README-GIT.md)
- -  [Apigility developer mailing list](http://bit.ly/apigility-dev)
- -  Apigility developer IRC channel: #apigility-dev on Freenode.net
+- **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - The easiest way to apply the conventions is to install [PHP Code Sniffer](http://pear.php.net/package/PHP_CodeSniffer).
+- **Add tests!** - Your patch won't be accepted if it doesn't have tests.
+- **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
+- **Consider our release cycle** - We try to follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
+- **Create feature branches** - Don't ask us to pull from your master branch.
+- **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
+- **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
 
-If you are working on new features, refactoring an existing module, or proposing
-a new module, please send an email to the developer mailing list.
 
-## REPORTING POTENTIAL SECURITY ISSUES
+## Running Tests
 
-If you have encountered a potential security vulnerability in any Apigility
-module, please report it to us at [zf-security@zend.com](mailto:zf-security@zend.com).
-We will work with you to verify the vulnerability and patch it.
-
-When reporting issues, please provide the following information:
-
-- Module(s) affected
-- A description indicating how to reproduce the issue
-- A summary of the security vulnerability and impact
-
-We request that you contact us via the email address above and give the project
-contributors a chance to resolve the vulnerability and issue a new release prior
-to any public exposure; this helps protect Apigility users, and provides them
-with a chance to upgrade and/or update in order to protect their applications.
-
-For sensitive email communications, please use 
-[our PGP key](http://framework.zend.com/zf-security-pgp-key.asc).
-
-## RUNNING TESTS
-
-First, use [Composer](https://getcomposer.org) to install all dependencies:
-
-```console
-$ composer install
-```
-
-To run tests:
-
-```console
+``` bash
 $ composer test
 ```
 
-## CODING STANDARDS
+## Coding Standards
 
-While Apigility uses Zend Framework 2 coding standards, in practice, we verify
-against [PSR-2](http://www.php-fig.org/psr/psr-2/). To check for CS issues:
+We verify against [PSR-2](http://www.php-fig.org/psr/psr-2/). To check for CS issues:
 
 ```console
 $ composer cs-check

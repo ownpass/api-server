@@ -17,7 +17,8 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "process-timeout": 5000
+        "process-timeout": 5000,
+        "sort-packages": true
     },
     "require": {
         "php": "^5.6 || ^7.0",
@@ -52,9 +53,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OwnPassApplicationTest\\": "module/OwnPassApplication/test/",
-            "OwnPassCredentialTest\\": "module/OwnPassCredential/test/",
-            "OwnPassUserTest\\": "module/OwnPassUser/test/"
+            "OwnPassApplicationTest\\": "module/OwnPassApplication/tests/",
+            "OwnPassCredentialTest\\": "module/OwnPassCredential/tests/",
+            "OwnPassOAuthTest\\": "module/OwnPassCredential/tests/",
+            "OwnPassUserTest\\": "module/OwnPassUser/tests/"
         },
         "files": [
             "src/Apigility/constants.php"
