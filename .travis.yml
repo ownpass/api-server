@@ -27,7 +27,7 @@ before_script:
   - travis_retry composer global require "squizlabs/php_codesniffer=*"
 
 script:
-  - phpcs --standard=psr2 src/
+  - phpcs
   - phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
