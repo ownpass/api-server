@@ -16,7 +16,13 @@ as an interface for the accounts to manage their credentials.
 1. Clone the repository to a directory that is accessible by your webserver: `git clone git@github.com:ownpass/ownpass.git`
 2. Enter the directory: `cd ownpass`
 3. Install composer dependencies: `composer install --no-dev -o`
-4. Run `php public/index.php ownpass:install` to finish the setup.
+4. Copy `config/autoload/apigility.local.php.dist` to `config/autoload/apigility.local.php` and fill in the correct settings.
+5. Copy `config/autoload/doctrine.local.php.dist` to `config/autoload/doctrine.local.php` and fill in the correct settings.
+6. Run `php public/index.php ownpass:install` to finish the setup.
+
+To enable development mode, copy `config/development.config.php.dist` to `config/development.config.php` and make sure to 
+clear the cache in `data/cache/`. You could consider copying `config/autoload/viewmanager.global.php` to viewmanager.local.php 
+and turn on errors so it becomes clear what errors occur.
 
 ## Change log
 
