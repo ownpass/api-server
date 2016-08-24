@@ -48,9 +48,9 @@ class ZZIndexControllerDevModeTest extends AbstractHttpControllerTestCase
         parent::setUp();
     }
 
-    public function testIndexActionRedirectsToAdminUi()
+    public function testApiActionRedirectsToAdminUi()
     {
-        $this->dispatch('/', 'GET');
+        $this->dispatch('/api', 'GET');
         $this->assertResponseStatusCode(302);
         $this->assertRedirectRegex('#/ui$#');
     }

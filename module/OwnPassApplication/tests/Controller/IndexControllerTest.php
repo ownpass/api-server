@@ -9,7 +9,7 @@
 
 namespace OwnPassApplicationTest\Controller;
 
-use OwnPassApplication\Controller\IndexController;
+use OwnPassApplication\Controller\Index;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
@@ -39,16 +39,10 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/', 'GET');
         $this->assertResponseStatusCode(200);
-        $this->assertModuleName('application');
-        $this->assertControllerName(IndexController::class); // as specified in router's controller name alias
-        $this->assertControllerClass('IndexController');
+        $this->assertModuleName('ownpassapplication');
+        $this->assertControllerName(Index::class); // as specified in router's controller name alias
+        $this->assertControllerClass('Index');
         $this->assertMatchedRouteName('home');
-    }
-
-    public function testIndexActionViewModelTemplateRenderedWithinLayout()
-    {
-        $this->dispatch('/', 'GET');
-        $this->assertQuery('.hero-unit');
     }
 
     public function testInvalidRouteDoesNotCrash()
