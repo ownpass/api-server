@@ -19,11 +19,21 @@ return [
             Controller\Api::class => InvokableFactory::class,
             Controller\Index::class => InvokableFactory::class,
             Controller\Installer::class => Controller\Service\InstallerFactory::class,
+            Controller\KeyManager::class => Controller\Service\KeyManagerFactory::class,
         ],
     ],
     'console' => [
         'router' => [
             'routes' => [
+                'generate-keys' => [
+                    'options' => [
+                        'route' => 'ownpass:generate-keys',
+                        'defaults' => [
+                            'controller' => Controller\KeyManager::class,
+                            'action' => 'generate',
+                        ],
+                    ],
+                ],
                 'install' => [
                     'options' => [
                         'route' => 'ownpass:install',
@@ -70,6 +80,9 @@ return [
         ],
     ],
     'service_manager' => [
+        'factories' => [
+            TaskService\KeyManager::class => TaskService\Service\KeyManagerFactory::class,
+        ],
         'invokables' => [
             'UnderscoreNamingStrategy' => UnderscoreNamingStrategy::class,
         ],

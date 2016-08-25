@@ -41,6 +41,7 @@ class Module implements
     public function getConsoleUsage(AdapterInterface $console)
     {
         return [
+            'ownpass:generate-keys' => 'Generates the public and private keys.',
             'ownpass:install' => 'Installs the application.',
         ];
     }

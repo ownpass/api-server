@@ -16,7 +16,7 @@ use Zend\Console\Prompt\Confirm;
 use Zend\Console\Prompt\Line;
 use Zend\Console\Prompt\Password;
 use Zend\Crypt\Password\PasswordInterface;
-use Zend\Mvc\Controller\AbstractConsoleController;
+use Zend\Mvc\Console\Controller\AbstractConsoleController;
 
 class Installer extends AbstractConsoleController
 {
