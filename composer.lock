@@ -477,12 +477,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "4b48b011e2ec84273114dd19aacf8ce398e9be49"
+                "reference": "2a4404a16e2937c0011e6413bc1b2d2f2b516eb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/4b48b011e2ec84273114dd19aacf8ce398e9be49",
-                "reference": "4b48b011e2ec84273114dd19aacf8ce398e9be49",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/2a4404a16e2937c0011e6413bc1b2d2f2b516eb4",
+                "reference": "2a4404a16e2937c0011e6413bc1b2d2f2b516eb4",
                 "shasum": ""
             },
             "require": {
@@ -561,7 +561,7 @@
                 "module",
                 "zf"
             ],
-            "time": "2016-08-24 16:13:58"
+            "time": "2016-08-25 07:35:09"
         },
         {
             "name": "doctrine/doctrine-orm-module",
@@ -569,12 +569,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineORMModule.git",
-                "reference": "334eec404a0d93ad5878dd5841cb643695d44466"
+                "reference": "1e147bb7526f78b3f39bc3d6b0a49907e6a586db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/334eec404a0d93ad5878dd5841cb643695d44466",
-                "reference": "334eec404a0d93ad5878dd5841cb643695d44466",
+                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/1e147bb7526f78b3f39bc3d6b0a49907e6a586db",
+                "reference": "1e147bb7526f78b3f39bc3d6b0a49907e6a586db",
                 "shasum": ""
             },
             "require": {
@@ -649,7 +649,7 @@
                 "orm",
                 "zf"
             ],
-            "time": "2016-08-24 16:13:37"
+            "time": "2016-08-25 08:24:43"
         },
         {
             "name": "doctrine/inflector",
@@ -5015,16 +5015,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.5.2",
+            "version": "5.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "46ec2d1522ae8c9a12aca6b7650e0be78bbb0502"
+                "reference": "08745ede58cb02b4043adadc09a01c09e698e3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/46ec2d1522ae8c9a12aca6b7650e0be78bbb0502",
-                "reference": "46ec2d1522ae8c9a12aca6b7650e0be78bbb0502",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/08745ede58cb02b4043adadc09a01c09e698e3f7",
+                "reference": "08745ede58cb02b4043adadc09a01c09e698e3f7",
                 "shasum": ""
             },
             "require": {
@@ -5089,20 +5089,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-08-18 11:10:44"
+            "time": "2016-08-25 04:45:28"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.2.4",
+            "version": "3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "4e83390f64e7ce04fcaec2ce95cd72823b431d19"
+                "reference": "8f444748e174e49d5bd2bd7a9bebbf44edbb55fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/4e83390f64e7ce04fcaec2ce95cd72823b431d19",
-                "reference": "4e83390f64e7ce04fcaec2ce95cd72823b431d19",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/8f444748e174e49d5bd2bd7a9bebbf44edbb55fb",
+                "reference": "8f444748e174e49d5bd2bd7a9bebbf44edbb55fb",
                 "shasum": ""
             },
             "require": {
@@ -5148,7 +5148,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-08-17 09:33:51"
+            "time": "2016-08-24 16:58:26"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
