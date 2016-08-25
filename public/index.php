@@ -18,7 +18,7 @@ if (php_sapi_name() === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['RE
     return false;
 }
 
-if (! file_exists('vendor/autoload.php')) {
+if (!file_exists('vendor/autoload.php')) {
     throw new RuntimeException(
         'Unable to load application.' . PHP_EOL
         . '- Type `composer install` if you are developing locally.' . PHP_EOL

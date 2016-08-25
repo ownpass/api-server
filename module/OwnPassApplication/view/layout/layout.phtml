@@ -6,20 +6,11 @@
         echo $this->headTitle('Own Pass');
 
         echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0');
-
-        echo $this->headLink(['rel' => 'icon', 'type' => 'image/png', 'href' => $this->basePath('/img/favicon.png')])
-            ->prependStylesheet($this->basePath('/zf-apigility/css/main.min.css'))
-            ->prependStylesheet($this->basePath('/zf-apigility/css/bootstrap.min.css'));
-
-        echo $this->headScript()
-            ->prependFile($this->basePath('/zf-apigility/js/bootstrap.min.js'))
-            ->prependFile($this->basePath('/zf-apigility/js/jquery.min.js'));
         ?>
     </head>
     <body>
-        <div class="container">
-            <?= $this->content ?>
-        </div>
+        <?= $this->content ?>
+
         <?= $this->inlineScript() ?>
     </body>
 </html>
