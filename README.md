@@ -18,7 +18,10 @@ as an interface for the accounts to manage their credentials.
 3. Install composer dependencies: `composer install --no-dev -o`
 4. Copy `config/autoload/apigility.local.php.dist` to `config/autoload/apigility.local.php` and fill in the correct settings.
 5. Copy `config/autoload/doctrine.local.php.dist` to `config/autoload/doctrine.local.php` and fill in the correct settings.
-6. Run `php public/index.php ownpass:install` to finish the setup.
+6. Copy `config/autoload/ownpass.local.php.dist` to `config/autoload/ownpass.local.php` and fill in the correct settings.
+7. Run `php public/index.php orm:schema-tool:create` to create the database.
+8. Run `php public/index.php ownpass:install` to finish the setup.
+9. Run `php public/index.php ownpass:generate-keys` to create the public and private key.
 
 To enable development mode, copy `config/development.config.php.dist` to `config/development.config.php` and make sure to 
 clear the cache in `data/cache/`. You could consider copying `config/autoload/viewmanager.global.php` to viewmanager.local.php 
