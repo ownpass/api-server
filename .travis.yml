@@ -13,7 +13,8 @@ sudo: false
 ## Cache composer
 cache:
   directories:
-    - $HOME/.composer/cache
+    - $HOME/.composer/cache/
+    - vendor/
 
 services:
   - mysql
@@ -28,7 +29,8 @@ before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
   - travis_retry composer global require "phpunit/phpunit=5.5.*"
   - travis_retry composer global require "squizlabs/php_codesniffer=*"
-  - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS ownpass;'
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - travis_retry mysql -u root -e 'CREATE DATABASE IF NOT EXISTS ownpass;'
   - cp config/autoload/apigility.local.php.dist config/autoload/apigility.local.php
   - cp config/autoload/doctrine.local.php.dist config/autoload/doctrine.local.php
   - cp config/autoload/ownpass.local.php.dist config/autoload/ownpass.local.php
