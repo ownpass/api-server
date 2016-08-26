@@ -15,6 +15,9 @@ cache:
   directories:
     - $HOME/.composer/cache
 
+services:
+  - mysql
+
 matrix:
   include:
     - php: 5.6
@@ -25,6 +28,16 @@ before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
   - travis_retry composer global require "phpunit/phpunit=5.5.*"
   - travis_retry composer global require "squizlabs/php_codesniffer=*"
+  - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS ownpass;'
+  - cp config/autoload/apigility.local.php.dist config/autoload/apigility.local.php
+  - cp config/autoload/doctrine.local.php.dist config/autoload/doctrine.local.php
+  - cp config/autoload/ownpass.local.php.dist config/autoload/ownpass.local.php
+  - sed -i "s|'username' => ''|'username' => 'root'|" config/autoload/apigility.local.php
+  - sed -i "s|'user' => ''|'user' => 'root'|" config/autoload/doctrine.local.php
+  - sed -i "s|'password' => ''|'password' => 'ownpass'|" config/autoload/ownpass.local.php
+  - php public/index.php orm:schema-tool:drop --force
+  - php public/index.php orm:schema-tool:create
+  - php public/index.php orm:validate-schema
 
 script:
   - phpcs
