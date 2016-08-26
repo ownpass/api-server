@@ -48,6 +48,10 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details
 
 If you discover any security related issues, please email :author_email instead of using the issue tracker.
 
+## Community
+
+You can find us on IRC. We're on the Freenode network in the channel #ownpass.
+
 ## License
 
 All rights reserved. The application is free to use but the rights of the source code are with the OwnPass team.
