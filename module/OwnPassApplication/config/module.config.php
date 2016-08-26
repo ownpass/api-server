@@ -19,7 +19,7 @@ return [
             Controller\Api::class => InvokableFactory::class,
             Controller\Index::class => InvokableFactory::class,
             Controller\Installer::class => Controller\Service\InstallerFactory::class,
-            Controller\KeyManager::class => Controller\Service\KeyManagerFactory::class,
+            Controller\KeyManagerCli::class => Controller\Service\KeyManagerCliFactory::class,
         ],
     ],
     'console' => [
@@ -29,17 +29,8 @@ return [
                     'options' => [
                         'route' => 'ownpass:generate-keys',
                         'defaults' => [
-                            'controller' => Controller\KeyManager::class,
+                            'controller' => Controller\KeyManagerCli::class,
                             'action' => 'generate',
-                        ],
-                    ],
-                ],
-                'install' => [
-                    'options' => [
-                        'route' => 'ownpass:install',
-                        'defaults' => [
-                            'controller' => Controller\Installer::class,
-                            'action' => 'index',
                         ],
                     ],
                 ],

@@ -10,6 +10,26 @@
 namespace OwnPassOAuth;
 
 return [
+    'controllers' => [
+        'factories' => [
+            Controller\Cli::class => Controller\Service\CliFactory::class,
+        ],
+    ],
+    'console' => [
+        'router' => [
+            'routes' => [
+                'oauth-create-application' => [
+                    'options' => [
+                        'route' => 'ownpass:oauth:create-application [--name=] [--client=] [--secret=] [--force]',
+                        'defaults' => [
+                            'controller' => Controller\Cli::class,
+                            'action' => 'create',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
     'doctrine' => [
         'driver' => [
             __NAMESPACE__ => [

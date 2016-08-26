@@ -9,10 +9,13 @@
 
 namespace OwnPassUser;
 
+use Zend\Console\Adapter\AdapterInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\Stdlib\ArrayUtils;
 use ZF\Apigility\Provider\ApigilityProviderInterface;
 
-class Module implements ApigilityProviderInterface
+class Module implements ApigilityProviderInterface, ConfigProviderInterface, ConsoleUsageProviderInterface
 {
     public function getConfig()
     {
@@ -20,5 +23,13 @@ class Module implements ApigilityProviderInterface
             include __DIR__ . '/../config/module.config.php',
             include __DIR__ . '/../config/ownpass.config.php'
         );
+    }
+
+    public function getConsoleUsage(AdapterInterface $console)
+    {
+        return [
+            'ownpass:account:create [--firstname=] [--lastname=] [--username=] [--force]' =>
+                'Create a new user account.',
+        ];
     }
 }

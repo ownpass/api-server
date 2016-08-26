@@ -10,16 +10,16 @@
 namespace OwnPassApplication\Controller\Service;
 
 use Interop\Container\ContainerInterface;
-use OwnPassApplication\Controller\KeyManager;
-use OwnPassApplication\TaskService\KeyManager as KeyManagerTaskService;
+use OwnPassApplication\Controller\KeyManagerCli;
+use OwnPassApplication\TaskService\KeyManager;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class KeyManagerFactory implements FactoryInterface
+class KeyManagerCliFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $keyManager = $container->get(KeyManagerTaskService::class);
+        $keyManager = $container->get(KeyManager::class);
 
-        return new KeyManager($keyManager);
+        return new KeyManagerCli($keyManager);
     }
 }

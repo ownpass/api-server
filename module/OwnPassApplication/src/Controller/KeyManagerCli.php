@@ -12,7 +12,7 @@ namespace OwnPassApplication\Controller;
 use OwnPassApplication\TaskService\KeyManager as KeyManagerTaskService;
 use Zend\Mvc\Console\Controller\AbstractConsoleController;
 
-class KeyManager extends AbstractConsoleController
+class KeyManagerCli extends AbstractConsoleController
 {
     /**
      * @var KeyManagerTaskService

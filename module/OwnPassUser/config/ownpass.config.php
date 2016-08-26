@@ -13,6 +13,26 @@ use Zend\Crypt\Password\Bcrypt;
 use Zend\Crypt\Password\PasswordInterface;
 
 return [
+    'controllers' => [
+        'factories' => [
+            Controller\UserCli::class => Controller\Service\UserCliFactory::class,
+        ],
+    ],
+    'console' => [
+        'router' => [
+            'routes' => [
+                'account-create' => [
+                    'options' => [
+                        'route' => 'ownpass:account:create [--firstname=] [--lastname=] [--username=] [--force]',
+                        'defaults' => [
+                            'controller' => Controller\UserCli::class,
+                            'action' => 'create',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
     'doctrine' => [
         'driver' => [
             __NAMESPACE__ => [
