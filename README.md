@@ -20,8 +20,11 @@ as an interface for the accounts to manage their credentials.
 5. Copy `config/autoload/doctrine.local.php.dist` to `config/autoload/doctrine.local.php` and fill in the correct settings.
 6. Copy `config/autoload/ownpass.local.php.dist` to `config/autoload/ownpass.local.php` and fill in the correct settings.
 7. Run `php public/index.php orm:schema-tool:create` to create the database.
-8. Run `php public/index.php ownpass:install` to finish the setup.
-9. Run `php public/index.php ownpass:generate-keys` to create the public and private key.
+8. Run `php public/index.php ownpass:account:create` to create an user account.
+9. Run `php public/index.php ownpass:oauth:create-application --name="Chrome Extension" --client=chrome-extension --force` to create an OAuth application for the Chrome Extension
+10. Run `php public/index.php ownpass:oauth:create-application --name="Firefox Extension" --client=firefox-extension --force` to create an OAuth application for the Firefox Extension
+11. Run `php public/index.php ownpass:oauth:create-application --name="Internet Explorer Extension" --client=ie-extension --force` to create an OAuth application for the Internet Explorer Extension
+12. Run `php public/index.php ownpass:generate-keys` to create the public and private key.
 
 To enable development mode, copy `config/development.config.php.dist` to `config/development.config.php` and make sure to 
 clear the cache in `data/cache/`. You could consider copying `config/autoload/viewmanager.global.php` to viewmanager.local.php 

@@ -30,6 +30,7 @@ class Cli extends AbstractConsoleController
     public function createAction()
     {
         $correct = false;
+        $force = $this->params()->fromRoute('force', false);
 
         while (!$correct) {
             $name = $this->params()->fromRoute('name');
@@ -43,11 +44,11 @@ class Cli extends AbstractConsoleController
             }
 
             $clientSecret = $this->params()->fromRoute('secret');
-            if (!$clientSecret) {
+            if ($clientSecret === null && !$force) {
                 $clientSecret = Line::prompt('Client secret (leave empty for public client): ', true);
             }
 
-            $correct = $this->params()->fromRoute('force');
+            $correct = $force;
             if (!$correct) {
                 $this->getConsole()->writeLine('');
                 $this->getConsole()->writeLine('Reviewing information:');
