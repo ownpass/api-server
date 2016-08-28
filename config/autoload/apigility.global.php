@@ -59,10 +59,11 @@ return [
         ],
     ],
     'zf-oauth2' => [
+        'access_lifetime' => 3600,
         'allow_implicit' => true,
         'grant_types' => [
-            'client_credentials' => true,
-            'authorization_code' => true,
+            'client_credentials' => false,
+            'authorization_code' => false,
             'password' => true,
             'refresh_token' => true,
             'jwt' => false,
