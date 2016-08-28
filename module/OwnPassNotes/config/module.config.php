@@ -15,6 +15,7 @@ return [
                     'defaults' => [
                         'controller' => 'OwnPassNotes\\V1\\Rest\\Note\\Controller',
                     ],
+                    'device_required' => true,
                 ],
             ],
             'own-pass-notes.rest.user-note' => [
@@ -24,6 +25,7 @@ return [
                     'defaults' => [
                         'controller' => 'OwnPassNotes\\V1\\Rest\\UserNote\\Controller',
                     ],
+                    'device_required' => true,
                 ],
             ],
         ],

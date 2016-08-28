@@ -15,6 +15,7 @@ return [
                     'defaults' => [
                         'controller' => 'OwnPassCredential\\V1\\Rest\\Credential\\Controller',
                     ],
+                    'device_required' => true,
                 ],
             ],
             'own-pass-credential.rest.user-credential' => [
@@ -24,6 +25,7 @@ return [
                     'defaults' => [
                         'controller' => 'OwnPassCredential\\V1\\Rest\\UserCredential\\Controller',
                     ],
+                    'device_required' => true,
                 ],
             ],
         ],

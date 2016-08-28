@@ -9,6 +9,7 @@
 
 namespace OwnPassApplication;
 
+use OwnPassApplication\Listener\DeviceHeader;
 use OwnPassApplication\Listener\SecureScheme;
 use Zend\Console\Adapter\AdapterInterface;
 use Zend\EventManager\EventInterface;
@@ -60,7 +61,12 @@ class Module implements
     {
         /** @var MvcEvent $e */
 
-        $listener = new SecureScheme(file_exists('config/development.config.php'));
-        $listener->attach($e->getApplication()->getEventManager());
+        $eventManager = $e->getApplication()->getEventManager();
+
+        $secureSchemeListener = new SecureScheme(file_exists('config/development.config.php'));
+        $secureSchemeListener->attach($eventManager);
+
+        $deviceHeaderListener = new DeviceHeader();
+        $deviceHeaderListener->attach($eventManager);
     }
 }
