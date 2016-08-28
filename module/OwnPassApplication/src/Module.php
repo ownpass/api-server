@@ -19,9 +19,12 @@ use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\Mvc\MvcEvent;
+use Zend\Stdlib\ArrayUtils;
 use Zend\Uri\UriFactory;
+use ZF\Apigility\Provider\ApigilityProviderInterface;
 
 class Module implements
+    ApigilityProviderInterface,
     BootstrapListenerInterface,
     ConfigProviderInterface,
     ConsoleBannerProviderInterface,
@@ -30,7 +33,10 @@ class Module implements
 {
     public function getConfig()
     {
-        return include __DIR__ . '/../config/module.config.php';
+        return ArrayUtils::merge(
+            include __DIR__ . '/../config/module.config.php',
+            include __DIR__ . '/../config/ownpass.config.php'
+        );
     }
 
     public function getConsoleBanner(AdapterInterface $console)

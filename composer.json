@@ -53,6 +53,7 @@
             "OwnPassApplication\\": "module/OwnPassApplication/src/",
             "OwnPassCredential\\": "module/OwnPassCredential/src/",
             "OwnPassOAuth\\": "module/OwnPassOAuth/src/",
+            "OwnPassNotes\\": "module/OwnPassNotes/src/",
             "OwnPassUser\\": "module/OwnPassUser/src/"
         }
     },
@@ -60,7 +61,8 @@
         "psr-4": {
             "OwnPassApplicationTest\\": "module/OwnPassApplication/tests/",
             "OwnPassCredentialTest\\": "module/OwnPassCredential/tests/",
-            "OwnPassOAuthTest\\": "module/OwnPassCredential/tests/",
+            "OwnPassNotesTest\\": "module/OwnPassNotes/tests/",
+            "OwnPassOAuthTest\\": "module/OwnPassOAuth/tests/",
             "OwnPassUserTest\\": "module/OwnPassUser/tests/"
         },
         "files": [

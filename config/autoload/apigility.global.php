@@ -70,6 +70,7 @@ return [
         ],
         'options' => [
             'always_issue_new_refresh_token' => true,
+            'unset_refresh_token_after_use' => true,
         ],
         'storage' => \OwnPassOAuth\Storage\Storage::class,
     ],
