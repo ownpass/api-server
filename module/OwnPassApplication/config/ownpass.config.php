@@ -38,6 +38,20 @@ return [
         ],
     ],
     'doctrine' => [
+        'driver' => [
+            __NAMESPACE__ => [
+                'class' => 'Doctrine\\ORM\\Mapping\\Driver\\XmlDriver',
+                'cache' => 'array',
+                'paths' => [
+                    __DIR__ . '/doctrine',
+                ],
+            ],
+            'orm_default' => [
+                'drivers' => [
+                    __NAMESPACE__ => __NAMESPACE__
+                ],
+            ],
+        ],
         'eventmanager' => [
             'orm_default' => [
                 'subscribers' => [
