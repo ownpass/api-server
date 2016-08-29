@@ -2574,16 +2574,16 @@
         },
         {
             "name": "zendframework/zend-mvc-console",
-            "version": "1.1.10",
+            "version": "1.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-mvc-console.git",
-                "reference": "34f6ffd4b84df614303f4c6e9fd3aebf331dc84b"
+                "reference": "a9b5559f129c2e6cc3f3f32e54c2daa02b336301"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-mvc-console/zipball/34f6ffd4b84df614303f4c6e9fd3aebf331dc84b",
-                "reference": "34f6ffd4b84df614303f4c6e9fd3aebf331dc84b",
+                "url": "https://api.github.com/repos/zendframework/zend-mvc-console/zipball/a9b5559f129c2e6cc3f3f32e54c2daa02b336301",
+                "reference": "a9b5559f129c2e6cc3f3f32e54c2daa02b336301",
                 "shasum": ""
             },
             "require": {
@@ -2592,7 +2592,7 @@
                 "zendframework/zend-console": "^2.6",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0",
                 "zendframework/zend-modulemanager": "^2.7.1",
-                "zendframework/zend-mvc": "^3.0.0-dev || ^3.0",
+                "zendframework/zend-mvc": "^3.0.3",
                 "zendframework/zend-router": "^3.0",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
                 "zendframework/zend-stdlib": "^2.7.5 || ^3.0",
@@ -2636,7 +2636,7 @@
                 "mvc",
                 "zf2"
             ],
-            "time": "2016-05-31 20:51:16"
+            "time": "2016-08-29 19:09:11"
         },
         {
             "name": "zendframework/zend-mvc-i18n",
