@@ -7,8 +7,6 @@
  * @license https://raw.githubusercontent.com/ownpass/ownpass/master/LICENSE MIT
  */
 
-use ZF\Apigility\Admin\Model\ModulePathSpec;
-
 return [
     'router' => [
         'routes' => [
@@ -26,9 +24,6 @@ return [
             \ZF\OAuth2\Service\OAuth2Server::class => \ZF\MvcAuth\Factory\NamedOAuth2ServerFactory::class,
             \OwnPassOAuth\Storage\Storage::class => \OwnPassOAuth\Storage\Service\StorageFactory::class,
         ],
-    ],
-    'zf-apigility-admin' => [
-        'path_spec' => ModulePathSpec::PSR_4,
     ],
     'zf-configuration' => [
         'enable_short_array' => true,
