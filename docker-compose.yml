@@ -1,0 +1,46 @@
+version: '2'
+
+volumes:
+  mysqldata:
+    driver: local
+  appcache:
+    driver: local
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./:/var/www:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - phpserver
+
+  phpserver:
+    build:
+      context: ./
+      dockerfile: ./phpserver.dockerfile
+    working_dir: /var/www/public
+    volumes:
+      - ./:/var/www:ro
+      - appcache:/var/www/data/cache
+    links:
+      - mysqlserver
+
+  mysqlserver:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: my_db
+      MYSQL_USER: my_db
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+  composer:
+    build:
+      context: ./
+      dockerfile: ./composer.dockerfile
+    working_dir: /var/www
+    user: "$USER_ID"
+    volumes:
+      - ./:/var/www/
