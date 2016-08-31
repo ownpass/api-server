@@ -36,7 +36,11 @@ class DeviceHeader extends AbstractListenerAggregate
         }
 
         $config = $event->getApplication()->getServiceManager()->get('config');
-        $route = $config['router']['routes'][$event->getRouteMatch()->getMatchedRouteName()];
+        $routeName = $event->getRouteMatch()->getMatchedRouteName();
+
+        if (!array_key_exists($routeName, $config['router']['routes'])) {
+            return;
+        }
 
         if (!array_key_exists('device_required', $route['options']) || !$route['options']['device_required']) {
             return;
