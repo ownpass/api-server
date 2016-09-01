@@ -1,9 +1,9 @@
 <?php
 /**
- * This file is part of Own Pass. (https://github.com/ownpass/)
+ * This file is part of OwnPass. (https://github.com/ownpass/)
  *
  * @link https://github.com/ownpass/ownpass for the canonical source repository
- * @copyright Copyright (c) 2016-2017 Own Pass. (https://github.com/ownpass/)
+ * @copyright Copyright (c) 2016-2017 OwnPass. (https://github.com/ownpass/)
  * @license https://raw.githubusercontent.com/ownpass/ownpass/master/LICENSE MIT
  */
 
@@ -49,7 +49,7 @@ class SecureScheme extends AbstractListenerAggregate
         /** @var Response $response */
         $response = $event->getResponse();
         $response->setStatusCode(Response::STATUS_CODE_403);
-        $response->setContent('Cannot access Own Pass over HTTP scheme, HTTPS is required.');
+        $response->setContent('Cannot access OwnPass over HTTP scheme, HTTPS is required.');
 
         // TODO: Render a nice template
 
