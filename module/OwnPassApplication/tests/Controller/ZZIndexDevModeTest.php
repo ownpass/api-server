@@ -18,7 +18,7 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
  * once the Admin module is loaded, the controller is able to find it and
  * will attempt the redirect.
  */
-class ZZIndexControllerDevModeTest extends AbstractHttpControllerTestCase
+class ZZIndexDevModeTest extends AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -48,6 +48,9 @@ class ZZIndexControllerDevModeTest extends AbstractHttpControllerTestCase
         parent::setUp();
     }
 
+    /**
+     * @covers OwnPassApplication\Controller\Index::indexAction
+     */
     public function testApiActionRedirectsToAdminUi()
     {
         $this->dispatch('/api', 'GET');

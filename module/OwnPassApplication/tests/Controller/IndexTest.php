@@ -13,7 +13,7 @@ use OwnPassApplication\Controller\Index;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class IndexControllerTest extends AbstractHttpControllerTestCase
+class IndexTest extends AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -35,6 +35,9 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         parent::setUp();
     }
 
+    /**
+     * @covers OwnPassApplication\Controller\Index::indexAction
+     */
     public function testIndexActionCanBeAccessed()
     {
         $this->dispatch('/', 'GET');
@@ -43,11 +46,5 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName(Index::class); // as specified in router's controller name alias
         $this->assertControllerClass('Index');
         $this->assertMatchedRouteName('home');
-    }
-
-    public function testInvalidRouteDoesNotCrash()
-    {
-        $this->dispatch('/invalid/route', 'GET');
-        $this->assertResponseStatusCode(404);
     }
 }
