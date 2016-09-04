@@ -11,9 +11,11 @@ namespace OwnPassNotes\V1\Rest\Note;
 
 use Doctrine\ORM\EntityManagerInterface;
 use DoctrineModule\Paginator\Adapter\Selectable;
+use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassNotes\Entity\Note;
+use OwnPassUser\Entity\Account;
 use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\AbstractResourceListener;
+use ZF\ApiProblem\ApiProblemResponse;
 
 class NoteResource extends AbstractResourceListener
 {
@@ -29,7 +31,15 @@ class NoteResource extends AbstractResourceListener
 
     public function create($data)
     {
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
+        }
+
+        $account = $this->entityManager->find(Account::class, $data->account_id);
+        if (!$account) {
+            return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Account not found.');
+        }
 
         $note = new Note($account);
         $note->setType($data->type);
@@ -44,6 +54,11 @@ class NoteResource extends AbstractResourceListener
 
     public function delete($id)
     {
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
+        }
+
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
@@ -57,6 +72,11 @@ class NoteResource extends AbstractResourceListener
 
     public function fetch($id)
     {
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
+        }
+
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
             return null;
@@ -67,6 +87,11 @@ class NoteResource extends AbstractResourceListener
 
     public function fetchAll($params = [])
     {
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
+        }
+
         $repository = $this->entityManager->getRepository(Note::class);
 
         $adapter = new Selectable($repository);
@@ -76,6 +101,11 @@ class NoteResource extends AbstractResourceListener
 
     public function update($id, $data)
     {
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
+        }
+
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');

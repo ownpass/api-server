@@ -12,7 +12,6 @@ namespace OwnPassCredentialTest\V1\Rpc\GeneratePassword;
 use OwnPassCredential\TaskService\Generator;
 use OwnPassCredential\V1\Rpc\GeneratePassword\GeneratePasswordController;
 use PHPUnit_Framework_TestCase;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;

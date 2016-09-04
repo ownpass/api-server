@@ -148,6 +148,27 @@ return [
         'OwnPassNotes\\V1\\Rest\\Note\\Validator' => [
             0 => [
                 'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\Uuid::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'account_id',
+                'description' => 'The account id of the account that owns the note.',
+            ],
+            1 => [
+                'required' => true,
                 'validators' => [],
                 'filters' => [
                     0 => [
@@ -162,7 +183,7 @@ return [
                 'name' => 'type',
                 'description' => 'The type of note, this can be used to categorize notes.',
             ],
-            1 => [
+            2 => [
                 'required' => true,
                 'validators' => [],
                 'filters' => [
@@ -174,7 +195,7 @@ return [
                 'name' => 'name',
                 'description' => 'The name of the note.',
             ],
-            2 => [
+            3 => [
                 'required' => true,
                 'validators' => [],
                 'filters' => [

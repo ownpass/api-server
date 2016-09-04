@@ -14,6 +14,7 @@
         <testsuite name="OwnPass Test Suite">
             <directory>module/OwnPassApplication/tests/</directory>
             <directory>module/OwnPassCredential/tests/</directory>
+            <directory>module/OwnPassNotes/tests/</directory>
             <directory>module/OwnPassOAuth/tests/</directory>
             <directory>module/OwnPassUser/tests/</directory>
         </testsuite>
