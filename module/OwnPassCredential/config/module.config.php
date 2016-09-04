@@ -28,12 +28,23 @@ return [
                     'device_required' => true,
                 ],
             ],
+            'own-pass-credential.rpc.generate-password' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/api/credential/generate',
+                    'defaults' => [
+                        'controller' => 'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller',
+                        'action' => 'generatePassword',
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-versioning' => [
         'uri' => [
             1 => 'own-pass-credential.rest.credential',
             0 => 'own-pass-credential.rest.user-credential',
+            2 => 'own-pass-credential.rpc.generate-password',
         ],
     ],
     'zf-rest' => [
@@ -74,7 +85,7 @@ return [
                 1 => 'POST',
             ],
             'collection_query_whitelist' => [
-                'host',
+                0 => 'host',
             ],
             'page_size' => 25,
             'page_size_param' => null,
@@ -87,6 +98,7 @@ return [
         'controllers' => [
             'OwnPassCredential\\V1\\Rest\\Credential\\Controller' => 'HalJson',
             'OwnPassCredential\\V1\\Rest\\UserCredential\\Controller' => 'HalJson',
+            'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => 'Json',
         ],
         'accept_whitelist' => [
             'OwnPassCredential\\V1\\Rest\\Credential\\Controller' => [
@@ -99,6 +111,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => [
+                0 => 'application/vnd.own-pass-credential.v1+json',
+                1 => 'application/json',
+                2 => 'application/*+json',
+            ],
         ],
         'content_type_whitelist' => [
             'OwnPassCredential\\V1\\Rest\\Credential\\Controller' => [
@@ -106,6 +123,10 @@ return [
                 1 => 'application/json',
             ],
             'OwnPassCredential\\V1\\Rest\\UserCredential\\Controller' => [
+                0 => 'application/vnd.own-pass-credential.v1+json',
+                1 => 'application/json',
+            ],
+            'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => [
                 0 => 'application/vnd.own-pass-credential.v1+json',
                 1 => 'application/json',
             ],
@@ -143,6 +164,9 @@ return [
         'OwnPassCredential\\V1\\Rest\\Credential\\Controller' => [
             'input_filter' => 'OwnPassCredential\\V1\\Rest\\Credential\\Validator',
         ],
+        'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => [
+            'input_filter' => 'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Validator',
+        ],
     ],
     'input_filter_specs' => [
         'OwnPassCredential\\V1\\Rest\\Credential\\Validator' => [
@@ -151,8 +175,7 @@ return [
                 'validators' => [
                     0 => [
                         'name' => \Zend\Validator\Uuid::class,
-                        'options' => [
-                        ],
+                        'options' => [],
                     ],
                 ],
                 'filters' => [],
@@ -187,6 +210,90 @@ return [
                 'filters' => [],
                 'name' => 'credential',
                 'description' => 'The credential that was entered.',
+            ],
+        ],
+        'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\Digits::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\ToInt::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'length',
+                'description' => 'The length of the password to generate.',
+                'field_type' => 'integer',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\Boolean::class,
+                        'options' => [
+                            'type' => 511,
+                        ],
+                    ],
+                ],
+                'name' => 'lowercase',
+                'description' => 'Whether or not to only use lowercase characters.',
+                'field_type' => 'boolean',
+                'allow_empty' => true,
+            ],
+            2 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\Boolean::class,
+                        'options' => [
+                            'type' => 511,
+                        ],
+                    ],
+                ],
+                'name' => 'uppercase',
+                'description' => 'Whether or not to only use uppercase characters.',
+                'field_type' => 'boolean',
+                'allow_empty' => true,
+            ],
+            3 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\Boolean::class,
+                        'options' => [
+                            'type' => 511,
+                        ],
+                    ],
+                ],
+                'name' => 'digits',
+                'description' => 'Whether or not to include digits.',
+                'field_type' => 'boolean',
+                'allow_empty' => true,
+            ],
+            4 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\Boolean::class,
+                        'options' => [
+                            'type' => 511,
+                        ],
+                    ],
+                ],
+                'name' => 'symbols',
+                'description' => 'Whether or not to include symbols.',
+                'field_type' => 'boolean',
+                'allow_empty' => true,
             ],
         ],
     ],
@@ -224,6 +331,31 @@ return [
                     'DELETE' => true,
                 ],
             ],
+            'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => [
+                'actions' => [
+                    'GeneratePassword' => [
+                        'GET' => false,
+                        'POST' => true,
+                        'PUT' => false,
+                        'PATCH' => false,
+                        'DELETE' => false,
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => \OwnPassCredential\V1\Rpc\GeneratePassword\GeneratePasswordControllerFactory::class,
+        ],
+    ],
+    'zf-rpc' => [
+        'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => [
+            'service_name' => 'GeneratePassword',
+            'http_methods' => [
+                0 => 'POST',
+            ],
+            'route_name' => 'own-pass-credential.rpc.generate-password',
         ],
     ],
 ];

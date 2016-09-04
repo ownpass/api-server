@@ -9,6 +9,8 @@
 
 namespace OwnPassCredential;
 
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'doctrine' => [
         'driver' => [
@@ -24,6 +26,11 @@ return [
                     __NAMESPACE__ => __NAMESPACE__
                 ],
             ],
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            TaskService\Generator::class => InvokableFactory::class,
         ],
     ],
 ];
