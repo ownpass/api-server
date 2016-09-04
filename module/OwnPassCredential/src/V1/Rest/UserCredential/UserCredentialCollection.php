@@ -13,4 +13,8 @@ use OwnPassCredential\V1\Rest\Credential\CredentialCollection;
 
 class UserCredentialCollection extends CredentialCollection
 {
+    protected function build($key, $value)
+    {
+        return new UserCredentialEntity($value);
+    }
 }

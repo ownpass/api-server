@@ -150,6 +150,19 @@ return [
                 'required' => true,
                 'validators' => [
                     0 => [
+                        'name' => \Zend\Validator\Uuid::class,
+                        'options' => [
+                        ],
+                    ],
+                ],
+                'filters' => [],
+                'name' => 'account_id',
+                'description' => 'The account_id to add the credential for.',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
                         'name' => \Zend\Validator\Uri::class,
                         'options' => [
                             'allowAbsolute' => true,
@@ -161,14 +174,14 @@ return [
                 'name' => 'raw_url',
                 'description' => 'The full url of the page where the credentials were entered.',
             ],
-            1 => [
+            2 => [
                 'required' => true,
                 'validators' => [],
                 'filters' => [],
                 'name' => 'identity',
                 'description' => 'The identity that was entered.',
             ],
-            2 => [
+            3 => [
                 'required' => true,
                 'validators' => [],
                 'filters' => [],

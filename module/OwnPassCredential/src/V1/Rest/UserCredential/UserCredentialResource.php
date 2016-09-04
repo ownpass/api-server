@@ -125,7 +125,7 @@ class UserCredentialResource extends AbstractResourceListener
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->eq('account', $account));
 
-        if ($params['host']) {
+        if (array_key_exists('host', $params)) {
             $criteria->andWhere(Criteria::expr()->eq('urlHost', $params['host']));
         }
 

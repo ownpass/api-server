@@ -12,6 +12,7 @@ namespace OwnPassCredential\V1\Rest\Credential;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use DoctrineModule\Paginator\Adapter\Selectable;
+use Exception;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassCredential\Entity\Credential;
 use OwnPassUser\Entity\Account;
@@ -25,6 +26,11 @@ class CredentialResource extends AbstractResourceListener
      */
     private $entityManager;
 
+    /**
+     * Initializes a new instance of this class.
+     *
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -38,7 +44,20 @@ class CredentialResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
+        }
+
+        try {
+            $account = $this->entityManager->find(Account::class, $data->account_id);
+        } catch (Exception $e) {
+            $account = null;
+        }
+
+        if (!$account) {
+            return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Account not found.');
+        }
 
         $credential = new Credential($account, $data->raw_url, $data->identity, $data->credential);
 
@@ -56,20 +75,12 @@ class CredentialResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
-
-        $repository = $this->entityManager->getRepository(Credential::class);
-
-        try {
-            /** @var Credential $credential */
-            $credential = $repository->findOneBy([
-                'account' => $account,
-                'id' => $id,
-            ]);
-        } catch (Exception $e) {
-            $credential = null;
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
         }
 
+        $credential = $this->entityManager->find(Credential::class, $id);
         if (!$credential) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
@@ -88,19 +99,12 @@ class CredentialResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
-
-        $repository = $this->entityManager->getRepository(Credential::class);
-
-        try {
-            /** @var Credential $credential */
-            $credential = $repository->findOneBy([
-                'account' => $account,
-                'id' => $id,
-            ]);
-        } catch (Exception $e) {
-            $credential = null;
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
         }
+
+        $credential = $this->entityManager->find(Credential::class, $id);
 
         if (!$credential) {
             return null;
@@ -117,14 +121,14 @@ class CredentialResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        $response = $this->validateScope('admin');
+        if ($response) {
+            return $response;
+        }
 
         $repository = $this->entityManager->getRepository(Credential::class);
 
-        $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('account', $account));
-
-        $adapter = new Selectable($repository, $criteria);
+        $adapter = new Selectable($repository);
 
         return new CredentialCollection($adapter);
     }
