@@ -50,7 +50,8 @@ If you discover any security related issues, please email :author_email instead 
 
 ## Community
 
-You can find us on IRC. We're on the Freenode network in the channel #ownpass.
+There's a Gitter room where you can drop questions: https://gitter.im/ownpass/Lobby
+You can also find us on IRC. We're on the Freenode network in the channel #ownpass.
 
 ## License
 
