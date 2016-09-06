@@ -3,22 +3,18 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
-    <entity name="OwnPassUser\Entity\Account" table="user_account">
+    <entity name="OwnPassUser\Entity\Identity" table="user_identity">
         <id name="id" type="uuid_binary" />
 
         <field name="creationDate" type="datetime">
             <gedmo:timestampable on="create" />
         </field>
 
-        <field name="updateDate" type="datetime">
-            <gedmo:timestampable on="update" />
-        </field>
+        <field name="directory" type="string" />
+        <field name="identity" type="string" />
 
-        <field name="name" type="string" />
-        <field name="role" type="string" />
-        <field name="credential" type="string" nullable="true" />
-
-        <field name="tfaType" type="string" nullable="true" />
-        <field name="tfaCode" type="string" nullable="true" />
+        <many-to-one target-entity="OwnPassUser\Entity\Account" field="account" orphan-removal="true">
+            <join-column on-delete="CASCADE" />
+        </many-to-one>
     </entity>
 </doctrine-mapping>

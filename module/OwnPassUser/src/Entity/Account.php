@@ -37,38 +37,36 @@ class Account
     /**
      * @var string
      */
-    private $role;
+    private $name;
 
     /**
      * @var string
      */
-    private $identity;
+    private $role;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $credential;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $firstName;
+    private $tfaType;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $lastName;
+    private $tfaCode;
 
-    public function __construct($identity, $credential, $firstName, $lastName)
+    public function __construct($name, $credential)
     {
         $this->id = Uuid::uuid4();
         $this->creationDate = new DateTimeImmutable();
         $this->updateDate = new DateTimeImmutable();
+        $this->name = $name;
         $this->role = self::ROLE_USER;
-        $this->identity = $identity;
         $this->credential = $credential;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
     }
 
     /**
@@ -98,6 +96,38 @@ class Account
     /**
      * @return string
      */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCredential()
+    {
+        return $this->credential;
+    }
+
+    /**
+     * @param null|string $credential
+     */
+    public function setCredential($credential)
+    {
+        $this->credential = $credential;
+    }
+
+    /**
+     * @return string
+     */
     public function getRole()
     {
         return $this->role;
@@ -112,66 +142,34 @@ class Account
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getIdentity()
+    public function getTfaType()
     {
-        return $this->identity;
+        return $this->tfaType;
     }
 
     /**
-     * @param string $identity
+     * @param null|string $tfaType
      */
-    public function setIdentity($identity)
+    public function setTfaType($tfaType)
     {
-        $this->identity = $identity;
+        $this->tfaType = $tfaType;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getCredential()
+    public function getTfaCode()
     {
-        return $this->credential;
+        return $this->tfaCode;
     }
 
     /**
-     * @param string $credential
+     * @param null|string $tfaCode
      */
-    public function setCredential($credential)
+    public function setTfaCode($tfaCode)
     {
-        $this->credential = $credential;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * @param string $firstName
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
+        $this->tfaCode = $tfaCode;
     }
 }

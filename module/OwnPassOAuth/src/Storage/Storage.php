@@ -23,6 +23,7 @@ use OwnPassOAuth\Entity\AccessToken;
 use OwnPassOAuth\Entity\Application;
 use OwnPassOAuth\Entity\AuthorizationCode;
 use OwnPassOAuth\Entity\RefreshToken;
+use OwnPassUser\Entity\Identity;
 use Zend\Crypt\Password\PasswordInterface;
 
 class Storage implements
@@ -101,7 +102,7 @@ class Storage implements
     {
         $application = $this->getApplication($clientId);
         if (!$application) {
-            return;
+            return false;
         }
 
         /** @var Account $account */
@@ -281,16 +282,20 @@ class Storage implements
 
     public function checkUserCredentials($username, $password)
     {
-        $repository = $this->entityManager->getRepository(Account::class);
+        $accountRepository = $this->entityManager->getRepository(Account::class);
+        $identityRepository = $this->entityManager->getRepository(Identity::class);
 
-        /** @var Account $account */
-        $account = $repository->findOneBy([
+        /** @var Identity $identity */
+        $identity = $identityRepository->findOneBy([
+            'directory' => 'username',
             'identity' => $username,
         ]);
 
-        if (!$account) {
+        if (!$identity) {
             return false;
         }
+
+        $account = $identity->getAccount();
 
         /** @var string $credential */
         $credential = $account->getCredential();
@@ -300,19 +305,20 @@ class Storage implements
 
     public function getUserDetails($username)
     {
-        $repository = $this->entityManager->getRepository(Account::class);
+        $repository = $this->entityManager->getRepository(Identity::class);
 
-        /** @var Account $account */
-        $account = $repository->findOneBy([
+        /** @var Identity $identity */
+        $identity = $repository->findOneBy([
+            'directory' => 'username',
             'identity' => $username,
         ]);
 
-        if (!$account) {
+        if (!$identity) {
             return false;
         }
 
         return [
-            'user_id' => $account->getId()->toString(),
+            'user_id' => $identity->getAccount()->getId()->toString(),
             'scope' => '',
         ];
     }

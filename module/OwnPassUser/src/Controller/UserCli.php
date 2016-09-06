@@ -11,6 +11,7 @@ namespace OwnPassUser\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use OwnPassUser\Entity\Account;
+use OwnPassUser\Entity\Identity;
 use Zend\Console\Prompt\Confirm;
 use Zend\Console\Prompt\Line;
 use Zend\Console\Prompt\Password;
@@ -40,14 +41,20 @@ class UserCli extends AbstractConsoleController
         $correct = false;
 
         while (!$correct) {
-            $firstName = $this->params()->fromRoute('firstname');
-            if (!$firstName) {
-                $firstName = Line::prompt('Please enter your first name: ');
+            $name = $this->params()->fromRoute('name');
+            if (!$name) {
+                $name = Line::prompt('Please enter your name: ');
             }
 
-            $lastName = $this->params()->fromRoute('firstname');
-            if (!$lastName) {
-                $lastName = Line::prompt('Please enter your last name: ');
+            $role = $this->params()->fromRoute('role');
+            if (!$role) {
+                $validRole = false;
+
+                while (!$validRole) {
+                    $role = Line::prompt('Please enter the role (user/admin): ');
+
+                    $validRole = in_array($role, [Account::ROLE_USER, Account::ROLE_ADMIN]);
+                }
             }
 
             $username = $this->params()->fromRoute('username');
@@ -76,8 +83,8 @@ class UserCli extends AbstractConsoleController
                 $this->getConsole()->writeLine('');
                 $this->getConsole()->writeLine('Reviewing information:');
                 $this->getConsole()->writeLine('');
-                $this->getConsole()->writeLine('First name: ' . $firstName);
-                $this->getConsole()->writeLine('Last name: ' . $lastName);
+                $this->getConsole()->writeLine('Name:     ' . $name);
+                $this->getConsole()->writeLine('Role:     ' . $role);
                 $this->getConsole()->writeLine('Username: ' . $username);
                 $this->getConsole()->writeLine('Password: ***');
                 $this->getConsole()->writeLine('');
@@ -86,9 +93,13 @@ class UserCli extends AbstractConsoleController
             }
         }
 
-        $account = new Account($username, $this->crypter->create($password), $firstName, $lastName);
+        $account = new Account($name, $this->crypter->create($password));
+        $account->setRole($role);
+
+        $identity = new Identity($account, 'username', $username);
 
         $this->entityManager->persist($account);
+        $this->entityManager->persist($identity);
         $this->entityManager->flush();
     }
 }

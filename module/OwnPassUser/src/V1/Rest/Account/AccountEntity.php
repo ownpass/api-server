@@ -14,15 +14,17 @@ use OwnPassUser\Entity\Account;
 class AccountEntity
 {
     public $id;
-    public $identity;
-    public $firstName;
-    public $lastName;
+    public $creationDate;
+    public $updateDate;
+    public $name;
+    public $role;
 
     public function __construct(Account $account)
     {
         $this->id = $account->getId();
-        $this->identity = $account->getIdentity();
-        $this->firstName = $account->getFirstName();
-        $this->lastName = $account->getLastName();
+        $this->creationDate = $account->getCreationDate();
+        $this->updateDate = $account->getUpdateDate();
+        $this->role = $account->getRole();
+        $this->name = $account->getName();
     }
 }
