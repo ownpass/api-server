@@ -17,6 +17,7 @@
         <field name="name" type="string" />
         <field name="role" type="string" />
         <field name="credential" type="string" nullable="true" />
+        <field name="emailAddress" type="string" />
 
         <field name="tfaType" type="string" nullable="true" />
         <field name="tfaCode" type="string" nullable="true" />

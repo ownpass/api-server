@@ -14,6 +14,7 @@ use DoctrineModule\Paginator\Adapter\Selectable;
 use Exception;
 use OwnPassApplication\Entity\Device;
 use OwnPassApplication\Rest\AbstractResourceListener;
+use OwnPassApplication\TaskService\Notification;
 use OwnPassUser\Entity\Account;
 use Zend\Math\Rand;
 
@@ -24,9 +25,15 @@ class DeviceResource extends AbstractResourceListener
      */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    /**
+     * @var Notification
+     */
+    private $notificationService;
+
+    public function __construct(EntityManagerInterface $entityManager, Notification $notificationService)
     {
         $this->entityManager = $entityManager;
+        $this->notificationService = $notificationService;
     }
 
     public function create($data)
@@ -40,10 +47,17 @@ class DeviceResource extends AbstractResourceListener
             $this->getEvent()->getRequest()->getServer('HTTP_USER_AGENT')
         );
 
-        $device->setActivationCode(Rand::getString(32));
+        $activationCode = Rand::getString(32);
+        $device->setActivationCode($activationCode);
 
         $this->entityManager->persist($device);
         $this->entityManager->flush($device);
+
+        $this->notificationService->notify('device.created', $account, [
+            'account' => $account,
+            'device' => $device,
+            'activationCode' => $activationCode,
+        ]);
 
         return new DeviceEntity($device);
     }

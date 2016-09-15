@@ -50,6 +50,11 @@ class Account
     private $credential;
 
     /**
+     * @var string
+     */
+    private $emailAddress;
+
+    /**
      * @var string|null
      */
     private $tfaType;
@@ -59,7 +64,7 @@ class Account
      */
     private $tfaCode;
 
-    public function __construct($name, $credential)
+    public function __construct($name, $credential, $emailAddress)
     {
         $this->id = Uuid::uuid4();
         $this->creationDate = new DateTimeImmutable();
@@ -67,6 +72,7 @@ class Account
         $this->name = $name;
         $this->role = self::ROLE_USER;
         $this->credential = $credential;
+        $this->emailAddress = $emailAddress;
     }
 
     /**
@@ -123,6 +129,22 @@ class Account
     public function setCredential($credential)
     {
         $this->credential = $credential;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailAddress()
+    {
+        return $this->emailAddress;
+    }
+
+    /**
+     * @param string $emailAddress
+     */
+    public function setEmailAddress($emailAddress)
+    {
+        $this->emailAddress = $emailAddress;
     }
 
     /**

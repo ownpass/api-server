@@ -10,13 +10,15 @@
 namespace OwnPassApplication\V1\Rest\Device;
 
 use Doctrine\ORM\EntityManager;
+use OwnPassApplication\TaskService\Notification;
 
 class DeviceResourceFactory
 {
     public function __invoke($services)
     {
         $entityManager = $services->get(EntityManager::class);
+        $mailer = $services->get(Notification::class);
 
-        return new DeviceResource($entityManager);
+        return new DeviceResource($entityManager, $mailer);
     }
 }

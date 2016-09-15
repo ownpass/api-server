@@ -11,4 +11,17 @@ return [
     'ownpass_security' => [
         'password' => '',
     ],
+    'ownpass_email' => [
+        'from_address' => '',
+        'from_name' => 'My OwnPass Instance',
+        'transport' => [
+            'type' => 'smtp',
+            'options' => [
+                'host' => '',
+                'port' => 587,
+                'username' => '',
+                'password' => '',
+            ],
+        ],
+    ],
 ];

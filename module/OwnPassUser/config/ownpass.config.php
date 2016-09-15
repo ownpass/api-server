@@ -23,7 +23,7 @@ return [
             'routes' => [
                 'account-create' => [
                     'options' => [
-                        'route' => 'ownpass:account:create [--firstname=] [--lastname=] [--username=] [--force]',
+                        'route' => 'ownpass:account:create [--name=] [--role=] [--email=] [--username=] [--force]',
                         'defaults' => [
                             'controller' => Controller\UserCli::class,
                             'action' => 'create',

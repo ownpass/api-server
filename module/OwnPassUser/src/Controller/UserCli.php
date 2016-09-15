@@ -17,6 +17,7 @@ use Zend\Console\Prompt\Line;
 use Zend\Console\Prompt\Password;
 use Zend\Crypt\Password\PasswordInterface;
 use Zend\Mvc\Console\Controller\AbstractConsoleController;
+use Zend\Validator\EmailAddress;
 
 class UserCli extends AbstractConsoleController
 {
@@ -57,6 +58,18 @@ class UserCli extends AbstractConsoleController
                 }
             }
 
+            $emailAddress = $this->params()->fromRoute('email');
+            if (!$emailAddress) {
+                $validEmailAddress = false;
+                $validator = new EmailAddress();
+
+                while (!$validEmailAddress) {
+                    $emailAddress = Line::prompt('Please enter the e-mail address: ');
+
+                    $validEmailAddress = $validator->isValid($emailAddress);
+                }
+            }
+
             $username = $this->params()->fromRoute('username');
             if (!$username) {
                 $username = Line::prompt('Please enter an username: ');
@@ -85,6 +98,7 @@ class UserCli extends AbstractConsoleController
                 $this->getConsole()->writeLine('');
                 $this->getConsole()->writeLine('Name:     ' . $name);
                 $this->getConsole()->writeLine('Role:     ' . $role);
+                $this->getConsole()->writeLine('Email:    ' . $emailAddress);
                 $this->getConsole()->writeLine('Username: ' . $username);
                 $this->getConsole()->writeLine('Password: ***');
                 $this->getConsole()->writeLine('');
@@ -93,7 +107,7 @@ class UserCli extends AbstractConsoleController
             }
         }
 
-        $account = new Account($name, $this->crypter->create($password));
+        $account = new Account($name, $this->crypter->create($password), $emailAddress);
         $account->setRole($role);
 
         $identity = new Identity($account, 'username', $username);

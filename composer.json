@@ -26,6 +26,7 @@
         "doctrine/doctrine-orm-module": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
         "ramsey/uuid-doctrine": "^1.2",
+        "swiftmailer/swiftmailer": "^5.4",
         "zendframework/zend-cache": "^2.7.1",
         "zendframework/zend-component-installer": "^1.0 || ^0.3 || ^1.0.0-dev@dev",
         "zendframework/zend-i18n": "^2.7",

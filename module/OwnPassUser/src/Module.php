@@ -28,7 +28,7 @@ class Module implements ApigilityProviderInterface, ConfigProviderInterface, Con
     public function getConsoleUsage(AdapterInterface $console)
     {
         return [
-            'ownpass:account:create [--firstname=] [--lastname=] [--username=] [--force]' =>
+            'ownpass:account:create [--name=] [--role=] [--email=] [--username=] [--force]' =>
                 'Create a new user account.',
         ];
     }

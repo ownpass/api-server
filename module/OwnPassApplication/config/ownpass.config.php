@@ -60,6 +60,27 @@ return [
             ],
         ],
     ],
+    'ownpass_email' => [
+        'from_address' => 'no-reply@ownpass.io',
+        'from_name' => 'OwnPass',
+        'transport' => [
+            'type' => 'smtp',
+            'options' => [
+                'host' => '',
+                'port' => 587,
+                'username' => '',
+                'password' => '',
+            ],
+        ],
+    ],
+    'ownpass_notifications' => [
+        'device.created' => [
+            'email' => [
+                'template' => 'notifications/device-created',
+                'subject' => 'email_device_created_subject',
+            ],
+        ],
+    ],
     'router' => [
         'routes' => [
             'api' => [
@@ -87,6 +108,7 @@ return [
     'service_manager' => [
         'factories' => [
             TaskService\KeyManager::class => TaskService\Service\KeyManagerFactory::class,
+            TaskService\Notification::class => TaskService\Service\NotificationFactory::class,
         ],
         'invokables' => [
             'UnderscoreNamingStrategy' => UnderscoreNamingStrategy::class,
