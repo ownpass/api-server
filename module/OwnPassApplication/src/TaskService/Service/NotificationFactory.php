@@ -10,9 +10,8 @@
 namespace OwnPassApplication\TaskService\Service;
 
 use Interop\Container\ContainerInterface;
-use OwnPassApplication\TaskService\KeyManager;
 use OwnPassApplication\TaskService\Notification;
-use Zend\I18n\Translator\TranslatorInterface;
+use Zend\EventManager\EventManager;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 class NotificationFactory implements FactoryInterface
@@ -20,9 +19,7 @@ class NotificationFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
-        $renderer = $container->get('ViewRenderer');
-        $translator = $container->get(TranslatorInterface::class);
 
-        return new Notification($config, $renderer, $translator);
+        return new Notification($config['ownpass_notifications'], new EventManager());
     }
 }

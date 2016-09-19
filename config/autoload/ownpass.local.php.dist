@@ -17,10 +17,15 @@ return [
         'transport' => [
             'type' => 'smtp',
             'options' => [
-                'host' => '',
+                'name' => 'example.com',
+                'host' => '127.0.0.1',
                 'port' => 587,
-                'username' => '',
-                'password' => '',
+                'connection_class' => 'plain',
+                'connection_config' => [
+                    'username' => 'user',
+                    'password' => 'pass',
+                    'ssl' => 'tls',
+                ],
             ],
         ],
     ],

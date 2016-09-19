@@ -15,6 +15,7 @@ return [
     'Zend\\InputFilter',
     'Zend\\I18n',
     'Zend\\Log',
+    'Zend\\Mail',
     'Zend\\Mvc\\Console',
     'Zend\\Mvc\\I18n',
     'Zend\\Paginator',

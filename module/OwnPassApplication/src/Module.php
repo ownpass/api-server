@@ -11,6 +11,8 @@ namespace OwnPassApplication;
 
 use OwnPassApplication\Listener\DeviceHeader;
 use OwnPassApplication\Listener\SecureScheme;
+use OwnPassApplication\TaskService\Notification;
+use OwnPassUser\Entity\Account;
 use Zend\Console\Adapter\AdapterInterface;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -62,11 +64,16 @@ class Module implements
         /** @var MvcEvent $e */
 
         $eventManager = $e->getApplication()->getEventManager();
+        $serviceManager = $e->getApplication()->getServiceManager();
 
         $secureSchemeListener = new SecureScheme(file_exists('config/development.config.php'));
         $secureSchemeListener->attach($eventManager);
 
         $deviceHeaderListener = new DeviceHeader();
         //$deviceHeaderListener->attach($eventManager);
+
+        /** @var Notification $notificationService */
+        $notificationService = $serviceManager->get(Notification::class);
+        $serviceManager->get(Listener\EmailNotification::class)->attach($notificationService->getEventManager());
     }
 }

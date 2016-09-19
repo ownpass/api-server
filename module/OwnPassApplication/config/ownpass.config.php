@@ -64,12 +64,8 @@ return [
         'from_address' => 'no-reply@ownpass.io',
         'from_name' => 'OwnPass',
         'transport' => [
-            'type' => 'smtp',
+            'type' => '',
             'options' => [
-                'host' => '',
-                'port' => 587,
-                'username' => '',
-                'password' => '',
             ],
         ],
     ],
@@ -107,6 +103,7 @@ return [
     ],
     'service_manager' => [
         'factories' => [
+            Listener\EmailNotification::class => Listener\Service\EmailNotificationFactory::class,
             TaskService\KeyManager::class => TaskService\Service\KeyManagerFactory::class,
             TaskService\Notification::class => TaskService\Service\NotificationFactory::class,
         ],
