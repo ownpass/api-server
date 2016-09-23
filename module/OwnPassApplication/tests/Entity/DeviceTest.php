@@ -26,6 +26,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->device = new Device($this->account, 'name', 'description', 'userAgent');
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getId
+     */
     public function testGetId()
     {
         // Arrange
@@ -38,6 +41,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(UuidInterface::class, $result);
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getAccount
+     */
     public function testGetAccount()
     {
         // Arrange
@@ -50,6 +56,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->account, $result);
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getCreationDate
+     */
     public function testGetCreationDate()
     {
         // Arrange
@@ -62,6 +71,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DateTimeInterface::class, $result);
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getName
+     */
     public function testGetName()
     {
         // Arrange
@@ -74,6 +86,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('name', $result);
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getDescription
+     */
     public function testGetDescription()
     {
         // Arrange
@@ -86,6 +101,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('description', $result);
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getUserAgent
+     */
     public function testGetUserAgent()
     {
         // Arrange
@@ -98,6 +116,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('userAgent', $result);
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getActivationCode
+     */
     public function testGetActivationCodeWithEmptyCode()
     {
         // Arrange
@@ -110,6 +131,9 @@ class DeviceTest extends PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
+    /**
+     * @covers OwnPassApplication\Entity\Device::getActivationCode
+     */
     public function testSetGetActivationCode()
     {
         // Arrange
