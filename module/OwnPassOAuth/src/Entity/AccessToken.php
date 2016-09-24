@@ -10,6 +10,7 @@
 namespace OwnPassOAuth\Entity;
 
 use DateTime;
+use DateTimeInterface;
 use OwnPassUser\Entity\Account;
 
 class AccessToken
@@ -39,7 +40,7 @@ class AccessToken
      */
     private $scope;
 
-    public function __construct($accessToken, Application $application, $expires)
+    public function __construct($accessToken, Application $application, DateTimeInterface $expires)
     {
         $this->accessToken = $accessToken;
         $this->application = $application;
