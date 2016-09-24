@@ -23,7 +23,7 @@ return [
           * Set the list of headers. This is returned in the preflight request to indicate
           * which HTTP headers can be used when making the actual request
           */
-         'allowed_headers' => ['Authorization'],
+         'allowed_headers' => ['Authorization', 'Content-Type', 'Accept'],
 
          /**
           * Set the max age of the preflight request in seconds. A non-zero max age means
