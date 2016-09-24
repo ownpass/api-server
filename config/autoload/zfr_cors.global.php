@@ -17,7 +17,7 @@ return [
          /**
           * Set the list of HTTP verbs.
           */
-         'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+         'allowed_methods' => ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
 
          /**
           * Set the list of headers. This is returned in the preflight request to indicate
