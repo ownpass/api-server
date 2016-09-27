@@ -41,6 +41,5 @@ services:
       context: ./
       dockerfile: ./composer.dockerfile
     working_dir: /var/www
-    user: "$USER_ID"
     volumes:
       - ./:/var/www/
