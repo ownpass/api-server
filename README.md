@@ -30,6 +30,23 @@ To enable development mode, copy `config/development.config.php.dist` to `config
 clear the cache in `data/cache/`. You could consider copying `config/autoload/viewmanager.global.php` to viewmanager.local.php 
 and turn on errors so it becomes clear what errors occur.
 
+### Using docker (development only!)
+
+1. Clone the repository to a working directory: `git clone git@github.com:ownpass/ownpass.git`
+2. Enter the directory: `cd ownpass`
+3. Start docker-compose: `docker-compose up`
+4. Install composer dependencies: `docker-compose run composer install`
+5. Copy `config/autoload/apigility.local.php.dist` to `config/autoload/apigility.local.php` and fill in the correct settings.
+6. Copy `config/autoload/doctrine.local.php.dist` to `config/autoload/doctrine.local.php` and fill in the correct settings.
+7. Copy `config/autoload/ownpass.local.php.dist` to `config/autoload/ownpass.local.php` and fill in the correct settings.
+8. Run `docker-compose exec phpserver php index.php orm:schema-tool:create` to create the database.
+9. Run `docker-compose exec phpserver php index.php ownpass:account:create` to create an user account.
+10. Run `docker-compose exec phpserver php index.php ownpass:oauth:create-application --name="Chrome Extension" --client=chrome-extension --force` to create an OAuth application for the Chrome Extension
+11. Run `docker-compose exec phpserver php index.php ownpass:oauth:create-application --name="Firefox Extension" --client=firefox-extension --force` to create an OAuth application for the Firefox Extension
+12. Run `docker-compose exec phpserver php index.php ownpass:oauth:create-application --name="Internet Explorer Extension" --client=ie-extension --force` to create an OAuth application for the Internet Explorer Extension
+13. Run `docker-compose exec phpserver php index.php ownpass:generate-keys` to create the public and private key.
+
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
