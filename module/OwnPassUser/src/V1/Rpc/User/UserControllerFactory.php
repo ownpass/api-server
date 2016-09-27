@@ -7,16 +7,19 @@
  * @license https://raw.githubusercontent.com/ownpass/ownpass/master/LICENSE MIT
  */
 
-namespace OwnPassUser\V1\Rest\User;
+namespace OwnPassUser\V1\Rpc\User;
 
 use Doctrine\ORM\EntityManager;
+use Zend\Crypt\Password\PasswordInterface;
 
-class UserResourceFactory
+class UserControllerFactory
 {
-    public function __invoke($services)
+    public function __invoke($controllers)
     {
-        $entityManager = $services->get(EntityManager::class);
+        $entityManager = $controllers->get(EntityManager::class);
 
-        return new UserResource($entityManager);
+        $crypter = $controllers->get(PasswordInterface::class);
+
+        return new UserController($entityManager, $crypter);
     }
 }

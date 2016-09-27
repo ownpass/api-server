@@ -18,6 +18,7 @@ class AccountEntity
     public $updateDate;
     public $name;
     public $role;
+    public $email_address;
 
     public function __construct(Account $account)
     {
@@ -26,5 +27,6 @@ class AccountEntity
         $this->updateDate = $account->getUpdateDate();
         $this->role = $account->getRole();
         $this->name = $account->getName();
+        $this->email_address = $account->getEmailAddress();
     }
 }

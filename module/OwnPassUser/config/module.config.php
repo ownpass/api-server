@@ -3,7 +3,6 @@ return [
     'service_manager' => [
         'factories' => [
             \OwnPassUser\V1\Rest\Account\AccountResource::class => \OwnPassUser\V1\Rest\Account\AccountResourceFactory::class,
-            \OwnPassUser\V1\Rest\User\UserResource::class => \OwnPassUser\V1\Rest\User\UserResourceFactory::class,
         ],
     ],
     'router' => [
@@ -17,12 +16,13 @@ return [
                     ],
                 ],
             ],
-            'own-pass-user.rest.user' => [
+            'own-pass-user.rpc.user' => [
                 'type' => 'Segment',
                 'options' => [
                     'route' => '/api/user',
                     'defaults' => [
-                        'controller' => 'OwnPassUser\\V1\\Rest\\User\\Controller',
+                        'controller' => 'OwnPassUser\\V1\\Rpc\\User\\Controller',
+                        'action' => 'user',
                     ],
                 ],
             ],
@@ -31,7 +31,7 @@ return [
     'zf-versioning' => [
         'uri' => [
             0 => 'own-pass-user.rest.account',
-            1 => 'own-pass-user.rest.user',
+            2 => 'own-pass-user.rpc.user',
         ],
     ],
     'zf-rest' => [
@@ -56,27 +56,11 @@ return [
             'collection_class' => \OwnPassUser\V1\Rest\Account\AccountCollection::class,
             'service_name' => 'Account',
         ],
-        'OwnPassUser\\V1\\Rest\\User\\Controller' => [
-            'listener' => \OwnPassUser\V1\Rest\User\UserResource::class,
-            'route_name' => 'own-pass-user.rest.user',
-            'route_identifier_name' => 'user_id',
-            'collection_name' => 'user',
-            'entity_http_methods' => [],
-            'collection_http_methods' => [
-                0 => 'GET',
-            ],
-            'collection_query_whitelist' => [],
-            'page_size' => 25,
-            'page_size_param' => null,
-            'entity_class' => \OwnPassUser\V1\Rest\User\UserEntity::class,
-            'collection_class' => \OwnPassUser\V1\Rest\User\UserCollection::class,
-            'service_name' => 'User',
-        ],
     ],
     'zf-content-negotiation' => [
         'controllers' => [
             'OwnPassUser\\V1\\Rest\\Account\\Controller' => 'HalJson',
-            'OwnPassUser\\V1\\Rest\\User\\Controller' => 'HalJson',
+            'OwnPassUser\\V1\\Rpc\\User\\Controller' => 'Json',
         ],
         'accept_whitelist' => [
             'OwnPassUser\\V1\\Rest\\Account\\Controller' => [
@@ -84,10 +68,10 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
-            'OwnPassUser\\V1\\Rest\\User\\Controller' => [
+            'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
                 0 => 'application/vnd.own-pass-user.v1+json',
-                1 => 'application/hal+json',
-                2 => 'application/json',
+                1 => 'application/json',
+                2 => 'application/*+json',
             ],
         ],
         'content_type_whitelist' => [
@@ -95,7 +79,7 @@ return [
                 0 => 'application/vnd.own-pass-user.v1+json',
                 1 => 'application/json',
             ],
-            'OwnPassUser\\V1\\Rest\\User\\Controller' => [
+            'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
                 0 => 'application/vnd.own-pass-user.v1+json',
                 1 => 'application/json',
             ],
@@ -115,27 +99,29 @@ return [
                 'route_identifier_name' => 'account_id',
                 'is_collection' => true,
             ],
-            \OwnPassUser\V1\Rest\User\UserEntity::class => [
-                'entity_identifier_name' => 'id',
-                'route_name' => 'own-pass-user.rest.user',
-                'route_identifier_name' => 'user_id',
-                'hydrator' => \Zend\Hydrator\ObjectProperty::class,
-            ],
-            \OwnPassUser\V1\Rest\User\UserCollection::class => [
-                'entity_identifier_name' => 'id',
-                'route_name' => 'own-pass-user.rest.user',
-                'route_identifier_name' => 'user_id',
-                'is_collection' => true,
-            ],
         ],
     ],
     'controllers' => [
-        'factories' => [],
+        'factories' => [
+            'OwnPassUser\\V1\\Rpc\\User\\Controller' => \OwnPassUser\V1\Rpc\User\UserControllerFactory::class,
+        ],
     ],
-    'zf-rpc' => [],
+    'zf-rpc' => [
+        'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
+            'service_name' => 'User',
+            'http_methods' => [
+                0 => 'GET',
+                1 => 'PUT',
+            ],
+            'route_name' => 'own-pass-user.rpc.user',
+        ],
+    ],
     'zf-content-validation' => [
         'OwnPassUser\\V1\\Rest\\Account\\Controller' => [
             'input_filter' => 'OwnPassUser\\V1\\Rest\\Account\\Validator',
+        ],
+        'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
+            'input_filter' => 'OwnPassUser\\V1\\Rpc\\User\\Controller',
         ],
     ],
     'input_filter_specs' => [
@@ -296,6 +282,84 @@ return [
                 'description' => 'The credential to authenticate.',
             ],
         ],
+        'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
+            0 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'credential',
+                'description' => 'The new credential to authenticate with.',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'name',
+                'description' => 'The name of the user.',
+            ],
+            2 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\EmailAddress::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'email',
+                'description' => 'The e-mail address of the user.',
+            ],
+            3 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\InArray::class,
+                        'options' => [
+                            'strict' => true,
+                            'haystack' => [
+                                0 => 'admin',
+                                1 => 'user',
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'role',
+                'description' => 'The role of the user.',
+            ],
+        ],
     ],
     'zf-mvc-auth' => [
         'authorization' => [
@@ -303,16 +367,27 @@ return [
                 'collection' => [
                     'GET' => true,
                     'POST' => true,
-                    'PUT' => false,
-                    'PATCH' => false,
-                    'DELETE' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => true,
                 ],
                 'entity' => [
                     'GET' => true,
-                    'POST' => false,
+                    'POST' => true,
                     'PUT' => true,
-                    'PATCH' => false,
+                    'PATCH' => true,
                     'DELETE' => true,
+                ],
+            ],
+            'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
+                'actions' => [
+                    'User' => [
+                        'GET' => true,
+                        'POST' => true,
+                        'PUT' => true,
+                        'PATCH' => true,
+                        'DELETE' => true,
+                    ],
                 ],
             ],
         ],
