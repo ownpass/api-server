@@ -38,6 +38,16 @@ class Credential
     private $updateDate;
 
     /**
+     * @var string|null
+     */
+    private $title;
+
+    /**
+     * @var string|null
+     */
+    private $description;
+
+    /**
      * @var string
      */
     private $urlRaw;
@@ -124,6 +134,38 @@ class Credential
     public function getUpdateDate()
     {
         return $this->updateDate;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param null|string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param null|string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**
