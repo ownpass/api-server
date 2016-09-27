@@ -167,6 +167,9 @@ return [
         'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller' => [
             'input_filter' => 'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Validator',
         ],
+        'OwnPassCredential\\V1\\Rest\\UserCredential\\Controller' => [
+            'input_filter' => 'OwnPassCredential\\V1\\Rest\\UserCredential\\Validator',
+        ],
     ],
     'input_filter_specs' => [
         'OwnPassCredential\\V1\\Rest\\Credential\\Validator' => [
@@ -210,6 +213,38 @@ return [
                 'filters' => [],
                 'name' => 'credential',
                 'description' => 'The credential that was entered.',
+            ],
+            4 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'title',
+                'description' => 'The title of the page.',
+            ],
+            5 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'description',
+                'description' => 'The description of the page.',
             ],
         ],
         'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Validator' => [
@@ -294,6 +329,69 @@ return [
                 'description' => 'Whether or not to include symbols.',
                 'field_type' => 'boolean',
                 'allow_empty' => true,
+            ],
+        ],
+        'OwnPassCredential\\V1\\Rest\\UserCredential\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\Uri::class,
+                        'options' => [
+                            'allowAbsolute' => true,
+                            'allowRelative' => false,
+                        ],
+                    ],
+                ],
+                'filters' => [],
+                'name' => 'raw_url',
+                'description' => 'The full url of the page where the credentials were entered.',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'identity',
+                'description' => 'The identity that was entered.',
+            ],
+            2 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'credential',
+                'description' => 'The credential that was entered.',
+            ],
+            3 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'title',
+                'description' => 'The title of the page.',
+            ],
+            4 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'description',
+                'description' => 'The description of the page.',
             ],
         ],
     ],

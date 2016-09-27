@@ -43,6 +43,14 @@ class UserCredentialResource extends AbstractResourceListener
 
         $credential = new Credential($account, $data->raw_url, $data->identity, $data->credential);
 
+        if (isset($data->title)) {
+            $credential->setTitle($data->title);
+        }
+
+        if (isset($data->description)) {
+            $credential->setDescription($data->description);
+        }
+
         $this->entityManager->persist($credential);
         $this->entityManager->flush($credential);
 

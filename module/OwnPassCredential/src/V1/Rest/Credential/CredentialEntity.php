@@ -16,6 +16,8 @@ class CredentialEntity
 {
     public $id;
     public $account;
+    public $title;
+    public $description;
     public $identity;
     public $credential;
     public $urlRaw;
@@ -24,6 +26,8 @@ class CredentialEntity
     {
         $this->id = $credential->getId();
         $this->account = new AccountEntity($credential->getAccount());
+        $this->title = $credential->getTitle();
+        $this->description = $credential->getDescription();
         $this->identity = $credential->getIdentity();
         $this->credential = $credential->getCredential();
         $this->urlRaw = $credential->getUrlRaw();
