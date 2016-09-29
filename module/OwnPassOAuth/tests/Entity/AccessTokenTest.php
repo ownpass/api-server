@@ -18,9 +18,10 @@ use Ramsey\Uuid\UuidInterface;
 class AccessTokenTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers OwnPassOAuth\Entity\AccessToken::getId
+     * @covers OwnPassOAuth\Entity\AccessToken::__construct
+     * @covers OwnPassOAuth\Entity\AccessToken::getAccessToken
      */
-    public function testSetIdentity()
+    public function testGetAccessToken()
     {
         // Arrange
         $application = new Application('client', 'name');
@@ -28,9 +29,9 @@ class AccessTokenTest extends PHPUnit_Framework_TestCase
         $entity = new AccessToken('code', $application, $expirationDate);
 
         // Act
-        $result = $entity->getId();
+        $result = $entity->getAccessToken();
 
         // Assert
-        $this->assertInstanceOf(UuidInterface::class, $result);
+        $this->assertEquals('code', $result);
     }
 }
