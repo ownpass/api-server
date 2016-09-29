@@ -11,7 +11,7 @@ return [
             'own-pass-credential.rest.credential' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/credential[/:credential_id]',
+                    'route' => '/credential[/:credential_id]',
                     'defaults' => [
                         'controller' => 'OwnPassCredential\\V1\\Rest\\Credential\\Controller',
                     ],
@@ -21,7 +21,7 @@ return [
             'own-pass-credential.rest.user-credential' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/user/credential[/:user_credential_id]',
+                    'route' => '/user/credential[/:user_credential_id]',
                     'defaults' => [
                         'controller' => 'OwnPassCredential\\V1\\Rest\\UserCredential\\Controller',
                     ],
@@ -31,7 +31,7 @@ return [
             'own-pass-credential.rpc.generate-password' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/credential/generate',
+                    'route' => '/credential/generate',
                     'defaults' => [
                         'controller' => 'OwnPassCredential\\V1\\Rpc\\GeneratePassword\\Controller',
                         'action' => 'generatePassword',

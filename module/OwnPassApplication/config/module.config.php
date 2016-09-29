@@ -10,7 +10,7 @@ return [
             'own-pass-application.rest.device' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/device[/:device_id]',
+                    'route' => '/device[/:device_id]',
                     'defaults' => [
                         'controller' => 'OwnPassApplication\\V1\\Rest\\Device\\Controller',
                     ],
@@ -19,7 +19,7 @@ return [
             'own-pass-application.rpc.device-activate' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/device/activate',
+                    'route' => '/device/activate',
                     'defaults' => [
                         'controller' => 'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller',
                         'action' => 'deviceActivate',

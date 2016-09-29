@@ -11,7 +11,7 @@ return [
             'own-pass-notes.rest.note' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/note[/:note_id]',
+                    'route' => '/note[/:note_id]',
                     'defaults' => [
                         'controller' => 'OwnPassNotes\\V1\\Rest\\Note\\Controller',
                     ],
@@ -21,7 +21,7 @@ return [
             'own-pass-notes.rest.user-note' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/user/note[/:user_note_id]',
+                    'route' => '/user/note[/:user_note_id]',
                     'defaults' => [
                         'controller' => 'OwnPassNotes\\V1\\Rest\\UserNote\\Controller',
                     ],

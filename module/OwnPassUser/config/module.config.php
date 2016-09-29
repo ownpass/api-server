@@ -10,7 +10,7 @@ return [
             'own-pass-user.rest.account' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/account[/:account_id]',
+                    'route' => '/account[/:account_id]',
                     'defaults' => [
                         'controller' => 'OwnPassUser\\V1\\Rest\\Account\\Controller',
                     ],
@@ -19,7 +19,7 @@ return [
             'own-pass-user.rpc.user' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/api/user',
+                    'route' => '/user',
                     'defaults' => [
                         'controller' => 'OwnPassUser\\V1\\Rpc\\User\\Controller',
                         'action' => 'user',
