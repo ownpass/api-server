@@ -12,6 +12,7 @@ namespace OwnPassOAuthTest\Storage;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use OwnPassOAuth\Entity\AccessToken;
 use OwnPassOAuth\Entity\Application;
 use OwnPassOAuth\Storage\Storage;
@@ -82,12 +83,12 @@ class StorageTest extends PHPUnit_Framework_TestCase
      * @covers OwnPassOAuth\Storage\Storage::getApplication
      * @covers OwnPassOAuth\Storage\Storage::setAccessToken
      */
-    public function testSetAccessTokenWithException()
+    public function testSetAccessTokenWithExceptionOnApplication()
     {
         // Arrange
         $storage = new Storage($this->entityManager, $this->crypter);
 
-        $this->entityManager->expects($this->once())->method('find')->will($this->throwException(new \Exception()));
+        $this->entityManager->expects($this->once())->method('find')->will($this->throwException(new Exception()));
         $this->entityManager->expects($this->never())->method('persist');
         $this->entityManager->expects($this->never())->method('flush');
 
@@ -96,6 +97,28 @@ class StorageTest extends PHPUnit_Framework_TestCase
 
         // Assert
         $this->assertFalse($result);
+    }
+
+    /**
+     * @covers OwnPassOAuth\Storage\Storage::__construct
+     * @covers OwnPassOAuth\Storage\Storage::getApplication
+     * @covers OwnPassOAuth\Storage\Storage::setAccessToken
+     */
+    public function testSetAccessTokenWithExceptionOnAccount()
+    {
+        // Arrange
+        $storage = new Storage($this->entityManager, $this->crypter);
+
+        $application = new Application('client', 'name');
+
+        $this->entityManager->expects($this->at(0))->method('find')->willReturn($application);
+        $this->entityManager->expects($this->at(1))->method('find')->will($this->throwException(new Exception()));
+
+        // Act
+        $result = $storage->setAccessToken('token', 'client', 'user', time(), null);
+
+        // Assert
+        $this->assertNull($result);
     }
 
     /**
