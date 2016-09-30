@@ -89,9 +89,11 @@ class Storage implements
             return null;
         }
 
+        $account = $accessToken->getAccount();
+
         return [
             'client_id' => $accessToken->getApplication()->getClientId(),
-            'user_id' => $accessToken->getAccount()->getId()->toString(),
+            'user_id' => $account ? $account->getId()->toString() : null,
             'expires' => $accessToken->getExpires()->format('U'),
             'scope' => $accessToken->getScope(),
             'id_token' => null,

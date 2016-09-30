@@ -57,8 +57,8 @@ class UserController extends AbstractActionController
             $this->entityManager->flush($account);
         }
 
-        return new ViewModel(array(
+        return new ViewModel([
             'payload' => new Entity(new AccountEntity($account), $account->getId()),
-        ));
+        ]);
     }
 }

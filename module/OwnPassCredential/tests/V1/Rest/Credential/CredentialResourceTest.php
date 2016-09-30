@@ -68,6 +68,8 @@ class CredentialResourceTest extends PHPUnit_Framework_TestCase
         $data->raw_url = 'http://domain.com';
         $data->identity = 'username';
         $data->credential = 'password';
+        $data->title = 'title';
+        $data->description = 'description';
 
         $event = new ResourceEvent();
         $event->setIdentity($this->adminIdentity);

@@ -93,6 +93,38 @@ class CredentialTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers OwnPassCredential\Entity\Credential::getTitle
+     * @covers OwnPassCredential\Entity\Credential::setTitle
+     */
+    public function testSetGetTitle()
+    {
+        // Arrange
+        // ...
+
+        // Act
+        $this->credential->setTitle('title');
+
+        // Assert
+        $this->assertEquals('title', $this->credential->getTitle());
+    }
+
+    /**
+     * @covers OwnPassCredential\Entity\Credential::getDescription
+     * @covers OwnPassCredential\Entity\Credential::setDescription
+     */
+    public function testSetGetDescription()
+    {
+        // Arrange
+        // ...
+
+        // Act
+        $this->credential->setDescription('description');
+
+        // Assert
+        $this->assertEquals('description', $this->credential->getDescription());
+    }
+
+    /**
      * @covers OwnPassCredential\Entity\Credential::getUrlRaw
      */
     public function testGetUrlRaw()
