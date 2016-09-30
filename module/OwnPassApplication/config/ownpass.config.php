@@ -11,14 +11,11 @@ namespace OwnPassApplication;
 
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Zend\Validator\Uuid;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'controllers' => [
         'factories' => [
-            Controller\Api::class => InvokableFactory::class,
-            Controller\Index::class => InvokableFactory::class,
-            Controller\Installer::class => Controller\Service\InstallerFactory::class,
+            Controller\Api::class => Controller\Service\ApiFactory::class,
             Controller\KeyManagerCli::class => Controller\Service\KeyManagerCliFactory::class,
         ],
     ],
@@ -82,19 +79,9 @@ return [
             'api' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/api',
-                    'defaults' => [
-                        'controller' => Controller\Api::class,
-                        'action' => 'index',
-                    ],
-                ],
-            ],
-            'home' => [
-                'type' => 'Literal',
-                'options' => [
                     'route' => '/',
                     'defaults' => [
-                        'controller' => Controller\Index::class,
+                        'controller' => Controller\Api::class,
                         'action' => 'index',
                     ],
                 ],
@@ -124,7 +111,6 @@ return [
         'exception_template' => 'error/index',
         'template_map' => [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ],

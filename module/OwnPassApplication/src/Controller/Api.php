@@ -15,12 +15,35 @@ use ZF\Apigility\Admin\Module as AdminModule;
 
 class Api extends AbstractActionController
 {
+    private $config;
+
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
     public function indexAction()
     {
-        if (class_exists(AdminModule::class, false)) {
+        if (false && class_exists(AdminModule::class, false)) {
             return $this->redirect()->toRoute('zf-apigility/ui');
         }
 
-        return new JsonModel();
+        $services = [];
+
+        foreach ($this->config['zf-rest'] as $service) {
+            if (!array_key_exists('service_name', $service)) {
+                continue;
+            }
+
+            $services[$service['service_name']] = $this->url()->fromRoute($service['route_name'], [], [
+                'force_canonical' => true,
+            ]);
+        }
+
+        ksort($services);
+
+        return new JsonModel($services, [
+            'prettyPrint' => true,
+        ]);
     }
 }

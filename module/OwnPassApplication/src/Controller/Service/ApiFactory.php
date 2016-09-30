@@ -9,20 +9,16 @@
 
 namespace OwnPassApplication\Controller\Service;
 
-use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
-use OwnPassApplication\Controller\Installer;
-use Zend\Crypt\Password\PasswordInterface;
+use OwnPassApplication\Controller\Api;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class InstallerFactory implements FactoryInterface
+class ApiFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $entityManager = $container->get(EntityManager::class);
+        $config = $container->get('config');
 
-        $crypter = $container->get(PasswordInterface::class);
-
-        return new Installer($entityManager, $crypter);
+        return new Api($config);
     }
 }
