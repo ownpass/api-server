@@ -101,6 +101,7 @@ class StorageTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers OwnPassOAuth\Storage\Storage::__construct
+     * @covers OwnPassOAuth\Storage\Storage::getAccount
      * @covers OwnPassOAuth\Storage\Storage::getApplication
      * @covers OwnPassOAuth\Storage\Storage::setAccessToken
      */
