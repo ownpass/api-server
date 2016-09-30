@@ -19,6 +19,9 @@ use Zend\Crypt\Password\PasswordInterface;
 use Zend\Mvc\Console\Controller\AbstractConsoleController;
 use Zend\Validator\EmailAddress;
 
+/**
+ * @codeCoverageIgnore
+ */
 class UserCli extends AbstractConsoleController
 {
     /**

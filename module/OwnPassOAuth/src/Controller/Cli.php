@@ -15,6 +15,9 @@ use Zend\Console\Prompt\Confirm;
 use Zend\Console\Prompt\Line;
 use Zend\Mvc\Console\Controller\AbstractConsoleController;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Cli extends AbstractConsoleController
 {
     /**
