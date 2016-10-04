@@ -43,10 +43,6 @@ return [
                     ],
                 ],
             ],
-        ],
-    ],
-    'zf-mvc-auth' => [
-        'authentication' => [
             'map' => [
                 'OwnPassCredential\\V1' => 'oauth2',
                 'OwnPassUser\\V1' => 'oauth2',
