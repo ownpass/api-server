@@ -31,18 +31,6 @@ return [
     ],
     'zf-mvc-auth' => [
         'authentication' => [
-            'adapters' => [
-                'oauth2 pdo' => [
-                    'adapter' => \ZF\MvcAuth\Authentication\OAuth2Adapter::class,
-                    'storage' => [
-                        'adapter' => \PDO::class,
-                        'dsn' => 'mysql:host=localhost;dbname=ownpass',
-                        'route' => '/oauth',
-                        'username' => '',
-                        'password' => '',
-                    ],
-                ],
-            ],
             'map' => [
                 'OwnPassCredential\\V1' => 'oauth2',
                 'OwnPassUser\\V1' => 'oauth2',
