@@ -7,22 +7,24 @@
  * @license https://raw.githubusercontent.com/ownpass/ownpass/master/LICENSE MIT
  */
 
-namespace OwnPassOAuth\Controller\Service;
+namespace OwnPassOAuth\TaskService\Service;
 
+use Closure;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
-use OwnPassOAuth\Controller\Cli;
-use Zend\Crypt\Password\PasswordInterface;
+use OwnPassOAuth\TaskService\OAuth;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class CliFactory implements FactoryInterface
+class OAuthFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $entityManager = $container->get(EntityManager::class);
+        /** @var Closure $server */
+        $server = $container->get('ZF\OAuth2\Service\OAuth2Server');
 
-        $crypter = $container->get(PasswordInterface::class);
+        /** @var EntityManager $entityManager */
+        $entityManager = $container->get('doctrine.entitymanager.orm_default');
 
-        return new Cli($entityManager, $crypter);
+        return new OAuth($server(), $entityManager);
     }
 }

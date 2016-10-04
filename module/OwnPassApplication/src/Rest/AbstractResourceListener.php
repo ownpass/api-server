@@ -17,6 +17,10 @@ class AbstractResourceListener extends BaseAbstractResourceListener
 {
     protected function getAccountId()
     {
+        if (!$this->getIdentity()) {
+            return null;
+        }
+
         $identity = $this->getIdentity()->getAuthenticationIdentity();
 
         return $identity['user_id'];

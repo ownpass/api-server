@@ -1,0 +1,27 @@
+<?php
+
+$this->loginForm->setAttribute('action', $this->url('login'));
+$this->loginForm->setAttribute('method', 'post');
+$this->loginForm->prepare();
+
+?>
+
+<h2>Login</h2>
+
+<?php echo $this->form()->openTag($this->loginForm); ?>
+    <p>
+        <?php echo $this->formLabel($this->loginForm->get('identity')); ?>
+        <?php echo $this->formText($this->loginForm->get('identity')); ?>
+        <?php echo $this->formElementErrors($this->loginForm->get('identity')); ?>
+    </p>
+
+    <p>
+        <?php echo $this->formLabel($this->loginForm->get('credential')); ?>
+        <?php echo $this->formPassword($this->loginForm->get('credential')); ?>
+        <?php echo $this->formElementErrors($this->loginForm->get('credential')); ?>
+    </p>
+
+    <p>
+        <?php echo $this->formSubmit($this->loginForm->get('submit')); ?>
+    </p>
+<?php echo $this->form()->closeTag(); ?>

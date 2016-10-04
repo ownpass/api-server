@@ -35,7 +35,7 @@ class AuthorizationCodeTest extends PHPUnit_Framework_TestCase
     public function testGetAuthorizationCode()
     {
         // Arrange
-        $entity = new AuthorizationCode('code', $this->application, $this->account, '', $this->expirationDate);
+        $entity = new AuthorizationCode('code', $this->application, '', $this->expirationDate, $this->account);
 
         // Act
         $result = $entity->getAuthorizationCode();
@@ -51,7 +51,7 @@ class AuthorizationCodeTest extends PHPUnit_Framework_TestCase
     public function testGetApplication()
     {
         // Arrange
-        $entity = new AuthorizationCode('code', $this->application, $this->account, '', $this->expirationDate);
+        $entity = new AuthorizationCode('code', $this->application, '', $this->expirationDate, $this->account);
 
         // Act
         $result = $entity->getApplication();
@@ -67,7 +67,7 @@ class AuthorizationCodeTest extends PHPUnit_Framework_TestCase
     public function testGetAccount()
     {
         // Arrange
-        $entity = new AuthorizationCode('code', $this->application, $this->account, '', $this->expirationDate);
+        $entity = new AuthorizationCode('code', $this->application, '', $this->expirationDate, $this->account);
 
         // Act
         $result = $entity->getAccount();
@@ -83,7 +83,7 @@ class AuthorizationCodeTest extends PHPUnit_Framework_TestCase
     public function testGetRedirectUri()
     {
         // Arrange
-        $entity = new AuthorizationCode('code', $this->application, $this->account, '', $this->expirationDate);
+        $entity = new AuthorizationCode('code', $this->application, '', $this->expirationDate, $this->account);
 
         // Act
         $result = $entity->getRedirectUri();
@@ -99,7 +99,7 @@ class AuthorizationCodeTest extends PHPUnit_Framework_TestCase
     public function testGetExpires()
     {
         // Arrange
-        $entity = new AuthorizationCode('code', $this->application, $this->account, '', $this->expirationDate);
+        $entity = new AuthorizationCode('code', $this->application, '', $this->expirationDate, $this->account);
 
         // Act
         $result = $entity->getExpires();
@@ -115,7 +115,7 @@ class AuthorizationCodeTest extends PHPUnit_Framework_TestCase
     public function testDefaultScope()
     {
         // Arrange
-        $entity = new AuthorizationCode('code', $this->application, $this->account, '', $this->expirationDate);
+        $entity = new AuthorizationCode('code', $this->application, '', $this->expirationDate, $this->account);
 
         // Act
         $result = $entity->getScope();
@@ -131,7 +131,7 @@ class AuthorizationCodeTest extends PHPUnit_Framework_TestCase
     public function testSetGetScope()
     {
         // Arrange
-        $entity = new AuthorizationCode('code', $this->application, $this->account, '', $this->expirationDate);
+        $entity = new AuthorizationCode('code', $this->application, '', $this->expirationDate, $this->account);
 
         // Act
         $entity->setScope('scope');

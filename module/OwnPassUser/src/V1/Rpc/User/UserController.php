@@ -14,6 +14,8 @@ use OwnPassUser\Entity\Account;
 use OwnPassUser\V1\Rest\Account\AccountEntity;
 use Zend\Crypt\Password\PasswordInterface;
 use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ApiProblem\ApiProblem;
+use ZF\ApiProblem\ApiProblemResponse;
 use ZF\ContentNegotiation\ViewModel;
 use ZF\Hal\Entity;
 
@@ -38,6 +40,13 @@ class UserController extends AbstractActionController
     public function userAction()
     {
         $identity = $this->getIdentity()->getAuthenticationIdentity();
+
+        // Make sure that an anonymous api has no access.
+        if ($identity['user_id'] === null) {
+            return new ApiProblemResponse(
+                new ApiProblem(ApiProblemResponse::STATUS_CODE_403, 'No access for public client.')
+            );
+        }
 
         /** @var Account $account */
         $account = $this->entityManager->find(Account::class, $identity['user_id']);

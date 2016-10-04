@@ -98,6 +98,12 @@ return [
             'UnderscoreNamingStrategy' => UnderscoreNamingStrategy::class,
         ],
     ],
+    'session_config' => [
+        'name' => 'ownpass',
+    ],
+    'session_storage' => [
+        'type' => 'SessionArrayStorage',
+    ],
     'validators' => [
         'invokables' => [
             Uuid::class => Uuid::class,

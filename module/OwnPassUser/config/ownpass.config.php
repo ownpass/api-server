@@ -9,15 +9,12 @@
 
 namespace OwnPassUser;
 
+use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Crypt\Password\PasswordInterface;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
-    'controllers' => [
-        'factories' => [
-            Controller\UserCli::class => Controller\Service\UserCliFactory::class,
-        ],
-    ],
     'console' => [
         'router' => [
             'routes' => [
@@ -31,6 +28,12 @@ return [
                     ],
                 ],
             ],
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            Controller\Authenticate::class => Controller\Service\AuthenticateFactory::class,
+            Controller\UserCli::class => Controller\Service\UserCliFactory::class,
         ],
     ],
     'doctrine' => [
@@ -49,9 +52,55 @@ return [
             ],
         ]
     ],
+    'forms' => [
+        Form\Login::class => [
+            'type' => Form\Login::class,
+            'input_filter' => InputFilter\Login::class,
+        ],
+    ],
+    'input_filters' => [
+        'factories' => [
+            InputFilter\Login::class => InputFilter\Service\LoginFactory::class,
+        ],
+    ],
+    'router' => [
+        'routes' => [
+            'login' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/login',
+                    'defaults' => [
+                        'controller' => Controller\Authenticate::class,
+                        'action' => 'login',
+                    ],
+                ],
+            ],
+            'logout' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/logout',
+                    'defaults' => [
+                        'controller' => Controller\Authenticate::class,
+                        'action' => 'logout',
+                    ],
+                ],
+            ],
+        ],
+    ],
     'service_manager' => [
+        'factories' => [
+            AuthenticationServiceInterface::class => Authentication\Service\AuthenticationFactory::class,
+        ],
         'invokables' => [
             PasswordInterface::class => Bcrypt::class,
+        ],
+    ],
+    'session_containers' => [
+        'AuthenticateSession',
+    ],
+    'view_manager' => [
+        'template_map' => [
+            'own-pass-user/authenticate/login' => __DIR__ . '/../view/own-pass-user/authenticate/login.phtml',
         ],
     ],
 ];

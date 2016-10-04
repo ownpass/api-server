@@ -1,0 +1,15 @@
+<h2><?php echo $this->translate('oAuthAuthorizeFormTitle'); ?></h2>
+
+<p>
+    <?php echo sprintf(
+        $this->translate('oAuthAuthorizeFormDescription'),
+        $this->escapeHtml($this->application->getName())
+    ); ?>
+</p>
+
+<form action="" method="post">
+    <div>
+        <input type="submit" name="allow" value="<?php echo $this->translate('oAuthAuthorizeFormYes'); ?>">
+        <input type="submit" name="deny" value="<?php echo $this->translate('oAuthAuthorizeFormNo'); ?>">
+    </div>
+</form>

@@ -9,20 +9,20 @@
 
 namespace OwnPassOAuth\Controller\Service;
 
-use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
-use OwnPassOAuth\Controller\Cli;
-use Zend\Crypt\Password\PasswordInterface;
+use OwnPassOAuth\Controller\OAuth;
+use OwnPassOAuth\TaskService\OAuth as OAuthTaskService;
+use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class CliFactory implements FactoryInterface
+class OAuthFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $entityManager = $container->get(EntityManager::class);
+        $oauthTaskService = $container->get(OAuthTaskService::class);
 
-        $crypter = $container->get(PasswordInterface::class);
+        $authService = $container->get(AuthenticationServiceInterface::class);
 
-        return new Cli($entityManager, $crypter);
+        return new OAuth($oauthTaskService, $authService);
     }
 }

@@ -7,15 +7,17 @@
  * @license https://raw.githubusercontent.com/ownpass/ownpass/master/LICENSE MIT
  */
 
-namespace OwnPassOAuth\Controller\Service;
+namespace OwnPassUser\Authentication\Service;
 
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
-use OwnPassOAuth\Controller\Cli;
+use OwnPassUser\Authentication\Adapter\OwnPass;
+use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Storage\Session;
 use Zend\Crypt\Password\PasswordInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class CliFactory implements FactoryInterface
+class AuthenticationFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -23,6 +25,10 @@ class CliFactory implements FactoryInterface
 
         $crypter = $container->get(PasswordInterface::class);
 
-        return new Cli($entityManager, $crypter);
+        $adapter = new OwnPass($entityManager, $crypter);
+
+        $storage = new Session();
+
+        return new AuthenticationService($storage, $adapter);
     }
 }

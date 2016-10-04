@@ -25,11 +25,6 @@ class AuthorizationCode
     private $application;
 
     /**
-     * @var Account
-     */
-    private $account;
-
-    /**
      * @var string
      */
     private $redirectUri;
@@ -45,6 +40,11 @@ class AuthorizationCode
     private $scope;
 
     /**
+     * @var Account|null
+     */
+    private $account;
+
+    /**
      * Initializes a new instance of this class.
      *
      * @param string $authorizationCode
@@ -56,15 +56,15 @@ class AuthorizationCode
     public function __construct(
         $authorizationCode,
         Application $application,
-        Account $account,
         $redirectUri,
-        DateTimeInterface $expires
+        DateTimeInterface $expires,
+        Account $account = null
     ) {
         $this->authorizationCode = $authorizationCode;
         $this->application = $application;
-        $this->account = $account;
         $this->redirectUri = $redirectUri;
         $this->expires = $expires;
+        $this->account = $account;
     }
 
     /**

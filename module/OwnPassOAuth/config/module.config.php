@@ -10,11 +10,6 @@
 namespace OwnPassOAuth;
 
 return [
-    'controllers' => [
-        'factories' => [
-            Controller\Cli::class => Controller\Service\CliFactory::class,
-        ],
-    ],
     'console' => [
         'router' => [
             'routes' => [
@@ -28,6 +23,12 @@ return [
                     ],
                 ],
             ],
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            Controller\Cli::class => Controller\Service\CliFactory::class,
+            Controller\OAuth::class => Controller\Service\OAuthFactory::class,
         ],
     ],
     'doctrine' => [
@@ -45,5 +46,57 @@ return [
                 ],
             ],
         ]
+    ],
+    'router' => [
+        'routes' => [
+            'oauth' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/oauth',
+                    'defaults' => [
+                        'controller' => Controller\OAuth::class,
+                    ],
+                ],
+                'child_routes' => [
+                    'authorize' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/authorize',
+                            'defaults' => [
+                                'action' => 'authorize',
+                            ],
+                        ],
+                    ],
+                    'token' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/token',
+                            'defaults' => [
+                                'action' => 'token',
+                            ],
+                        ],
+                    ],
+                    'resource' => [
+                        'type' => 'Literal',
+                        'options' => [
+                            'route' => '/resource',
+                            'defaults' => [
+                                'action' => 'resource',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            TaskService\OAuth::class => TaskService\Service\OAuthFactory::class,
+        ],
+    ],
+    'view_manager' => [
+        'template_map' => [
+            'own-pass-o-auth/o-auth/authorize' => __DIR__ . '/../view/own-pass-o-auth/o-auth/authorize.phtml',
+        ],
     ],
 ];

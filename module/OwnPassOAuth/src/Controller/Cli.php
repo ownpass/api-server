@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use OwnPassOAuth\Entity\Application;
 use Zend\Console\Prompt\Confirm;
 use Zend\Console\Prompt\Line;
+use Zend\Crypt\Password\PasswordInterface;
 use Zend\Mvc\Console\Controller\AbstractConsoleController;
 
 /**
@@ -25,9 +26,15 @@ class Cli extends AbstractConsoleController
      */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    /**
+     * @var PasswordInterface
+     */
+    private $crypter;
+
+    public function __construct(EntityManagerInterface $entityManager, PasswordInterface $crypter)
     {
         $this->entityManager = $entityManager;
+        $this->crypter = $crypter;
     }
 
     public function createAction()
@@ -68,7 +75,7 @@ class Cli extends AbstractConsoleController
         $application = new Application($clientId, $name);
 
         if ($clientSecret) {
-            $application->setClientSecret($clientSecret);
+            $application->setClientSecret($this->crypter->create($clientSecret));
         }
 
         $this->entityManager->persist($application);

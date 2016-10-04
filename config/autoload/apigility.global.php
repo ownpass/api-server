@@ -58,7 +58,7 @@ return [
         'allow_implicit' => true,
         'grant_types' => [
             'client_credentials' => false,
-            'authorization_code' => false,
+            'authorization_code' => true,
             'password' => true,
             'refresh_token' => true,
             'jwt' => false,

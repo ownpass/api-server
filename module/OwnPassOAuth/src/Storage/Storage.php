@@ -54,7 +54,7 @@ class Storage implements
      * @param string $id
      * @return Application
      */
-    private function getApplication($id)
+    public function getApplication($id)
     {
         try {
             $result = $this->entityManager->find(Application::class, $id);
@@ -130,9 +130,11 @@ class Storage implements
             return null;
         }
 
+        $account = $authorizationCode->getAccount();
+
         return [
             'client_id' => $authorizationCode->getApplication()->getClientId(),
-            'user_id' => $authorizationCode->getAccount()->getId()->toString(),
+            'user_id' => $account ? $account->getId()->toString() : null,
             'expires' => (int)$authorizationCode->getExpires()->format('U'),
             'redirect_uri' => $authorizationCode->getRedirectUri(),
             'scope' => $authorizationCode->getScope(),
@@ -153,7 +155,7 @@ class Storage implements
         $expireDate = new DateTime();
         $expireDate->setTimestamp($expires);
 
-        $authorizationCode = new AuthorizationCode($code, $application, $account, $redirect_uri, $expireDate);
+        $authorizationCode = new AuthorizationCode($code, $application, $redirect_uri, $expireDate, $account);
         $authorizationCode->setScope($scope);
 
         $this->entityManager->persist($authorizationCode);

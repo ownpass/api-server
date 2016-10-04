@@ -21,6 +21,7 @@ return [
     'Zend\\Paginator',
     'Zend\\Router',
     'Zend\\Serializer',
+    'Zend\\Session',
     'Zend\\Validator',
     'ZfrCors',
     'ZF\\Apigility',
