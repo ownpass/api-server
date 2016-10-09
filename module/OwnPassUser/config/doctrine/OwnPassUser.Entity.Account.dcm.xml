@@ -14,6 +14,7 @@
             <gedmo:timestampable on="update" />
         </field>
 
+        <field name="status" type="integer" />
         <field name="name" type="string" />
         <field name="role" type="string" />
         <field name="credential" type="string" nullable="true" />

@@ -14,6 +14,7 @@ use DoctrineModule\Paginator\Adapter\Selectable;
 use Exception;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassUser\Entity\Account;
+use RuntimeException;
 use Zend\Crypt\Password\PasswordInterface;
 use ZF\ApiProblem\ApiProblem;
 use ZF\ApiProblem\ApiProblemResponse;
@@ -54,13 +55,23 @@ class AccountResource extends AbstractResourceListener
             return $response;
         }
 
-        $credential = $this->crypter->create($data->credential);
-
-        $account = new Account($data->identity, $credential, $data->first_name, $data->last_name);
+        $account = new Account($data->name, $data->email_address);
         $account->setRole($data->role);
 
+        if (isset($data->status)) {
+            $status = $this->convertStatus($data->status);
+
+            $account->setStatus($status);
+        }
+
+        if (isset($data->credential)) {
+            $credential = $this->crypter->create($data->credential);
+
+            $account->setCredential($credential);
+        }
+
         $this->entityManager->persist($account);
-        $this->entityManager->flush($account);
+        $this->entityManager->flush();
 
         return new AccountEntity($account);
     }
@@ -167,12 +178,41 @@ class AccountResource extends AbstractResourceListener
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
 
-        $account->setFirstName($data->first_name);
-        $account->setLastName($data->last_name);
+        $account->setName($data->name);
         $account->setRole($data->role);
 
-        $this->entityManager->flush($account);
+        if (isset($data->status)) {
+            $status = $this->convertStatus($data->status);
+
+            $account->setStatus($status);
+        }
+
+        if (isset($data->credential)) {
+            $credential = $this->crypter->create($data->credential);
+
+            $account->setCredential($credential);
+        }
+
+        $this->entityManager->flush();
 
         return new AccountEntity($account);
+    }
+
+    private function convertStatus($status)
+    {
+        switch ($status) {
+            case 'active':
+                $result = Account::STATUS_ACTIVE;
+                break;
+
+            case 'inactive':
+                $result = Account::STATUS_INACTIVE;
+                break;
+
+            default:
+                throw new RuntimeException(sprintf('The status "%s" is not implemented.', $status));
+        }
+
+        return $result;
     }
 }

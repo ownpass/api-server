@@ -119,13 +119,14 @@ return [
     'zf-content-validation' => [
         'OwnPassUser\\V1\\Rest\\Account\\Controller' => [
             'input_filter' => 'OwnPassUser\\V1\\Rest\\Account\\Validator',
+            'POST' => 'OwnPassUser\\V1\\Rest\\Account\\PostValidator',
         ],
         'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
             'input_filter' => 'OwnPassUser\\V1\\Rpc\\User\\Controller',
         ],
     ],
     'input_filter_specs' => [
-        'OwnPassUser\\V1\\Rest\\Account\\Validator' => [
+        'OwnPassUser\\V1\\Rest\\Account\\PostValidator' => [
             0 => [
                 'required' => true,
                 'validators' => [
@@ -146,72 +147,32 @@ return [
                         'options' => [],
                     ],
                 ],
-                'name' => 'first_name',
-                'description' => 'The first name of the person that owns the account.',
+                'name' => 'name',
+                'description' => 'The name of the person that owns the account.',
                 'field_type' => 'string',
             ],
             1 => [
                 'required' => true,
                 'validators' => [
                     0 => [
-                        'name' => \Zend\I18n\Validator\Alpha::class,
-                        'options' => [
-                            'allowwhitespace' => true,
-                        ],
+                        'name' => \Zend\Validator\EmailAddress::class,
+                        'options' => [],
                     ],
                 ],
                 'filters' => [
                     0 => [
-                        'name' => \Zend\Filter\StripTags::class,
-                        'options' => [],
-                    ],
-                    1 => [
                         'name' => \Zend\Filter\StringTrim::class,
                         'options' => [],
                     ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
                 ],
-                'name' => 'last_name',
-                'description' => 'The last name of the person that owns the account.',
-                'field_type' => 'string',
+                'name' => 'email_address',
+                'description' => 'The e-mail address of the user that owns the account.',
             ],
             2 => [
-                'required' => true,
-                'validators' => [
-                    0 => [
-                        'name' => \Zend\I18n\Validator\Alnum::class,
-                        'options' => [],
-                    ],
-                ],
-                'filters' => [
-                    0 => [
-                        'name' => \Zend\Filter\StripTags::class,
-                        'options' => [],
-                    ],
-                    1 => [
-                        'name' => \Zend\Filter\StringTrim::class,
-                        'options' => [],
-                    ],
-                    2 => [
-                        'name' => \Zend\Filter\StringToLower::class,
-                        'options' => [],
-                    ],
-                ],
-                'name' => 'identity',
-                'description' => 'The identity to identify the account with while authenticating.',
-            ],
-            3 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [
-                    0 => [
-                        'name' => \Zend\Filter\StringTrim::class,
-                        'options' => [],
-                    ],
-                ],
-                'name' => 'credential',
-                'description' => 'The credential of the account to authenticate with.',
-            ],
-            4 => [
                 'required' => true,
                 'validators' => [
                     0 => [
@@ -240,7 +201,171 @@ return [
                     ],
                 ],
                 'name' => 'role',
-                'description' => 'The role of the user which defines the permissions that the user has.',
+                'description' => 'The role of the account which defines the permissions that the user has.',
+            ],
+            3 => [
+                'required' => false,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\InArray::class,
+                        'options' => [
+                            'strict' => true,
+                            'haystack' => [
+                                0 => 'active',
+                                1 => 'inactive',
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    2 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'status',
+                'description' => 'The status of the account.',
+            ],
+            4 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'credential',
+                'description' => 'The credential of the account.',
+            ],
+        ],
+        'OwnPassUser\\V1\\Rest\\Account\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alpha::class,
+                        'options' => [
+                            'allowwhitespace' => true,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'name',
+                'description' => 'The name of the person that owns the account.',
+                'field_type' => 'string',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\EmailAddress::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'email_address',
+                'description' => 'The e-mail address of the user that owns the account.',
+            ],
+            2 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\InArray::class,
+                        'options' => [
+                            'strict' => true,
+                            'haystack' => [
+                                0 => 'admin',
+                                1 => 'user',
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    2 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'role',
+                'description' => 'The role of the account which defines the permissions that the user has.',
+            ],
+            3 => [
+                'required' => false,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\InArray::class,
+                        'options' => [
+                            'strict' => true,
+                            'haystack' => [
+                                0 => 'active',
+                                1 => 'inactive',
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    2 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'status',
+                'description' => 'The status of the account.',
+            ],
+            4 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'credential',
+                'description' => 'The credential of the account.',
             ],
         ],
         'OwnPassUser\\V1\\Rpc\\Authenticate\\Validator' => [

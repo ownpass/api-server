@@ -110,7 +110,8 @@ class UserCli extends AbstractConsoleController
             }
         }
 
-        $account = new Account($name, $this->crypter->create($password), $emailAddress);
+        $account = new Account($name, $emailAddress);
+        $account->setCredential($this->crypter->create($password));
         $account->setRole($role);
 
         $identity = new Identity($account, 'username', $username);

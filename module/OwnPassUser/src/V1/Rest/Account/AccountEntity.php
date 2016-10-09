@@ -10,12 +10,14 @@
 namespace OwnPassUser\V1\Rest\Account;
 
 use OwnPassUser\Entity\Account;
+use RuntimeException;
 
 class AccountEntity
 {
     public $id;
-    public $creationDate;
-    public $updateDate;
+    public $creation_date;
+    public $update_date;
+    public $status;
     public $name;
     public $role;
     public $email_address;
@@ -23,10 +25,27 @@ class AccountEntity
     public function __construct(Account $account)
     {
         $this->id = $account->getId();
-        $this->creationDate = $account->getCreationDate();
-        $this->updateDate = $account->getUpdateDate();
+        $this->creation_date = $account->getCreationDate();
+        $this->update_date = $account->getUpdateDate();
         $this->role = $account->getRole();
         $this->name = $account->getName();
         $this->email_address = $account->getEmailAddress();
+
+        switch ($account->getStatus()) {
+            case Account::STATUS_ACTIVE:
+                $this->status = 'active';
+                break;
+
+            case Account::STATUS_INACTIVE:
+                $this->status = 'inactive';
+                break;
+
+            case Account::STATUS_INVITED:
+                $this->status = 'invited';
+                break;
+
+            default:
+                throw new RuntimeException(sprintf('The status "%s" is not implemented yet.', $account->getStatus()));
+        }
     }
 }

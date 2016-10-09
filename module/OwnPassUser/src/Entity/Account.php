@@ -19,6 +19,10 @@ class Account
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    const STATUS_INVITED = 2;
+
     /**
      * @var UuidInterface
      */
@@ -33,6 +37,11 @@ class Account
      * @var DateTimeInterface
      */
     private $updateDate;
+
+    /**
+     * @var int
+     */
+    private $status;
 
     /**
      * @var string
@@ -64,14 +73,14 @@ class Account
      */
     private $tfaCode;
 
-    public function __construct($name, $credential, $emailAddress)
+    public function __construct($name, $emailAddress)
     {
         $this->id = Uuid::uuid4();
         $this->creationDate = new DateTimeImmutable();
         $this->updateDate = new DateTimeImmutable();
+        $this->status = self::STATUS_ACTIVE;
         $this->name = $name;
         $this->role = self::ROLE_USER;
-        $this->credential = $credential;
         $this->emailAddress = $emailAddress;
     }
 
@@ -97,6 +106,26 @@ class Account
     public function getUpdateDate()
     {
         return $this->updateDate;
+    }
+
+    /**
+     * Gets the value of the "status" field.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Sets the value of the "status" field.
+     *
+     * @param int $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     /**
