@@ -12,7 +12,7 @@ namespace OwnPassUser\Authentication\Service;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use OwnPassUser\Authentication\Adapter\OwnPass;
-use Zend\Authentication\AuthenticationService;
+use OwnPassUser\Authentication\AuthenticationService;
 use Zend\Authentication\Storage\Session;
 use Zend\Crypt\Password\PasswordInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
@@ -26,9 +26,8 @@ class AuthenticationFactory implements FactoryInterface
         $crypter = $container->get(PasswordInterface::class);
 
         $adapter = new OwnPass($entityManager, $crypter);
-
         $storage = new Session();
 
-        return new AuthenticationService($storage, $adapter);
+        return new AuthenticationService($entityManager, $storage, $adapter);
     }
 }

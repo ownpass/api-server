@@ -10,6 +10,7 @@
 namespace OwnPassUser\Authentication\Adapter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use OwnPassUser\Entity\Account;
 use OwnPassUser\Entity\Identity;
 use Zend\Authentication\Adapter\ValidatableAdapterInterface;
 use Zend\Authentication\Result;
@@ -95,10 +96,18 @@ class OwnPass implements ValidatableAdapterInterface
         }
 
         $identity = $identities[0];
+
+        /** @var Account $account */
         $account = $identity->getAccount();
 
         if (!$this->crypter->verify($this->getCredential(), $account->getCredential())) {
             return new Result(Result::FAILURE_CREDENTIAL_INVALID, (string)$account->getId(), []);
+        }
+
+        if ($account->getStatus() !== Account::STATUS_ACTIVE) {
+            return new Result(Result::FAILURE_UNCATEGORIZED, (string)$account->getId(), [
+                'The account has been suspended.',
+            ]);
         }
 
         return new Result(Result::SUCCESS, (string)$account->getId(), []);
