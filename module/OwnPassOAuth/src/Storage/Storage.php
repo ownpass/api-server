@@ -286,7 +286,6 @@ class Storage implements
 
     public function checkUserCredentials($username, $password)
     {
-        $accountRepository = $this->entityManager->getRepository(Account::class);
         $identityRepository = $this->entityManager->getRepository(Identity::class);
 
         /** @var Identity $identity */
@@ -321,6 +320,12 @@ class Storage implements
             return false;
         }
 
+        $account = $identity->getAccount();
+
+        if ($account->getStatus() !== Account::STATUS_ACTIVE) {
+            return false;
+        }
+
         return [
             'user_id' => $identity->getAccount()->getId()->toString(),
             'scope' => '',
@@ -329,7 +334,8 @@ class Storage implements
 
     public function scopeExists($scope)
     {
-        return $scope === 'admin';
+        // We don't support scopes yet.
+        return false;
     }
 
     public function getDefaultScope($clientId = null)
