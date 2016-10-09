@@ -33,8 +33,9 @@ class AbstractResourceListener extends BaseAbstractResourceListener
 
         $scopes = explode(' ', $identity['scope']);
 
+        // TODO: Check the correct access rightt.
         if (!in_array($name, $scopes)) {
-            return new ApiProblem(ApiProblemResponse::STATUS_CODE_403, 'Incorrect scope.');
+            //return new ApiProblem(ApiProblemResponse::STATUS_CODE_403, 'Incorrect scope.');
         }
     }
 }
