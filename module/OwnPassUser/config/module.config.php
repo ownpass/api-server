@@ -236,6 +236,31 @@ return [
             ],
             4 => [
                 'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\I18n\Validator\Alnum::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [
+                    0 => [
+                        'name' => \Zend\Filter\StringTrim::class,
+                        'options' => [],
+                    ],
+                    1 => [
+                        'name' => \Zend\Filter\StringToLower::class,
+                        'options' => [],
+                    ],
+                    2 => [
+                        'name' => \Zend\Filter\StripTags::class,
+                        'options' => [],
+                    ],
+                ],
+                'name' => 'identity',
+                'description' => 'The identity to authenticate with.',
+            ],
+            5 => [
+                'required' => true,
                 'validators' => [],
                 'filters' => [
                     0 => [
@@ -244,7 +269,7 @@ return [
                     ],
                 ],
                 'name' => 'credential',
-                'description' => 'The credential of the account.',
+                'description' => 'The credential to authenticate with.',
             ],
         ],
         'OwnPassUser\\V1\\Rest\\Account\\Validator' => [
