@@ -180,6 +180,22 @@ class AccountResource extends AbstractResourceListener
         $account->setName($data->name);
         $account->setRole($data->role);
 
+        if (isset($data->email_address)) {
+            $account->setEmailAddress($data->email_address);
+
+            $identityRepository = $this->entityManager->getRepository(Identity::class);
+
+            /** @var Identity|null $identity */
+            $identity = $identityRepository->findOneBy([
+                'account' => $account,
+                'directory' => Identity::DIRECTORY_EMAIL,
+            ]);
+
+            if ($identity) {
+                $identity->setIdentity($data->email_address);
+            }
+        }
+
         if (isset($data->status)) {
             $status = $this->convertStatus($data->status);
 
