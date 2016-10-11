@@ -129,14 +129,7 @@ return [
         'OwnPassUser\\V1\\Rest\\Account\\PostValidator' => [
             0 => [
                 'required' => true,
-                'validators' => [
-                    0 => [
-                        'name' => \Zend\I18n\Validator\Alpha::class,
-                        'options' => [
-                            'allowwhitespace' => true,
-                        ],
-                    ],
-                ],
+                'validators' => [],
                 'filters' => [
                     0 => [
                         'name' => \Zend\Filter\StripTags::class,
@@ -213,14 +206,7 @@ return [
         'OwnPassUser\\V1\\Rest\\Account\\Validator' => [
             0 => [
                 'required' => true,
-                'validators' => [
-                    0 => [
-                        'name' => \Zend\I18n\Validator\Alpha::class,
-                        'options' => [
-                            'allowwhitespace' => true,
-                        ],
-                    ],
-                ],
+                'validators' => [],
                 'filters' => [
                     0 => [
                         'name' => \Zend\Filter\StripTags::class,
@@ -380,12 +366,7 @@ return [
             ],
             1 => [
                 'required' => true,
-                'validators' => [
-                    0 => [
-                        'name' => \Zend\I18n\Validator\Alnum::class,
-                        'options' => [],
-                    ],
-                ],
+                'validators' => [],
                 'filters' => [
                     0 => [
                         'name' => \Zend\Filter\StringTrim::class,
@@ -417,7 +398,7 @@ return [
                         'options' => [],
                     ],
                 ],
-                'name' => 'email',
+                'name' => 'email_address',
                 'description' => 'The e-mail address of the user.',
             ],
             3 => [

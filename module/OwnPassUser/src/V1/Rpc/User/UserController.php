@@ -55,8 +55,7 @@ class UserController extends AbstractActionController
             $data = $this->bodyParams();
 
             $account->setName($data['name']);
-            $account->setRole($data['role']);
-            $account->setEmailAddress($data['email']);
+            $account->setEmailAddress($data['email_address']);
 
             if (array_key_exists('credential', $data)) {
                 $account->setCredential($this->crypter->create($data['credential']));
