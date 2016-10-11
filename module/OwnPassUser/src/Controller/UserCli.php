@@ -40,9 +40,22 @@ class UserCli extends AbstractConsoleController
         $this->crypter = $crypter;
     }
 
+    private function hasIdentity($directory, $identity)
+    {
+        return $this->entityManager->getRepository(Identity::class)->findOneBy([
+            'directory' => $directory,
+            'identity' => $identity,
+        ]) !== null;
+    }
+
     public function createAction()
     {
         $correct = false;
+        $name = null;
+        $role = null;
+        $emailAddress = null;
+        $username = null;
+        $password = null;
 
         while (!$correct) {
             $name = $this->params()->fromRoute('name');
@@ -64,18 +77,44 @@ class UserCli extends AbstractConsoleController
             $emailAddress = $this->params()->fromRoute('email');
             if (!$emailAddress) {
                 $validEmailAddress = false;
-                $validator = new EmailAddress();
 
+                $validator = new EmailAddress();
                 while (!$validEmailAddress) {
                     $emailAddress = Line::prompt('Please enter the e-mail address: ');
 
-                    $validEmailAddress = $validator->isValid($emailAddress);
+                    if (!$validator->isValid($emailAddress)) {
+                        $this->getConsole()->writeLine('The e-mail address is invalid.');
+                        continue;
+                    }
+
+                    if ($this->hasIdentity(Identity::DIRECTORY_EMAIL, $emailAddress)) {
+                        $this->getConsole()->writeLine('The e-mail address already exists.');
+                        continue;
+                    }
+
+                    $validEmailAddress = true;
                 }
             }
 
             $username = $this->params()->fromRoute('username');
             if (!$username) {
-                $username = Line::prompt('Please enter an username: ');
+                $validUsername = false;
+
+                while (!$validUsername) {
+                    $username = Line::prompt('Please enter an username: ');
+
+                    if ($username === '') {
+                        $this->getConsole()->writeLine('No valid username provided.');
+                        continue;
+                    }
+
+                    if ($this->hasIdentity(Identity::DIRECTORY_USERNAME, $username)) {
+                        $this->getConsole()->writeLine('The username already exists.');
+                        continue;
+                    }
+
+                    $validUsername = true;
+                }
             }
 
             $password = getenv('OWNPASS_CREDENTIAL');
@@ -114,10 +153,9 @@ class UserCli extends AbstractConsoleController
         $account->setCredential($this->crypter->create($password));
         $account->setRole($role);
 
-        $identity = new Identity($account, 'username', $username);
-
         $this->entityManager->persist($account);
-        $this->entityManager->persist($identity);
+        $this->entityManager->persist(new Identity($account, Identity::DIRECTORY_EMAIL, $emailAddress));
+        $this->entityManager->persist(new Identity($account, Identity::DIRECTORY_USERNAME, $username));
         $this->entityManager->flush();
     }
 }

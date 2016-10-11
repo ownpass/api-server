@@ -98,6 +98,11 @@ return [
     'session_containers' => [
         'AuthenticateSession',
     ],
+    'validators' => [
+        'factories' => [
+            Validator\NoIdentityExists::class => Validator\Service\NoIdentityExistsFactory::class,
+        ],
+    ],
     'view_manager' => [
         'template_map' => [
             'own-pass-user/authenticate/login' => __DIR__ . '/../view/own-pass-user/authenticate/login.phtml',

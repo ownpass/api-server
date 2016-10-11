@@ -158,6 +158,12 @@ return [
                         'name' => \Zend\Validator\EmailAddress::class,
                         'options' => [],
                     ],
+                    1 => [
+                        'name' => \OwnPassUser\Validator\NoIdentityExists::class,
+                        'options' => [
+                            'directory' => \OwnPassUser\Entity\Identity::DIRECTORY_EMAIL,
+                        ],
+                    ],
                 ],
                 'filters' => [
                     0 => [
@@ -202,74 +208,6 @@ return [
                 ],
                 'name' => 'role',
                 'description' => 'The role of the account which defines the permissions that the user has.',
-            ],
-            3 => [
-                'required' => false,
-                'validators' => [
-                    0 => [
-                        'name' => \Zend\Validator\InArray::class,
-                        'options' => [
-                            'strict' => true,
-                            'haystack' => [
-                                0 => 'active',
-                                1 => 'inactive',
-                            ],
-                        ],
-                    ],
-                ],
-                'filters' => [
-                    0 => [
-                        'name' => \Zend\Filter\StripTags::class,
-                        'options' => [],
-                    ],
-                    1 => [
-                        'name' => \Zend\Filter\StringTrim::class,
-                        'options' => [],
-                    ],
-                    2 => [
-                        'name' => \Zend\Filter\StringToLower::class,
-                        'options' => [],
-                    ],
-                ],
-                'name' => 'status',
-                'description' => 'The status of the account.',
-            ],
-            4 => [
-                'required' => true,
-                'validators' => [
-                    0 => [
-                        'name' => \Zend\I18n\Validator\Alnum::class,
-                        'options' => [],
-                    ],
-                ],
-                'filters' => [
-                    0 => [
-                        'name' => \Zend\Filter\StringTrim::class,
-                        'options' => [],
-                    ],
-                    1 => [
-                        'name' => \Zend\Filter\StringToLower::class,
-                        'options' => [],
-                    ],
-                    2 => [
-                        'name' => \Zend\Filter\StripTags::class,
-                        'options' => [],
-                    ],
-                ],
-                'name' => 'identity',
-                'description' => 'The identity to authenticate with.',
-            ],
-            5 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [
-                    0 => [
-                        'name' => \Zend\Filter\StringTrim::class,
-                        'options' => [],
-                    ],
-                ],
-                'name' => 'credential',
-                'description' => 'The credential to authenticate with.',
             ],
         ],
         'OwnPassUser\\V1\\Rest\\Account\\Validator' => [

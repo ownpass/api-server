@@ -16,6 +16,9 @@ use Ramsey\Uuid\UuidInterface;
 
 class Identity
 {
+    const DIRECTORY_EMAIL = 'email';
+    const DIRECTORY_USERNAME = 'username';
+
     /**
      * @var UuidInterface
      */

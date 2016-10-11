@@ -14,6 +14,7 @@ use DoctrineModule\Paginator\Adapter\Selectable;
 use Exception;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassUser\Entity\Account;
+use OwnPassUser\Entity\Identity;
 use RuntimeException;
 use Zend\Crypt\Password\PasswordInterface;
 use ZF\ApiProblem\ApiProblem;
@@ -57,6 +58,7 @@ class AccountResource extends AbstractResourceListener
 
         $account = new Account($data->name, $data->email_address);
         $account->setRole($data->role);
+        $account->setStatus(Account::STATUS_INVITED);
 
         if (isset($data->status)) {
             $status = $this->convertStatus($data->status);
@@ -64,13 +66,10 @@ class AccountResource extends AbstractResourceListener
             $account->setStatus($status);
         }
 
-        if (isset($data->credential)) {
-            $credential = $this->crypter->create($data->credential);
-
-            $account->setCredential($credential);
-        }
+        $identity = new Identity($account, Identity::DIRECTORY_EMAIL, $data->email_address);
 
         $this->entityManager->persist($account);
+        $this->entityManager->persist($identity);
         $this->entityManager->flush();
 
         return new AccountEntity($account);
