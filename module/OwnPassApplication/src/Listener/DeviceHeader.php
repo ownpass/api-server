@@ -45,7 +45,9 @@ class DeviceHeader extends AbstractListenerAggregate
         // The device id is not required in the following cases:
         // - When we are handling an oauth request.
         // - When we are creating a new device.
+        // - When we activate a device
         if ($routeName === 'oauth' ||
+            $routeName === 'own-pass-application.rpc.device-activate' ||
             ($routeName === 'own-pass-application.rest.device' && $event->getRequest()->isPost())) {
             return;
         }

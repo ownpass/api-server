@@ -19,18 +19,20 @@ class DeviceEntity
 
     public $id;
     public $account;
-    public $user_agent;
     public $state;
     public $name;
     public $description;
+    public $remote_address;
+    public $user_agent;
 
     public function __construct(Device $device)
     {
         $this->id = $device->getId();
         $this->account = new AccountEntity($device->getAccount());
+        $this->state = $device->getActivationCode() ? self::STATE_NOT_ACTIVATED : self::STATE_ACTIVATED;
         $this->name = $device->getName();
         $this->description = $device->getDescription();
+        $this->remote_address = $device->getRemoteAddress();
         $this->user_agent = $device->getUserAgent();
-        $this->state = $device->getActivationCode() ? self::STATE_NOT_ACTIVATED : self::STATE_ACTIVATED;
     }
 }

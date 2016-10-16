@@ -11,8 +11,12 @@ namespace OwnPassApplication\V1\Rpc\DeviceActivate;
 
 use Doctrine\ORM\EntityManagerInterface;
 use OwnPassApplication\Entity\Device;
-use Zend\Http\Response;
+use OwnPassApplication\V1\Rest\Device\DeviceEntity;
 use Zend\Mvc\Controller\AbstractActionController;
+use ZF\ApiProblem\ApiProblem;
+use ZF\ApiProblem\ApiProblemResponse;
+use ZF\ContentNegotiation\ViewModel;
+use ZF\Hal\Entity;
 
 class DeviceActivateController extends AbstractActionController
 {
@@ -28,7 +32,7 @@ class DeviceActivateController extends AbstractActionController
 
     public function deviceActivateAction()
     {
-        $code = $this->getRequest()->getPost('code');
+        $code = $this->bodyParam('code');
 
         $repository = $this->entityManager->getRepository(Device::class);
 
@@ -37,17 +41,16 @@ class DeviceActivateController extends AbstractActionController
             'activationCode' => $code,
         ]);
 
-        $response = $this->getResponse();
-        $response->setStatusCode(Response::STATUS_CODE_404);
-
-        if ($device) {
-            $response->setStatusCode(Response::STATUS_CODE_200);
-
-            $device->setActivationCode(null);
-
-            $this->entityManager->flush();
+        if (!$device) {
+            return new ApiProblemResponse(new ApiProblem(404, 'The device could not be found.', 'invalid_device'));
         }
 
-        return $response;
+        $device->setActivationCode(null);
+
+        $this->entityManager->flush();
+
+        return new ViewModel([
+            'payload' => new Entity(new DeviceEntity($device), $device->getId()),
+        ]);
     }
 }
