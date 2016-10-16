@@ -70,7 +70,7 @@ class Module implements
         $secureSchemeListener->attach($eventManager);
 
         $deviceHeaderListener = new DeviceHeader();
-        //$deviceHeaderListener->attach($eventManager);
+        $deviceHeaderListener->attach($eventManager);
 
         /** @var Notification $notificationService */
         $notificationService = $serviceManager->get(Notification::class);

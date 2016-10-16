@@ -51,14 +51,21 @@ class EmailNotification extends AbstractListenerAggregate
      */
     private $fromName;
 
+    /**
+     * @var array
+     */
+    private $notifications;
+
     public function __construct(
         TransportInterface $transport,
         RendererInterface $renderer,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        array $notifications
     ) {
         $this->transport = $transport;
         $this->renderer = $renderer;
         $this->translator = $translator;
+        $this->notifications = $notifications;
     }
 
     /**
@@ -77,6 +84,16 @@ class EmailNotification extends AbstractListenerAggregate
         $this->fromName = $fromName;
     }
 
+    /**
+     * Gets the value of the "notifications" field.
+     *
+     * @return array
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
     public function attach(EventManagerInterface $events, $priority = 1)
     {
         $events->attach(Notification::EVENT_NOTIFY, [$this, 'onNotify'], -1);
@@ -84,17 +101,20 @@ class EmailNotification extends AbstractListenerAggregate
 
     public function onNotify(Notification $event)
     {
-        $config = $event->getParam('config');
-
-        if (!array_key_exists('email', $config)) {
-            return;
+        foreach ($this->getNotifications() as $notification) {
+            if ($notification['event'] === $event->getParam('id') && array_key_exists('email', $notification)) {
+                $this->handleNotification($notification, $event);
+            }
         }
+    }
 
+    private function handleNotification(array $notification, Notification $event)
+    {
         $receiver = $event->getParam('receiver');
         $variables = $event->getParam('variables');
         $options = $event->getParam('options');
 
-        $this->notifyViaEmail($receiver, $config['email'], $variables, $options);
+        $this->notifyViaEmail($receiver, $notification['email'], $variables, $options);
     }
 
     private function notifyViaEmail(Account $receiver, $config, array $variables, array $options)

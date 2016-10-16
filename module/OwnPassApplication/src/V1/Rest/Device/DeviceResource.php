@@ -53,7 +53,7 @@ class DeviceResource extends AbstractResourceListener
         $this->entityManager->persist($device);
         $this->entityManager->flush($device);
 
-        $this->notificationService->notify('device.created', $account, [
+        $this->notificationService->notify('device-created', $account, [
             'account' => $account,
             'device' => $device,
             'activationCode' => $activationCode,

@@ -1,8 +1,35 @@
 <?php
 return [
-    'service_manager' => [
+    'controllers' => [
         'factories' => [
-            \OwnPassApplication\V1\Rest\Device\DeviceResource::class => \OwnPassApplication\V1\Rest\Device\DeviceResourceFactory::class,
+            'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller' => \OwnPassApplication\V1\Rpc\DeviceActivate\DeviceActivateControllerFactory::class,
+        ],
+    ],
+    'input_filter_specs' => [
+        'OwnPassApplication\\V1\\Rest\\Device\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
+                'description' => 'The name of the client.',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'description',
+                'description' => 'The description of the client.',
+            ],
+        ],
+        'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'code',
+                'description' => 'The activation code',
+            ],
         ],
     ],
     'router' => [
@@ -26,6 +53,11 @@ return [
                     ],
                 ],
             ],
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            \OwnPassApplication\V1\Rest\Device\DeviceResource::class => \OwnPassApplication\V1\Rest\Device\DeviceResourceFactory::class,
         ],
     ],
     'zf-versioning' => [
@@ -138,38 +170,6 @@ return [
         ],
         'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller' => [
             'input_filter' => 'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Validator',
-        ],
-    ],
-    'input_filter_specs' => [
-        'OwnPassApplication\\V1\\Rest\\Device\\Validator' => [
-            0 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [],
-                'name' => 'name',
-                'description' => 'The name of the client.',
-            ],
-            1 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [],
-                'name' => 'description',
-                'description' => 'The description of the client.',
-            ],
-        ],
-        'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Validator' => [
-            0 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [],
-                'name' => 'code',
-                'description' => 'The activation code',
-            ],
-        ],
-    ],
-    'controllers' => [
-        'factories' => [
-            'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller' => \OwnPassApplication\V1\Rpc\DeviceActivate\DeviceActivateControllerFactory::class,
         ],
     ],
     'zf-rpc' => [

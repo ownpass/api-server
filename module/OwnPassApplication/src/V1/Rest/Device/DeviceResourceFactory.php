@@ -17,8 +17,8 @@ class DeviceResourceFactory
     public function __invoke($services)
     {
         $entityManager = $services->get(EntityManager::class);
-        $mailer = $services->get(Notification::class);
+        $notificationService = $services->get(Notification::class);
 
-        return new DeviceResource($entityManager, $mailer);
+        return new DeviceResource($entityManager, $notificationService);
     }
 }

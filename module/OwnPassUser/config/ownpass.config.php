@@ -63,6 +63,22 @@ return [
             InputFilter\Login::class => InputFilter\Service\LoginFactory::class,
         ],
     ],
+    'ownpass_notifications' => [
+        'account-welcome' => [
+            'event' => 'account-created',
+            'email' => [
+                'template' => 'notifications/account-welcome',
+                'subject' => 'email_account_welcome_subject',
+            ],
+        ],
+        'account-created' => [
+            'event' => 'account-created',
+            'email' => [
+                'template' => 'notifications/account-created',
+                'subject' => 'email_account_created_subject',
+            ],
+        ],
+    ],
     'router' => [
         'routes' => [
             'login' => [

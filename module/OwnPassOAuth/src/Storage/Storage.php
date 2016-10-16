@@ -18,6 +18,7 @@ use OAuth2\Storage\ClientCredentialsInterface;
 use OAuth2\Storage\RefreshTokenInterface;
 use OAuth2\Storage\ScopeInterface;
 use OAuth2\Storage\UserCredentialsInterface;
+use OwnPassApplication\Entity\Device;
 use OwnPassUser\Entity\Account;
 use OwnPassOAuth\Entity\AccessToken;
 use OwnPassOAuth\Entity\Application;
@@ -58,6 +59,21 @@ class Storage implements
     {
         try {
             $result = $this->entityManager->find(Application::class, $id);
+        } catch (Exception $e) {
+            $result = null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $id
+     * @return Device
+     */
+    public function getDevice($id)
+    {
+        try {
+            $result = $this->entityManager->find(Device::class, $id);
         } catch (Exception $e) {
             $result = null;
         }

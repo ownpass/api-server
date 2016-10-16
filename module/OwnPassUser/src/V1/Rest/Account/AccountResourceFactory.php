@@ -10,6 +10,7 @@
 namespace OwnPassUser\V1\Rest\Account;
 
 use Doctrine\ORM\EntityManager;
+use OwnPassApplication\TaskService\Notification;
 use Zend\Crypt\Password\PasswordInterface;
 
 class AccountResourceFactory
@@ -18,7 +19,8 @@ class AccountResourceFactory
     {
         $entityManager = $services->get(EntityManager::class);
         $crypter = $services->get(PasswordInterface::class);
+        $notificationTaskService = $services->get(Notification::class);
 
-        return new AccountResource($entityManager, $crypter);
+        return new AccountResource($entityManager, $crypter, $notificationTaskService);
     }
 }

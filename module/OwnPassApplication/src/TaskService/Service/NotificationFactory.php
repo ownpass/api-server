@@ -18,8 +18,6 @@ class NotificationFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $container->get('config');
-
-        return new Notification($config['ownpass_notifications'], new EventManager());
+        return new Notification(new EventManager());
     }
 }

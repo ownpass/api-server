@@ -39,6 +39,11 @@ class Account
     private $updateDate;
 
     /**
+     * @var null|string
+     */
+    private $activationCode;
+
+    /**
      * @var int
      */
     private $status;
@@ -106,6 +111,26 @@ class Account
     public function getUpdateDate()
     {
         return $this->updateDate;
+    }
+
+    /**
+     * Gets the value of the "activationCode" field.
+     *
+     * @return null|string
+     */
+    public function getActivationCode()
+    {
+        return $this->activationCode;
+    }
+
+    /**
+     * Sets the value of the "activationCode" field.
+     *
+     * @param null|string $activationCode
+     */
+    public function setActivationCode($activationCode)
+    {
+        $this->activationCode = $activationCode;
     }
 
     /**

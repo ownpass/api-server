@@ -26,7 +26,7 @@ class DeviceHeader extends AbstractListenerAggregate
 
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], -1);
+        $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], PHP_INT_MAX);
     }
 
     public function onDispatch(MvcEvent $event)
@@ -42,13 +42,17 @@ class DeviceHeader extends AbstractListenerAggregate
             return;
         }
 
-        $route = $config['router']['routes'][$routeName];
-        if (!array_key_exists('device_required', $route['options']) || !$route['options']['device_required']) {
+        // The device id is not required in the following cases:
+        // - When we are handling an oauth request.
+        // - When we are creating a new device.
+        if ($routeName === 'oauth' ||
+            ($routeName === 'own-pass-application.rest.device' && $event->getRequest()->isPost())) {
             return;
         }
 
         /** @var GenericHeader $header */
         $header = $event->getRequest()->getHeaders()->get(self::HEADER_NAME);
+
         if (!$header) {
             $this->buildErrorResponse($event, sprintf(
                 'Missing "%s" header.',

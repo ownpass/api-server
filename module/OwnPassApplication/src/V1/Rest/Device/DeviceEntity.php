@@ -14,10 +14,13 @@ use OwnPassUser\V1\Rest\Account\AccountEntity;
 
 class DeviceEntity
 {
+    const STATE_ACTIVATED = 'activated';
+    const STATE_NOT_ACTIVATED = 'not-activated';
+
     public $id;
     public $account;
     public $user_agent;
-    public $activation_code;
+    public $state;
     public $name;
     public $description;
 
@@ -28,6 +31,6 @@ class DeviceEntity
         $this->name = $device->getName();
         $this->description = $device->getDescription();
         $this->user_agent = $device->getUserAgent();
-        $this->activation_code = $device->getActivationCode();
+        $this->state = $device->getActivationCode() ? self::STATE_NOT_ACTIVATED : self::STATE_ACTIVATED;
     }
 }

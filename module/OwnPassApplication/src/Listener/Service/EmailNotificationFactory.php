@@ -22,13 +22,14 @@ class EmailNotificationFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
+
         $emailConfig = $config['ownpass_email'];
 
         $renderer = $container->get('ViewRenderer');
         $translator = $container->get(TranslatorInterface::class);
         $transport = $this->buildEmailTransport($emailConfig['transport']);
 
-        $listener = new EmailNotification($transport, $renderer, $translator);
+        $listener = new EmailNotification($transport, $renderer, $translator, $config['ownpass_notifications']);
         $listener->setFromAddress($emailConfig['from_address']);
         $listener->setFromName($emailConfig['from_name']);
 

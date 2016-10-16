@@ -12,6 +12,7 @@ namespace OwnPassOAuth\TaskService;
 use Doctrine\ORM\EntityManager;
 use OAuth2\Request as OAuthRequest;
 use OAuth2\Response as OAuthResponse;
+use OAuth2\Response;
 use OAuth2\Server;
 use OwnPassOAuth\Entity\Application;
 use OwnPassOAuth\Entity\AuthorizedApplication;
@@ -56,6 +57,15 @@ class OAuth
         $oauthRequest = $this->buildRequest($httpRequest);
 
         return $this->server->getAccessTokenData($oauthRequest);
+    }
+
+    public function getDevice($deviceId)
+    {
+        if (!$deviceId) {
+            return null;
+        }
+
+        return $this->server->getStorage('client')->getDevice($deviceId);
     }
 
     public function isApplicationAuthorized(Application $application, $accountId)

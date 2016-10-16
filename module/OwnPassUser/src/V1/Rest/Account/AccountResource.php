@@ -13,10 +13,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use DoctrineModule\Paginator\Adapter\Selectable;
 use Exception;
 use OwnPassApplication\Rest\AbstractResourceListener;
+use OwnPassApplication\TaskService\Notification;
 use OwnPassUser\Entity\Account;
 use OwnPassUser\Entity\Identity;
 use RuntimeException;
 use Zend\Crypt\Password\PasswordInterface;
+use Zend\Math\Rand;
 use ZF\ApiProblem\ApiProblem;
 use ZF\ApiProblem\ApiProblemResponse;
 
@@ -33,14 +35,25 @@ class AccountResource extends AbstractResourceListener
     private $crypter;
 
     /**
+     * @var Notification
+     */
+    private $notificationTaskService;
+
+    /**
      * Initializes a new instance of this class.
      *
      * @param EntityManagerInterface $entityManager
+     * @param PasswordInterface $crypter
+     * @param Notification $notificationTaskService
      */
-    public function __construct(EntityManagerInterface $entityManager, PasswordInterface $crypter)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        PasswordInterface $crypter,
+        Notification $notificationTaskService
+    ) {
         $this->entityManager = $entityManager;
         $this->crypter = $crypter;
+        $this->notificationTaskService = $notificationTaskService;
     }
 
     /**
@@ -59,6 +72,7 @@ class AccountResource extends AbstractResourceListener
         $account = new Account($data->name, $data->email_address);
         $account->setRole($data->role);
         $account->setStatus(Account::STATUS_INVITED);
+        $account->setActivationCode(Rand::getString(64));
 
         if (isset($data->status)) {
             $status = $this->convertStatus($data->status);
@@ -71,6 +85,11 @@ class AccountResource extends AbstractResourceListener
         $this->entityManager->persist($account);
         $this->entityManager->persist($identity);
         $this->entityManager->flush();
+
+        $this->notificationTaskService->notify('account-created', [
+            'account' => $account,
+            'identity' => $identity,
+        ]);
 
         return new AccountEntity($account);
     }

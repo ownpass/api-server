@@ -67,7 +67,8 @@ return [
         ],
     ],
     'ownpass_notifications' => [
-        'device.created' => [
+        'device-created' => [
+            'event' => 'device-created',
             'email' => [
                 'template' => 'notifications/device-created',
                 'subject' => 'email_device_created_subject',
