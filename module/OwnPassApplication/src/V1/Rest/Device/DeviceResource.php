@@ -16,6 +16,7 @@ use OwnPassApplication\Entity\Device;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassApplication\TaskService\Notification;
 use OwnPassUser\Entity\Account;
+use Zend\Http\PhpEnvironment\RemoteAddress;
 use Zend\Math\Rand;
 
 class DeviceResource extends AbstractResourceListener
@@ -40,10 +41,13 @@ class DeviceResource extends AbstractResourceListener
     {
         $account = $this->entityManager->find(Account::class, $this->getAccountId());
 
+        $remoteAddress = new RemoteAddress();
+
         $device = new Device(
             $account,
             $data->name,
             $data->description,
+            $remoteAddress->getIpAddress(),
             $this->getEvent()->getRequest()->getServer('HTTP_USER_AGENT')
         );
 
@@ -53,11 +57,7 @@ class DeviceResource extends AbstractResourceListener
         $this->entityManager->persist($device);
         $this->entityManager->flush($device);
 
-        $this->notificationService->notify('device-created', $account, [
-            'account' => $account,
-            'device' => $device,
-            'activationCode' => $activationCode,
-        ]);
+        $this->notificationService->notifyUserOfNewDevice($account, $device, $activationCode);
 
         return new DeviceEntity($device);
     }

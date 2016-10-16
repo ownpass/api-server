@@ -105,6 +105,16 @@ return [
     'session_storage' => [
         'type' => 'SessionArrayStorage',
     ],
+    'translator' => [
+        'locale' => 'en_US',
+        'translation_file_patterns' => [
+            [
+                'type' => 'phparray',
+                'base_dir' => __DIR__ . '/../language',
+                'pattern' => '%s.php',
+            ],
+        ],
+    ],
     'validators' => [
         'invokables' => [
             Uuid::class => Uuid::class,

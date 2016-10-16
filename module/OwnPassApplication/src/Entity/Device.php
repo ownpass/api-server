@@ -45,6 +45,11 @@ class Device
     /**
      * @var string
      */
+    private $remoteAddress;
+
+    /**
+     * @var string
+     */
     private $userAgent;
 
     /**
@@ -52,17 +57,20 @@ class Device
      */
     private $activationCode;
 
-    public function __construct(Account $account, $name, $description, $userAgent)
+    public function __construct(Account $account, $name, $description, $remoteAddress, $userAgent)
     {
         $this->id = Uuid::uuid4();
         $this->account = $account;
         $this->creationDate = new DateTimeImmutable();
         $this->name = $name;
         $this->description = $description;
+        $this->remoteAddress = $remoteAddress;
         $this->userAgent = $userAgent;
     }
 
     /**
+     * Gets the value of the "id" field.
+     *
      * @return UuidInterface
      */
     public function getId()
@@ -71,6 +79,8 @@ class Device
     }
 
     /**
+     * Gets the value of the "account" field.
+     *
      * @return Account
      */
     public function getAccount()
@@ -79,6 +89,8 @@ class Device
     }
 
     /**
+     * Gets the value of the "creationDate" field.
+     *
      * @return DateTimeInterface
      */
     public function getCreationDate()
@@ -87,6 +99,8 @@ class Device
     }
 
     /**
+     * Gets the value of the "name" field.
+     *
      * @return string
      */
     public function getName()
@@ -95,7 +109,9 @@ class Device
     }
 
     /**
-     * @return string|null
+     * Gets the value of the "description" field.
+     *
+     * @return null|string
      */
     public function getDescription()
     {
@@ -103,6 +119,18 @@ class Device
     }
 
     /**
+     * Gets the value of the "remoteAddress" field.
+     *
+     * @return string
+     */
+    public function getRemoteAddress()
+    {
+        return $this->remoteAddress;
+    }
+
+    /**
+     * Gets the value of the "userAgent" field.
+     *
      * @return string
      */
     public function getUserAgent()
@@ -111,7 +139,9 @@ class Device
     }
 
     /**
-     * @return string|null
+     * Gets the value of the "activationCode" field.
+     *
+     * @return null|string
      */
     public function getActivationCode()
     {
@@ -119,7 +149,9 @@ class Device
     }
 
     /**
-     * @param string|null $activationCode
+     * Sets the value of the "activationCode" field.
+     *
+     * @param null|string $activationCode
      */
     public function setActivationCode($activationCode)
     {

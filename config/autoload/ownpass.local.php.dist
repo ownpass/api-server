@@ -10,6 +10,7 @@
 return [
     'ownpass_security' => [
         'password' => '',
+        'control_panel_url' => 'http://your-own-pass-control-panel',
     ],
     'ownpass_email' => [
         'from_address' => '',

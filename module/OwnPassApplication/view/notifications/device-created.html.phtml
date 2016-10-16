@@ -1,9 +1,25 @@
 <?php $this->layout('layout/email'); ?>
 
-<p>A device has been created!</p>
+<p>
+    Hi <?php echo $this->escapeHtml($this->account->getName()); ?>,
+</p>
 
-<?php
+<p>
+    You have logged in to OwnPass via an unknown device. In order to use this device you need to activate it. If
+    this device does not belong to you, you can simply delete this e-mail.
+</p>
 
-var_dump($this->activationCode);
-var_dump($this->account->getEmailAddress());
-var_dump($this->device->getName());
+<ul>
+    <li><strong>Device name:</strong> <?php echo $this->escapeHtml($this->device->getName()); ?></li>
+    <li><strong>Device description:</strong> <?php echo $this->escapeHtml($this->device->getDescription()); ?></li>
+    <li><strong>IP Address:</strong> <?php echo $this->escapeHtml($this->device->getRemoteAddress()); ?></li>
+    <li><strong>User agent:</strong> <?php echo $this->escapeHtml($this->device->getUserAgent()); ?></li>
+</ul>
+
+<p>
+    If this device belongs to you, please activate it by <a href="<?php echo sprintf(
+        '%s/device/activate/%s',
+        $this->controlPanelUrl,
+        $this->activationCode
+    ); ?>">clicking here</a>.
+</p>

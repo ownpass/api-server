@@ -12,6 +12,7 @@
 
         <field name="name" type="string" />
         <field name="description" type="string" nullable="true" />
+        <field name="remoteAddress" type="string" />
         <field name="userAgent" type="string" />
         <field name="activationCode" type="string" nullable="true" length="32" />
 

@@ -23,7 +23,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->account = new Account('identity', 'credential', 'firstName', 'lastName');
-        $this->device = new Device($this->account, 'name', 'description', 'userAgent');
+        $this->device = new Device($this->account, 'name', 'description', 'remoteAddress', 'userAgent');
     }
 
     /**

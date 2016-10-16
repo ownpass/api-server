@@ -86,10 +86,8 @@ class AccountResource extends AbstractResourceListener
         $this->entityManager->persist($identity);
         $this->entityManager->flush();
 
-        $this->notificationTaskService->notify('account-created', [
-            'account' => $account,
-            'identity' => $identity,
-        ]);
+        $this->notificationTaskService->notifyNewUser($account, $identity);
+        $this->notificationTaskService->notifyAdminsOfNewUser($account, $identity);
 
         return new AccountEntity($account);
     }

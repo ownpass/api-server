@@ -9,8 +9,10 @@
 
 namespace OwnPassApplication\TaskService;
 
+use OwnPassApplication\Entity\Device;
 use OwnPassApplication\Event\Notification as NotificationEvent;
 use OwnPassUser\Entity\Account;
+use OwnPassUser\Entity\Identity;
 use Zend\EventManager\EventManagerInterface;
 
 class Notification
@@ -20,9 +22,15 @@ class Notification
      */
     private $eventManager;
 
-    public function __construct(EventManagerInterface $eventManager)
+    /**
+     * @var array
+     */
+    private $config;
+
+    public function __construct(EventManagerInterface $eventManager, array $config)
     {
         $this->eventManager = $eventManager;
+        $this->config = $config;
     }
 
     /**
@@ -33,7 +41,30 @@ class Notification
         return $this->eventManager;
     }
 
-    public function notify($notificationId, Account $receiver, array $variables = [], array $options = [])
+    public function notifyUserOfNewDevice(Account $user, Device $device, $activationCode)
+    {
+        $this->notify('device-created', $user, [
+            'account' => $user,
+            'device' => $device,
+            'activationCode' => $activationCode,
+            'controlPanelUrl' => $this->config['ownpass_security']['control_panel_url'],
+        ]);
+    }
+
+    public function notifyNewUser(Account $account, Identity $identity)
+    {
+        $this->notify('account-created', [
+            'account' => $account,
+            'identity' => $identity,
+        ]);
+    }
+
+    public function notifyAdminsOfNewUser(Account $account, Identity $identity)
+    {
+        // @todo Notify all admins that a new account has been created.
+    }
+
+    private function notify($notificationId, Account $receiver, array $variables = [], array $options = [])
     {
         $this->eventManager->triggerEvent(new NotificationEvent(NotificationEvent::EVENT_NOTIFY, $this, [
             'id' => $notificationId,

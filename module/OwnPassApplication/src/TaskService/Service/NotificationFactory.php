@@ -18,6 +18,6 @@ class NotificationFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new Notification(new EventManager());
+        return new Notification(new EventManager(), $container->get('config'));
     }
 }

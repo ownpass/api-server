@@ -8,14 +8,5 @@
  */
 
 return [
-    'ownpass_security' => [
-        'password' => '',
-        'control_panel_url' => '',
-        'private_key_bits' => 4096,
-        'private_key' => 'data/security/ownpass_private_key.pem',
-        'public_key' => 'data/security/ownpass_public_key.pub',
-    ],
-    'translator' => [
-        'locale' => 'en-US',
-    ],
+    'email_device_created_subject' => 'OwnPass device authorization required',
 ];
