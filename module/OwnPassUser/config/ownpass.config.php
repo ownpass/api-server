@@ -114,6 +114,15 @@ return [
     'session_containers' => [
         'AuthenticateSession',
     ],
+    'translator' => [
+        'translation_file_patterns' => [
+            [
+                'type' => 'phparray',
+                'base_dir' => __DIR__ . '/../language',
+                'pattern' => '%s.php',
+            ],
+        ],
+    ],
     'validators' => [
         'factories' => [
             Validator\NoIdentityExists::class => Validator\Service\NoIdentityExistsFactory::class,

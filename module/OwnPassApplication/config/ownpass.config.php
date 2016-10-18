@@ -106,7 +106,6 @@ return [
         'type' => 'SessionArrayStorage',
     ],
     'translator' => [
-        'locale' => 'en_US',
         'translation_file_patterns' => [
             [
                 'type' => 'phparray',
