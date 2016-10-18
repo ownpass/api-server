@@ -64,6 +64,31 @@ class ValidateRole extends AbstractListenerAggregate
 
     private function guardRestApi(MvcEvent $event, $method, RouteMatch $routeMatch, $config)
     {
+        $isEntity = $routeMatch->getParam($config['route_identifier_name']) !== null;
+
+        if ($isEntity) {
+            if (!in_array($method, $config['entity_http_methods'])) {
+                return null;
+            }
+
+            if (!array_key_exists('entity_role_guard', $config)) {
+                throw new RuntimeException('Missing "entity_role_guard" configuration for API.');
+            }
+
+            $guard = $config['entity_role_guard'];
+        } else {
+            if (!in_array($method, $config['collection_http_methods'])) {
+                return null;
+            }
+
+            if (!array_key_exists('collection_role_guard', $config)) {
+                throw new RuntimeException('Missing "collection_role_guard" configuration for API.');
+            }
+
+            $guard = $config['collection_role_guard'];
+        }
+
+        return $this->validateGuard($event, $method, $guard);
     }
 
     private function guardRpcApi(MvcEvent $event, $method, $config)
