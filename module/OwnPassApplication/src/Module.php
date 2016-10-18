@@ -9,10 +9,11 @@
 
 namespace OwnPassApplication;
 
+use Doctrine\ORM\EntityManager;
 use OwnPassApplication\Listener\DeviceHeader;
 use OwnPassApplication\Listener\SecureScheme;
+use OwnPassApplication\Listener\ValidateRole;
 use OwnPassApplication\TaskService\Notification;
-use OwnPassUser\Entity\Account;
 use Zend\Console\Adapter\AdapterInterface;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -71,6 +72,12 @@ class Module implements
 
         $deviceHeaderListener = new DeviceHeader();
         $deviceHeaderListener->attach($eventManager);
+
+        $validateRoleListener = new ValidateRole(
+            $serviceManager->get(EntityManager::class),
+            $serviceManager->get('config')
+        );
+        $validateRoleListener->attach($eventManager);
 
         /** @var Notification $notificationService */
         $notificationService = $serviceManager->get(Notification::class);

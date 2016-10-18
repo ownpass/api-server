@@ -12,11 +12,13 @@ namespace OwnPassApplication\Listener;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use OwnPassApplication\Entity\Device;
+use RuntimeException;
 use Zend\Console\Request as ConsoleRequest;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Http\Header\GenericHeader;
 use Zend\Mvc\MvcEvent;
+use Zend\Router\RouteMatch;
 use ZF\ApiProblem\ApiProblem;
 use ZF\ApiProblem\ApiProblemResponse;
 
@@ -26,68 +28,130 @@ class DeviceHeader extends AbstractListenerAggregate
 
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], PHP_INT_MAX);
+        $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], -10);
     }
 
-    public function onDispatch(MvcEvent $event)
+    public function onRoute(MvcEvent $event)
     {
-        if ($event->getRequest() instanceof ConsoleRequest) {
-            return;
-        }
-
         $config = $event->getApplication()->getServiceManager()->get('config');
-        $routeName = $event->getRouteMatch()->getMatchedRouteName();
+        $routeMatch = $event->getRouteMatch();
+        $controllerFqcn = $routeMatch->getParam('controller');
 
-        if (!array_key_exists($routeName, $config['router']['routes'])) {
-            return;
+        if (array_key_exists($controllerFqcn, $config['zf-rest'])) {
+            $method = $event->getRequest()->getMethod();
+
+            return $this->guardRestApi($event, $method, $routeMatch, $config['zf-rest'][$controllerFqcn]);
         }
 
-        // The device id is not required in the following cases:
-        // - When we are handling an oauth request.
-        // - When we are creating a new device.
-        // - When we activate a device
-        if ($routeName === 'oauth' ||
-            $routeName === 'own-pass-application.rpc.device-activate' ||
-            ($routeName === 'own-pass-application.rest.device' && $event->getRequest()->isPost())) {
-            return;
+        if (array_key_exists($controllerFqcn, $config['zf-rpc'])) {
+            $method = $event->getRequest()->getMethod();
+
+            return $this->guardRpcApi($event, $method, $config['zf-rpc'][$controllerFqcn]);
+        }
+    }
+
+    private function guardRestApi(MvcEvent $event, $method, RouteMatch $routeMatch, $config)
+    {
+        $isEntity = $routeMatch->getParam($config['route_identifier_name']) !== null;
+
+        if ($isEntity) {
+            if (!in_array($method, $config['entity_http_methods'])) {
+                return null;
+            }
+
+            if (!array_key_exists('entity_device_guard', $config)) {
+                throw new RuntimeException('Missing "entity_device_guard" configuration for API.');
+            }
+
+            $guard = $config['entity_device_guard'];
+        } else {
+            if (!in_array($method, $config['collection_http_methods'])) {
+                return null;
+            }
+
+            if (!array_key_exists('collection_device_guard', $config)) {
+                throw new RuntimeException('Missing "collection_device_guard" configuration for API.');
+            }
+
+            $guard = $config['collection_device_guard'];
         }
 
+        return $this->validateGuard($event, $method, $guard);
+    }
+
+    private function guardRpcApi(MvcEvent $event, $method, $config)
+    {
+        if (!in_array($method, $config['http_methods'])) {
+            return null;
+        }
+
+        if (!array_key_exists('device_guard', $config)) {
+            throw new RuntimeException('Missing "device_guard" configuration for API.');
+        }
+
+        return $this->validateGuard($event, $method, $config['device_guard']);
+    }
+
+    private function validateGuard(MvcEvent $event, $method, array $guard)
+    {
+        if (!array_key_exists($method, $guard)) {
+            throw new RuntimeException('No guard set for method ' . $method);
+        }
+
+        if (!$guard[$method]) {
+            return null;
+        }
+
+        $response = $this->validateHeader($event);
+        if (!$response) {
+            return null;
+        }
+
+        return $response;
+    }
+
+    public function validateHeader(MvcEvent $event)
+    {
         /** @var GenericHeader $header */
         $header = $event->getRequest()->getHeaders()->get(self::HEADER_NAME);
 
         if (!$header) {
-            $this->buildErrorResponse($event, sprintf(
+            return $this->buildErrorResponse($event, sprintf(
                 'Missing "%s" header.',
                 self::HEADER_NAME
             ));
-
-            return $event->getResponse();
         }
 
-        $deviceId = $header->getFieldValue();
+        $device = $this->getDevice($event, $header->getFieldValue());
+        if (!$device) {
+            return $this->buildErrorResponse($event, sprintf(
+                'Invalid device id provided in header "%s".',
+                self::HEADER_NAME
+            ));
+        }
 
+        if ($device->getActivationCode()) {
+            return $this->buildErrorResponse($event, sprintf(
+                'The device with id "%s" is not activated.',
+                $device->getId()
+            ));
+        }
+
+        return null;
+    }
+
+    private function getDevice(MvcEvent $event, $deviceId)
+    {
         try {
             $entityManager = $event->getApplication()->getServiceManager()->get(EntityManager::class);
 
             /** @var Device $device */
             $device = $entityManager->find(Device::class, $deviceId);
         } catch (Exception $e) {
-            $this->buildErrorResponse($event, sprintf(
-                'Invalid device id provided in header "%s".',
-                self::HEADER_NAME
-            ));
-
-            return $event->getResponse();
+            $device = null;
         }
 
-        if ($device->getActivationCode()) {
-            $this->buildErrorResponse($event, sprintf(
-                'The device with id "%s" is not activated.',
-                $deviceId
-            ));
-
-            return $event->getResponse();
-        }
+        return $device;
     }
 
     private function buildErrorResponse(MvcEvent $event, $msg)
@@ -95,5 +159,7 @@ class DeviceHeader extends AbstractListenerAggregate
         $response = new ApiProblemResponse(new ApiProblem(ApiProblemResponse::STATUS_CODE_403, $msg));
 
         $event->setResponse($response);
+
+        return $response;
     }
 }

@@ -9,11 +9,12 @@
 
 namespace OwnPassApplication\Rest;
 
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use OwnPassUser\Entity\Account;
 use ZF\Rest\AbstractResourceListener as BaseAbstractResourceListener;
 
-class AbstractResourceListener extends BaseAbstractResourceListener
+abstract class AbstractResourceListener extends BaseAbstractResourceListener
 {
     protected function getAccountId()
     {
@@ -26,16 +27,14 @@ class AbstractResourceListener extends BaseAbstractResourceListener
         return $identity['user_id'];
     }
 
-    // TODO: We should move this to a listener so we don't have to call this method in every api service.
-    protected function validateScope($name)
+    public function getAccount(EntityManagerInterface $entityManager, $id)
     {
-        $identity = $this->getIdentity()->getAuthenticationIdentity();
-
-        $scopes = explode(' ', $identity['scope']);
-
-        // TODO: Check the correct access rightt.
-        if (!in_array($name, $scopes)) {
-            //return new ApiProblem(ApiProblemResponse::STATUS_CODE_403, 'Incorrect scope.');
+        try {
+            $account = $entityManager->find(Account::class, $id);
+        } catch (Exception $e) {
+            $account = null;
         }
+
+        return $account;
     }
 }

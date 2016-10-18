@@ -64,11 +64,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         $account = new Account($data->name, $data->email_address);
         $account->setRole($data->role);
         $account->setStatus(Account::STATUS_INVITED);
@@ -100,11 +95,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         try {
             /** @var Account $account */
             $account = $this->entityManager->find(Account::class, $id);
@@ -130,11 +120,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         try {
             /** @var Account $account */
             $account = $this->entityManager->find(Account::class, $id);
@@ -157,11 +142,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         $repository = $this->entityManager->getRepository(Account::class);
 
         $adapter = new Selectable($repository);
@@ -178,11 +158,6 @@ class AccountResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         try {
             /** @var Account $account */
             $account = $this->entityManager->find(Account::class, $id);

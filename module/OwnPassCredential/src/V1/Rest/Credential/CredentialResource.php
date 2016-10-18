@@ -44,17 +44,7 @@ class CredentialResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
-        try {
-            $account = $this->entityManager->find(Account::class, $data->account_id);
-        } catch (Exception $e) {
-            $account = null;
-        }
-
+        $account = $this->getAccount($this->entityManager, $data->account_id);
         if (!$account) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Account not found.');
         }
@@ -83,11 +73,6 @@ class CredentialResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         $credential = $this->entityManager->find(Credential::class, $id);
         if (!$credential) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
@@ -107,11 +92,6 @@ class CredentialResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         $credential = $this->entityManager->find(Credential::class, $id);
 
         if (!$credential) {
@@ -129,11 +109,6 @@ class CredentialResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         $repository = $this->entityManager->getRepository(Credential::class);
 
         $adapter = new Selectable($repository);

@@ -81,6 +81,20 @@ return [
                 0 => 'GET',
                 1 => 'POST',
             ],
+            'entity_device_guard' => [
+                'GET' => true,
+            ],
+            'entity_role_guard' => [
+                'GET' => 'admin',
+            ],
+            'collection_device_guard' => [
+                'GET' => true,
+                'POST' => false,
+            ],
+            'collection_role_guard' => [
+                'GET' => 'admin',
+                'POST' => null,
+            ],
             'collection_query_whitelist' => [],
             'page_size' => 25,
             'page_size_param' => null,
@@ -179,6 +193,12 @@ return [
                 0 => 'POST',
             ],
             'route_name' => 'own-pass-application.rpc.device-activate',
+            'device_guard' => [
+                'POST' => false,
+            ],
+            'role_guard' => [
+                'POST' => null,
+            ],
         ],
     ],
 ];

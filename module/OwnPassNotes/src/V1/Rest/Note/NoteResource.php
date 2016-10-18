@@ -31,12 +31,7 @@ class NoteResource extends AbstractResourceListener
 
     public function create($data)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
-        $account = $this->entityManager->find(Account::class, $data->account_id);
+        $account = $this->getAccount($this->entityManager, $data->account_id);
         if (!$account) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Account not found.');
         }
@@ -54,12 +49,7 @@ class NoteResource extends AbstractResourceListener
 
     public function delete($id)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
-        $note = $this->entityManager->find(Note::class, $id);
+        $note = $this->findNote($id);
         if (!$note) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
@@ -72,12 +62,7 @@ class NoteResource extends AbstractResourceListener
 
     public function fetch($id)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
-        $note = $this->entityManager->find(Note::class, $id);
+        $note = $this->findNote($id);
         if (!$note) {
             return null;
         }
@@ -87,11 +72,6 @@ class NoteResource extends AbstractResourceListener
 
     public function fetchAll($params = [])
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
         $repository = $this->entityManager->getRepository(Note::class);
 
         $adapter = new Selectable($repository);
@@ -101,12 +81,7 @@ class NoteResource extends AbstractResourceListener
 
     public function update($id, $data)
     {
-        $response = $this->validateScope('admin');
-        if ($response) {
-            return $response;
-        }
-
-        $note = $this->entityManager->find(Note::class, $id);
+        $note = $this->findNote($id);
         if (!$note) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
@@ -119,5 +94,16 @@ class NoteResource extends AbstractResourceListener
         $this->entityManager->flush($note);
 
         return new NoteEntity($note);
+    }
+
+    private function findNote($id)
+    {
+        try {
+            $note = $this->entityManager->find(Note::class, $id);
+        } catch (\Exception $e) {
+            $note = null;
+        }
+
+        return $note;
     }
 }

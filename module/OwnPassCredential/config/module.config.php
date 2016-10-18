@@ -61,6 +61,26 @@ return [
                 0 => 'GET',
                 1 => 'POST',
             ],
+            'entity_device_guard' => [
+                'DELETE' => true,
+                'GET' => true,
+                'PATCH' => true,
+                'PUT' => true,
+            ],
+            'entity_role_guard' => [
+                'DELETE' => 'admin',
+                'GET' => 'admin',
+                'PATCH' => 'admin',
+                'PUT' => 'admin',
+            ],
+            'collection_device_guard' => [
+                'GET' => true,
+                'POST' => true,
+            ],
+            'collection_role_guard' => [
+                'GET' => 'admin',
+                'POST' => 'admin',
+            ],
             'collection_query_whitelist' => [],
             'page_size' => 25,
             'page_size_param' => null,

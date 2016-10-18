@@ -45,7 +45,7 @@ return [
                     __NAMESPACE__ => __NAMESPACE__
                 ],
             ],
-        ]
+        ],
     ],
     'router' => [
         'routes' => [
