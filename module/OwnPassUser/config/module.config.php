@@ -55,17 +55,17 @@ return [
                 'PUT' => true,
             ],
             'entity_role_guard' => [
-                'DELETE' => 'admin',
-                'GET' => 'admin',
-                'PUT' => 'admin',
+                'DELETE' => ['admin'],
+                'GET' => ['admin'],
+                'PUT' => ['admin'],
             ],
             'collection_device_guard' => [
                 'GET' => true,
                 'POST' => true,
             ],
             'collection_role_guard' => [
-                'GET' => 'admin',
-                'POST' => 'admin',
+                'GET' => ['admin'],
+                'POST' => ['admin'],
             ],
             'collection_query_whitelist' => [],
             'page_size' => 25,
@@ -135,6 +135,10 @@ return [
             'device_guard' => [
                 'GET' => true,
                 'PUT' => true,
+            ],
+            'role_guard' => [
+                'GET' => ['user', 'admin'],
+                'PUT' => ['user'],
             ],
         ],
     ],

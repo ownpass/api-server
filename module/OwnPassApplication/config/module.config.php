@@ -85,14 +85,14 @@ return [
                 'GET' => true,
             ],
             'entity_role_guard' => [
-                'GET' => 'admin',
+                'GET' => ['admin'],
             ],
             'collection_device_guard' => [
                 'GET' => true,
                 'POST' => false,
             ],
             'collection_role_guard' => [
-                'GET' => 'admin',
+                'GET' => ['admin'],
                 'POST' => null,
             ],
             'collection_query_whitelist' => [],

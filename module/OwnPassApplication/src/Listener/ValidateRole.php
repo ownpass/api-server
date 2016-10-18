@@ -123,11 +123,15 @@ class ValidateRole extends AbstractListenerAggregate
         /** @var Account $account */
         $account = $this->entityManager->find(Account::class, $identity['user_id']);
 
-        if ($account->getRole() !== $guard[$method]) {
-            return $this->buildError();
+        if ($guard[$method] === null) {
+            return null;
+        } elseif (is_array($guard[$method]) && in_array($account->getRole(), $guard[$method])) {
+            return null;
+        } elseif ($account->getRole() === $guard[$method]) {
+            return null;
         }
 
-        return null;
+        return $this->buildError();
     }
 
     protected function buildError()
