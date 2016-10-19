@@ -102,6 +102,24 @@ return [
                 0 => 'GET',
                 1 => 'POST',
             ],
+            'entity_device_guard' => [
+                'DELETE' => true,
+                'GET' => true,
+                'PUT' => true,
+            ],
+            'entity_role_guard' => [
+                'DELETE' => ['user'],
+                'GET' => ['user'],
+                'PUT' => ['user'],
+            ],
+            'collection_device_guard' => [
+                'GET' => true,
+                'POST' => true,
+            ],
+            'collection_role_guard' => [
+                'GET' => ['user'],
+                'POST' => ['user'],
+            ],
             'collection_query_whitelist' => [
                 0 => 'host',
             ],
