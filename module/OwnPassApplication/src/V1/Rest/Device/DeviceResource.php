@@ -51,7 +51,12 @@ class DeviceResource extends AbstractResourceListener
             $this->getEvent()->getRequest()->getServer('HTTP_USER_AGENT')
         );
 
-        $activationCode = Rand::getString(32);
+        $activationCode = Rand::getString(32, implode('', array_merge(
+            range('a', 'z'),
+            range('A', 'Z'),
+            range('0', '9')
+        )));
+
         $device->setActivationCode($activationCode);
 
         $this->entityManager->persist($device);
