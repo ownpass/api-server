@@ -108,17 +108,17 @@ return [
                 'PUT' => true,
             ],
             'entity_role_guard' => [
-                'DELETE' => ['user'],
-                'GET' => ['user'],
-                'PUT' => ['user'],
+                'DELETE' => ['user', 'admin'],
+                'GET' => ['user', 'admin'],
+                'PUT' => ['user', 'admin'],
             ],
             'collection_device_guard' => [
                 'GET' => true,
                 'POST' => true,
             ],
             'collection_role_guard' => [
-                'GET' => ['user'],
-                'POST' => ['user'],
+                'GET' => ['user', 'admin'],
+                'POST' => ['user', 'admin'],
             ],
             'collection_query_whitelist' => [
                 0 => 'host',

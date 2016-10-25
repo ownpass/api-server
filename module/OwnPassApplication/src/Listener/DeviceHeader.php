@@ -52,6 +52,10 @@ class DeviceHeader extends AbstractListenerAggregate
 
     private function guardRestApi(MvcEvent $event, $method, RouteMatch $routeMatch, $config)
     {
+        if (substr($config['route_name'], 0, 13) === 'zf-apigility/') {
+            return;
+        }
+
         $isEntity = $routeMatch->getParam($config['route_identifier_name']) !== null;
 
         if ($isEntity) {
@@ -60,7 +64,10 @@ class DeviceHeader extends AbstractListenerAggregate
             }
 
             if (!array_key_exists('entity_device_guard', $config)) {
-                throw new RuntimeException('Missing "entity_device_guard" configuration for API.');
+                throw new RuntimeException(sprintf(
+                    'Missing "entity_device_guard" configuration for API.',
+                    $config['route_name']
+                ));
             }
 
             $guard = $config['entity_device_guard'];
@@ -70,7 +77,10 @@ class DeviceHeader extends AbstractListenerAggregate
             }
 
             if (!array_key_exists('collection_device_guard', $config)) {
-                throw new RuntimeException('Missing "collection_device_guard" configuration for API.');
+                throw new RuntimeException(sprintf(
+                    'Missing "collection_device_guard" configuration for API.',
+                    $config['route_name']
+                ));
             }
 
             $guard = $config['collection_device_guard'];
@@ -85,8 +95,15 @@ class DeviceHeader extends AbstractListenerAggregate
             return null;
         }
 
+        if (substr($config['route_name'], 0, 13) === 'zf-apigility/') {
+            return;
+        }
+
         if (!array_key_exists('device_guard', $config)) {
-            throw new RuntimeException('Missing "device_guard" configuration for API.');
+            throw new RuntimeException(sprintf(
+                'Missing "device_guard" configuration for route "%s".',
+                $config['route_name']
+            ));
         }
 
         return $this->validateGuard($event, $method, $config['device_guard']);

@@ -3,6 +3,7 @@ return [
     'controllers' => [
         'factories' => [
             'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller' => \OwnPassApplication\V1\Rpc\DeviceActivate\DeviceActivateControllerFactory::class,
+            'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => \OwnPassApplication\V1\Rpc\Ping\PingControllerFactory::class,
         ],
     ],
     'input_filter_specs' => [
@@ -53,6 +54,16 @@ return [
                     ],
                 ],
             ],
+            'own-pass-application.rpc.ping' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/ping',
+                    'defaults' => [
+                        'controller' => 'OwnPassApplication\\V1\\Rpc\\Ping\\Controller',
+                        'action' => 'ping',
+                    ],
+                ],
+            ],
         ],
     ],
     'service_manager' => [
@@ -64,6 +75,7 @@ return [
         'uri' => [
             0 => 'own-pass-application.rest.device',
             1 => 'own-pass-application.rpc.device-activate',
+            2 => 'own-pass-application.rpc.ping',
         ],
     ],
     'zf-rest' => [
@@ -85,14 +97,18 @@ return [
                 'GET' => true,
             ],
             'entity_role_guard' => [
-                'GET' => ['admin'],
+                'GET' => [
+                    0 => 'admin',
+                ],
             ],
             'collection_device_guard' => [
                 'GET' => true,
                 'POST' => false,
             ],
             'collection_role_guard' => [
-                'GET' => ['admin'],
+                'GET' => [
+                    0 => 'admin',
+                ],
                 'POST' => null,
             ],
             'collection_query_whitelist' => [],
@@ -107,6 +123,7 @@ return [
         'controllers' => [
             'OwnPassApplication\\V1\\Rest\\Device\\Controller' => 'HalJson',
             'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller' => 'Json',
+            'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => 'Json',
         ],
         'accept_whitelist' => [
             'OwnPassApplication\\V1\\Rest\\Device\\Controller' => [
@@ -119,6 +136,11 @@ return [
                 1 => 'application/json',
                 2 => 'application/*+json',
             ],
+            'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => [
+                0 => 'application/vnd.own-pass-application.v1+json',
+                1 => 'application/json',
+                2 => 'application/*+json',
+            ],
         ],
         'content_type_whitelist' => [
             'OwnPassApplication\\V1\\Rest\\Device\\Controller' => [
@@ -126,6 +148,10 @@ return [
                 1 => 'application/json',
             ],
             'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller' => [
+                0 => 'application/vnd.own-pass-application.v1+json',
+                1 => 'application/json',
+            ],
+            'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => [
                 0 => 'application/vnd.own-pass-application.v1+json',
                 1 => 'application/json',
             ],
@@ -176,6 +202,17 @@ return [
                     ],
                 ],
             ],
+            'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => [
+                'actions' => [
+                    'Ping' => [
+                        'GET' => true,
+                        'POST' => false,
+                        'PUT' => false,
+                        'PATCH' => false,
+                        'DELETE' => false,
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-content-validation' => [
@@ -198,6 +235,19 @@ return [
             ],
             'role_guard' => [
                 'POST' => null,
+            ],
+        ],
+        'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => [
+            'service_name' => 'Ping',
+            'http_methods' => [
+                0 => 'GET',
+            ],
+            'route_name' => 'own-pass-application.rpc.ping',
+            'device_guard' => [
+                'GET' => true,
+            ],
+            'role_guard' => [
+                'GET' => ['user', 'admin'],
             ],
         ],
     ],

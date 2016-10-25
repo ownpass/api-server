@@ -64,6 +64,10 @@ class ValidateRole extends AbstractListenerAggregate
 
     private function guardRestApi(MvcEvent $event, $method, RouteMatch $routeMatch, $config)
     {
+        if (substr($config['route_name'], 0, 13) === 'zf-apigility/') {
+            return;
+        }
+
         $isEntity = $routeMatch->getParam($config['route_identifier_name']) !== null;
 
         if ($isEntity) {
@@ -93,6 +97,10 @@ class ValidateRole extends AbstractListenerAggregate
 
     private function guardRpcApi(MvcEvent $event, $method, $config)
     {
+        if (substr($config['route_name'], 0, 13) === 'zf-apigility/') {
+            return;
+        }
+
         if (!in_array($method, $config['http_methods'])) {
             return null;
         }
