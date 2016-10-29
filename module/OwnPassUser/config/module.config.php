@@ -138,7 +138,7 @@ return [
             ],
             'role_guard' => [
                 'GET' => ['user', 'admin'],
-                'PUT' => ['user'],
+                'PUT' => ['user', 'admin'],
             ],
         ],
     ],
