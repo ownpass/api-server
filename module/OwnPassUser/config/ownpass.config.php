@@ -78,6 +78,13 @@ return [
                 'subject' => 'email_account_created_subject',
             ],
         ],
+        'account-recover-credential' => [
+            'event' => 'account-recover-credential',
+            'email' => [
+                'template' => 'notifications/recover-account',
+                'subject' => 'email_recover_account',
+            ],
+        ],
     ],
     'router' => [
         'routes' => [
@@ -130,6 +137,12 @@ return [
     ],
     'view_manager' => [
         'template_map' => [
+            'notifications/account-created.html.phtml' => __DIR__ . '/../view/notifications/account-created.html.phtml',
+            'notifications/account-created.text.phtml' => __DIR__ . '/../view/notifications/account-created.text.phtml',
+            'notifications/account-welcome.html.phtml' => __DIR__ . '/../view/notifications/account-welcome.html.phtml',
+            'notifications/account-welcome.text.phtml' => __DIR__ . '/../view/notifications/account-welcome.text.phtml',
+            'notifications/recover-account.html.phtml' => __DIR__ . '/../view/notifications/recover-account.html.phtml',
+            'notifications/recover-account.text.phtml' => __DIR__ . '/../view/notifications/recover-account.text.phtml',
             'own-pass-user/authenticate/login' => __DIR__ . '/../view/own-pass-user/authenticate/login.phtml',
         ],
     ],

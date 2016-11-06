@@ -8,7 +8,8 @@
  */
 
 return [
-    'email_account_welcome_subject' => 'Your OwnPass has been created',
-    'email_account_created_subject' => 'Your OwnPass has been created',
-    'email_recover_account' => 'Recover your OwnPass credential',
+    'oAuthAuthorizeFormTitle' => 'Authorize',
+    'oAuthAuthorizeFormDescription' => 'Are you sure you want to authorize this application to have access to your account?',
+    'oAuthAuthorizeFormYes' => 'Yes',
+    'oAuthAuthorizeFormNo' => 'No',
 ];

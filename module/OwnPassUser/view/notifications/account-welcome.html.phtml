@@ -1,8 +1,30 @@
-<?php $this->layout('layout/email'); ?>
-
-<p>Hi, somebody created an account for you. Please activate it to make use of OwnPass.</p>
-
 <?php
 
-var_dump($this->account);
-var_dump($this->identity);
+$this->layout('layout/email');
+
+/** @var \OwnPassUser\Entity\Account $account */
+$account = $this->account;
+
+?>
+
+<p>
+    Hi <?php echo $this->escapeHtml($account->getName()); ?>,
+</p>
+
+<p>
+    Somebody created an account for you. In order to start using OwnPass, please activate your account by clicking
+    the link below
+</p>
+
+<ul>
+    <li>
+        <strong>Activation link:</strong> <?php echo $this->escapeHtml($this->activationLink); ?>
+    </li>
+    <li>
+        <strong>Activation code:</strong> <?php echo $this->escapeHtml($account->getActivationCode()); ?>
+    </li>
+</ul>
+
+<p>
+    This e-mail has been automatically generated.
+</p>

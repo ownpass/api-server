@@ -26,12 +26,23 @@ return [
                     ],
                 ],
             ],
+            'own-pass-user.rpc.recover-credential' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/recover/credential',
+                    'defaults' => [
+                        'controller' => 'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller',
+                        'action' => 'recoverCredential',
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-versioning' => [
         'uri' => [
             0 => 'own-pass-user.rest.account',
             2 => 'own-pass-user.rpc.user',
+            3 => 'own-pass-user.rpc.recover-credential',
         ],
     ],
     'zf-rest' => [
@@ -55,17 +66,27 @@ return [
                 'PUT' => true,
             ],
             'entity_role_guard' => [
-                'DELETE' => ['admin'],
-                'GET' => ['admin'],
-                'PUT' => ['admin'],
+                'DELETE' => [
+                    0 => 'admin',
+                ],
+                'GET' => [
+                    0 => 'admin',
+                ],
+                'PUT' => [
+                    0 => 'admin',
+                ],
             ],
             'collection_device_guard' => [
                 'GET' => true,
                 'POST' => true,
             ],
             'collection_role_guard' => [
-                'GET' => ['admin'],
-                'POST' => ['admin'],
+                'GET' => [
+                    0 => 'admin',
+                ],
+                'POST' => [
+                    0 => 'admin',
+                ],
             ],
             'collection_query_whitelist' => [],
             'page_size' => 25,
@@ -79,6 +100,7 @@ return [
         'controllers' => [
             'OwnPassUser\\V1\\Rest\\Account\\Controller' => 'HalJson',
             'OwnPassUser\\V1\\Rpc\\User\\Controller' => 'Json',
+            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => 'Json',
         ],
         'accept_whitelist' => [
             'OwnPassUser\\V1\\Rest\\Account\\Controller' => [
@@ -91,6 +113,11 @@ return [
                 1 => 'application/json',
                 2 => 'application/*+json',
             ],
+            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
+                0 => 'application/vnd.own-pass-user.v1+json',
+                1 => 'application/json',
+                2 => 'application/*+json',
+            ],
         ],
         'content_type_whitelist' => [
             'OwnPassUser\\V1\\Rest\\Account\\Controller' => [
@@ -98,6 +125,10 @@ return [
                 1 => 'application/json',
             ],
             'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
+                0 => 'application/vnd.own-pass-user.v1+json',
+                1 => 'application/json',
+            ],
+            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
                 0 => 'application/vnd.own-pass-user.v1+json',
                 1 => 'application/json',
             ],
@@ -122,6 +153,7 @@ return [
     'controllers' => [
         'factories' => [
             'OwnPassUser\\V1\\Rpc\\User\\Controller' => \OwnPassUser\V1\Rpc\User\UserControllerFactory::class,
+            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => \OwnPassUser\V1\Rpc\RecoverCredential\RecoverCredentialControllerFactory::class,
         ],
     ],
     'zf-rpc' => [
@@ -137,9 +169,26 @@ return [
                 'PUT' => true,
             ],
             'role_guard' => [
-                'GET' => ['user', 'admin'],
-                'PUT' => ['user', 'admin'],
+                'GET' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
+                'PUT' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
             ],
+        ],
+        'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
+            'service_name' => 'RecoverCredential',
+            'http_methods' => [
+                0 => 'POST',
+            ],
+            'route_name' => 'own-pass-user.rpc.recover-credential',
+            'device_guard' => [
+                'POST' => false,
+            ],
+            'role_guard' => [],
         ],
     ],
     'zf-content-validation' => [
@@ -149,6 +198,9 @@ return [
         ],
         'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
             'input_filter' => 'OwnPassUser\\V1\\Rpc\\User\\Controller',
+        ],
+        'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
+            'input_filter' => 'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller',
         ],
     ],
     'input_filter_specs' => [
@@ -180,7 +232,7 @@ return [
                     1 => [
                         'name' => \OwnPassUser\Validator\NoIdentityExists::class,
                         'options' => [
-                            'directory' => \OwnPassUser\Entity\Identity::DIRECTORY_EMAIL,
+                            \directory::class => 'email',
                         ],
                     ],
                 ],
@@ -453,6 +505,20 @@ return [
                 ],
                 'name' => 'role',
                 'description' => 'The role of the user.',
+            ],
+        ],
+        'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
+            0 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\EmailAddress::class,
+                        'options' => [],
+                    ],
+                ],
+                'filters' => [],
+                'name' => 'email_address',
+                'description' => 'The new credential to authenticate with.',
             ],
         ],
     ],

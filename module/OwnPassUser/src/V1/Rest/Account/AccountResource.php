@@ -67,7 +67,11 @@ class AccountResource extends AbstractResourceListener
         $account = new Account($data->name, $data->email_address);
         $account->setRole($data->role);
         $account->setStatus(Account::STATUS_INVITED);
-        $account->setActivationCode(Rand::getString(64));
+        $account->setActivationCode(Rand::getString(64, implode('', array_merge(
+            range('a', 'z'),
+            range('A', 'Z'),
+            range('0', '9')
+        ))));
 
         if (isset($data->status)) {
             $status = $this->convertStatus($data->status);

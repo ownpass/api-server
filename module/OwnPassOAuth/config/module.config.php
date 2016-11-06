@@ -94,6 +94,15 @@ return [
             TaskService\OAuth::class => TaskService\Service\OAuthFactory::class,
         ],
     ],
+    'translator' => [
+        'translation_file_patterns' => [
+            [
+                'type' => 'phparray',
+                'base_dir' => __DIR__ . '/../language',
+                'pattern' => '%s.php',
+            ],
+        ],
+    ],
     'view_manager' => [
         'template_map' => [
             'own-pass-o-auth/o-auth/authorize' => __DIR__ . '/../view/own-pass-o-auth/o-auth/authorize.phtml',

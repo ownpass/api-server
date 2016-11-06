@@ -53,7 +53,7 @@ class Notification
 
     public function notifyNewUser(Account $account, Identity $identity)
     {
-        $this->notify('account-created', [
+        $this->notify('account-created', $account, [
             'account' => $account,
             'identity' => $identity,
         ]);
@@ -62,6 +62,13 @@ class Notification
     public function notifyAdminsOfNewUser(Account $account, Identity $identity)
     {
         // @todo Notify all admins that a new account has been created.
+    }
+
+    public function notifyRecoverAccount(Account $account)
+    {
+        $this->notify('account-recover-credential', $account, [
+            'account' => $account,
+        ]);
     }
 
     private function notify($notificationId, Account $receiver, array $variables = [], array $options = [])
