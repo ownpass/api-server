@@ -10,5 +10,6 @@
 return [
     'email_account_welcome_subject' => 'Your OwnPass has been created',
     'email_account_created_subject' => 'Your OwnPass has been created',
-    'email_recover_account' => 'Recover your OwnPass credential',
+    'email_account_activate_subject' => 'Your OwnPass account has been activated',
+    'email_account_deactivate_subject' => 'Your OwnPass account has been deactivated',
 ];

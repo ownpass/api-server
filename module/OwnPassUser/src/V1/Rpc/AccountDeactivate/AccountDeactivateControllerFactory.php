@@ -7,13 +7,13 @@
  * @license https://raw.githubusercontent.com/ownpass/ownpass/master/LICENSE MIT
  */
 
-namespace OwnPassUser\V1\Rpc\RecoverCredential;
+namespace OwnPassUser\V1\Rpc\AccountDeactivate;
 
 use Doctrine\ORM\EntityManager;
 use OwnPassApplication\TaskService\Notification;
 use Zend\Crypt\Password\PasswordInterface;
 
-class RecoverCredentialControllerFactory
+class AccountDeactivateControllerFactory
 {
     public function __invoke($controllers)
     {
@@ -23,6 +23,6 @@ class RecoverCredentialControllerFactory
 
         $notificationTaskService = $controllers->get(Notification::class);
 
-        return new RecoverCredentialController($entityManager, $crypter, $notificationTaskService);
+        return new AccountDeactivateController($entityManager, $crypter, $notificationTaskService);
     }
 }

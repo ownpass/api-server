@@ -1,0 +1,16 @@
+<?php
+
+$this->layout('layout/email');
+
+/** @var \OwnPassUser\Entity\Account $account */
+$account = $this->account;
+
+$activationLink = $this->opControlPanelUrl() . '/recover/activate/' . $this->escapeUrl($account->getActivationCode());
+
+?>
+
+Hi <?php echo $this->escapeHtml($account->getName()); ?>,
+
+Your account has been activated and a password has been set for your account. Enjoy the usage of OwnPass.
+
+This e-mail has been automatically generated.

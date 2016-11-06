@@ -7,18 +7,18 @@
  * @license https://raw.githubusercontent.com/ownpass/ownpass/master/LICENSE MIT
  */
 
-namespace OwnPassUser\V1\Rpc\RecoverCredential;
+namespace OwnPassUser\V1\Rpc\AccountActivate;
 
 use Doctrine\ORM\EntityManagerInterface;
 use OwnPassApplication\TaskService\Notification;
 use OwnPassUser\Entity\Account;
 use Zend\Crypt\Password\PasswordInterface;
-use Zend\Math\Rand;
 use Zend\Mvc\Controller\AbstractActionController;
-use ZF\ContentNegotiation\JsonModel;
-use ZF\Hal\Entity;
+use Zend\View\Model\JsonModel;
+use ZF\ApiProblem\ApiProblem;
+use ZF\ApiProblem\ApiProblemResponse;
 
-class RecoverCredentialController extends AbstractActionController
+class AccountActivateController extends AbstractActionController
 {
     /**
      * @var EntityManagerInterface
@@ -45,7 +45,7 @@ class RecoverCredentialController extends AbstractActionController
         $this->notificationTaskService = $notificationTaskService;
     }
 
-    public function recoverCredentialAction()
+    public function accountActivateAction()
     {
         $data = $this->bodyParams();
 
@@ -53,29 +53,40 @@ class RecoverCredentialController extends AbstractActionController
 
         /** @var Account $account */
         $account = $repository->findOneBy([
-            'emailAddress' => $data['email_address'],
+            'activationCode' => $data['activation_code'],
         ]);
 
         if (!$account) {
             return new JsonModel([
-                'email_address' => $data['email_address'],
+                'activation_code' => $data['activation_code'],
             ]);
         }
 
-        $account->setStatus(Account::STATUS_INACTIVE);
-        $account->setActivationCode(Rand::getString(64, implode('', array_merge(
-            range('a', 'z'),
-            range('A', 'Z'),
-            range('0', '9')
-        ))));
+        // When the credential has already been set, we can simply activate the account. When no credential exists yet,
+        // we can only activate the account if a credential has been passed in the body.
+        if (!$account->getCredential() && !array_key_exists('credential', $data)) {
+            return new ApiProblemResponse(new ApiProblem(
+                ApiProblemResponse::STATUS_CODE_422,
+                'The "credential" field is required.'
+            ));
+        }
 
-        $this->entityManager->persist($account);
+        $credential = null;
+        if (array_key_exists('credential', $data)) {
+            $credential = $this->crypter->create($data['credential']);
+
+            $account->setCredential($credential);
+        }
+
+        $account->setActivationCode(null);
+        $account->setStatus(Account::STATUS_ACTIVE);
+
         $this->entityManager->flush($account);
 
-        $this->notificationTaskService->notifyRecoverAccount($account);
+        $this->notificationTaskService->notifyAccountActivate($account, $credential);
 
         return new JsonModel([
-            'email_address' => $data['email_address'],
+            'activation_code' => $data['activation_code'],
         ]);
     }
 }

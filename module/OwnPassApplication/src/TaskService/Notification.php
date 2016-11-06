@@ -64,14 +64,22 @@ class Notification
         // @todo Notify all admins that a new account has been created.
     }
 
-    public function notifyRecoverAccount(Account $account)
+    public function notifyAccountActivate(Account $account, $credential)
     {
-        $this->notify('account-recover-credential', $account, [
+        $this->notify('account-activate', $account, [
+            'account' => $account,
+            'credential' => $credential,
+        ]);
+    }
+
+    public function notifyAccountDeactivate(Account $account)
+    {
+        $this->notify('account-deactivate', $account, [
             'account' => $account,
         ]);
     }
 
-    private function notify($notificationId, Account $receiver, array $variables = [], array $options = [])
+    public function notify($notificationId, Account $receiver, array $variables = [], array $options = [])
     {
         $this->eventManager->triggerEvent(new NotificationEvent(NotificationEvent::EVENT_NOTIFY, $this, [
             'id' => $notificationId,

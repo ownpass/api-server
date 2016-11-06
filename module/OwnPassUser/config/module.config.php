@@ -26,13 +26,23 @@ return [
                     ],
                 ],
             ],
-            'own-pass-user.rpc.recover-credential' => [
+            'own-pass-user.rpc.account-deactivate' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/recover/credential',
+                    'route' => '/account/deactivate',
                     'defaults' => [
-                        'controller' => 'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller',
-                        'action' => 'recoverCredential',
+                        'controller' => 'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller',
+                        'action' => 'accountDeactivate',
+                    ],
+                ],
+            ],
+            'own-pass-user.rpc.account-activate' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/account/activate',
+                    'defaults' => [
+                        'controller' => 'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller',
+                        'action' => 'accountActivate',
                     ],
                 ],
             ],
@@ -42,7 +52,8 @@ return [
         'uri' => [
             0 => 'own-pass-user.rest.account',
             2 => 'own-pass-user.rpc.user',
-            3 => 'own-pass-user.rpc.recover-credential',
+            3 => 'own-pass-user.rpc.account-deactivate',
+            4 => 'own-pass-user.rpc.account-activate',
         ],
     ],
     'zf-rest' => [
@@ -100,7 +111,8 @@ return [
         'controllers' => [
             'OwnPassUser\\V1\\Rest\\Account\\Controller' => 'HalJson',
             'OwnPassUser\\V1\\Rpc\\User\\Controller' => 'Json',
-            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => 'Json',
+            'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller' => 'Json',
+            'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller' => 'Json',
         ],
         'accept_whitelist' => [
             'OwnPassUser\\V1\\Rest\\Account\\Controller' => [
@@ -113,7 +125,12 @@ return [
                 1 => 'application/json',
                 2 => 'application/*+json',
             ],
-            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
+            'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller' => [
+                0 => 'application/vnd.own-pass-user.v1+json',
+                1 => 'application/json',
+                2 => 'application/*+json',
+            ],
+            'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller' => [
                 0 => 'application/vnd.own-pass-user.v1+json',
                 1 => 'application/json',
                 2 => 'application/*+json',
@@ -128,7 +145,11 @@ return [
                 0 => 'application/vnd.own-pass-user.v1+json',
                 1 => 'application/json',
             ],
-            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
+            'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller' => [
+                0 => 'application/vnd.own-pass-user.v1+json',
+                1 => 'application/json',
+            ],
+            'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller' => [
                 0 => 'application/vnd.own-pass-user.v1+json',
                 1 => 'application/json',
             ],
@@ -153,7 +174,8 @@ return [
     'controllers' => [
         'factories' => [
             'OwnPassUser\\V1\\Rpc\\User\\Controller' => \OwnPassUser\V1\Rpc\User\UserControllerFactory::class,
-            'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => \OwnPassUser\V1\Rpc\RecoverCredential\RecoverCredentialControllerFactory::class,
+            'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller' => \OwnPassUser\V1\Rpc\AccountDeactivate\AccountDeactivateControllerFactory::class,
+            'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller' => \OwnPassUser\V1\Rpc\AccountActivate\AccountActivateControllerFactory::class,
         ],
     ],
     'zf-rpc' => [
@@ -179,12 +201,23 @@ return [
                 ],
             ],
         ],
-        'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
-            'service_name' => 'RecoverCredential',
+        'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller' => [
+            'service_name' => 'AccountDeactivate',
             'http_methods' => [
                 0 => 'POST',
             ],
-            'route_name' => 'own-pass-user.rpc.recover-credential',
+            'route_name' => 'own-pass-user.rpc.account-deactivate',
+            'device_guard' => [
+                'POST' => false,
+            ],
+            'role_guard' => [],
+        ],
+        'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller' => [
+            'service_name' => 'AccountActivate',
+            'http_methods' => [
+                0 => 'POST',
+            ],
+            'route_name' => 'own-pass-user.rpc.account-activate',
             'device_guard' => [
                 'POST' => false,
             ],
@@ -199,8 +232,11 @@ return [
         'OwnPassUser\\V1\\Rpc\\User\\Controller' => [
             'input_filter' => 'OwnPassUser\\V1\\Rpc\\User\\Controller',
         ],
-        'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
-            'input_filter' => 'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller',
+        'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller' => [
+            'input_filter' => 'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller',
+        ],
+        'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller' => [
+            'input_filter' => 'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller',
         ],
     ],
     'input_filter_specs' => [
@@ -507,7 +543,31 @@ return [
                 'description' => 'The role of the user.',
             ],
         ],
-        'OwnPassUser\\V1\\Rpc\\RecoverCredential\\Controller' => [
+        'OwnPassUser\\V1\\Rpc\\AccountActivate\\Controller' => [
+            0 => [
+                'required' => true,
+                'validators' => [
+                    0 => [
+                        'name' => \Zend\Validator\StringLength::class,
+                        'options' => [
+                            'max' => 64,
+                            'min' => 64,
+                        ],
+                    ],
+                ],
+                'filters' => [],
+                'name' => 'activation_code',
+                'description' => 'The activation code that was send via e-mail.',
+            ],
+            1 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'credential',
+                'description' => 'The new credential to set.',
+            ],
+        ],
+        'OwnPassUser\\V1\\Rpc\\AccountDeactivate\\Controller' => [
             0 => [
                 'required' => true,
                 'validators' => [
@@ -518,7 +578,7 @@ return [
                 ],
                 'filters' => [],
                 'name' => 'email_address',
-                'description' => 'The new credential to authenticate with.',
+                'description' => 'The e-mail address to request access to.',
             ],
         ],
     ],

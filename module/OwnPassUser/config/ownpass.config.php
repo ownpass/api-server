@@ -64,11 +64,11 @@ return [
         ],
     ],
     'ownpass_notifications' => [
-        'account-welcome' => [
-            'event' => 'account-created',
+        'account-activate' => [
+            'event' => 'account-activate',
             'email' => [
-                'template' => 'notifications/account-welcome',
-                'subject' => 'email_account_welcome_subject',
+                'template' => 'notifications/account-activate',
+                'subject' => 'email_account_activate_subject',
             ],
         ],
         'account-created' => [
@@ -78,11 +78,18 @@ return [
                 'subject' => 'email_account_created_subject',
             ],
         ],
-        'account-recover-credential' => [
-            'event' => 'account-recover-credential',
+        'account-deactivate' => [
+            'event' => 'account-deactivate',
             'email' => [
-                'template' => 'notifications/recover-account',
-                'subject' => 'email_recover_account',
+                'template' => 'notifications/account-deactivate',
+                'subject' => 'email_account_deactivate_subject',
+            ],
+        ],
+        'account-welcome' => [
+            'event' => 'account-welcome',
+            'email' => [
+                'template' => 'notifications/account-welcome',
+                'subject' => 'email_account_welcome_subject',
             ],
         ],
     ],
@@ -137,12 +144,14 @@ return [
     ],
     'view_manager' => [
         'template_map' => [
+            'notifications/account-activate.html.phtml' => __DIR__ . '/../view/notifications/account-activate.html.phtml',
+            'notifications/account-activate.text.phtml' => __DIR__ . '/../view/notifications/account-activate.text.phtml',
             'notifications/account-created.html.phtml' => __DIR__ . '/../view/notifications/account-created.html.phtml',
             'notifications/account-created.text.phtml' => __DIR__ . '/../view/notifications/account-created.text.phtml',
+            'notifications/account-deactivate.html.phtml' => __DIR__ . '/../view/notifications/account-deactivate.html.phtml',
+            'notifications/account-deactivate.text.phtml' => __DIR__ . '/../view/notifications/account-deactivate.text.phtml',
             'notifications/account-welcome.html.phtml' => __DIR__ . '/../view/notifications/account-welcome.html.phtml',
             'notifications/account-welcome.text.phtml' => __DIR__ . '/../view/notifications/account-welcome.text.phtml',
-            'notifications/recover-account.html.phtml' => __DIR__ . '/../view/notifications/recover-account.html.phtml',
-            'notifications/recover-account.text.phtml' => __DIR__ . '/../view/notifications/recover-account.text.phtml',
             'own-pass-user/authenticate/login' => __DIR__ . '/../view/own-pass-user/authenticate/login.phtml',
         ],
     ],
