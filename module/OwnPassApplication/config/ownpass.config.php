@@ -119,6 +119,11 @@ return [
             Uuid::class => Uuid::class,
         ],
     ],
+    'view_helpers' => [
+        'factories' => [
+            'opControlPanelUrl' => View\Helper\Service\ControlPanelUrlFactory::class,
+        ],
+    ],
     'view_manager' => [
         'display_not_found_reason' => true,
         'display_exceptions' => true,

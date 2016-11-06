@@ -5,6 +5,8 @@ $this->layout('layout/email');
 /** @var \OwnPassUser\Entity\Account $account */
 $account = $this->account;
 
+$activationLink = $this->opControlPanelUrl() . '/recover/activate/' . $this->escapeUrl($account->getActivationCode());
+
 ?>
 
 <p>
@@ -18,7 +20,7 @@ $account = $this->account;
 
 <ul>
     <li>
-        <strong>Activation link:</strong> <?php echo $this->escapeHtml($this->activationLink); ?>
+        <strong>Activation link:</strong> <a href="<?php echo $activationLink; ?>">Click here</a>
     </li>
     <li>
         <strong>Activation code:</strong> <?php echo $this->escapeHtml($account->getActivationCode()); ?>
