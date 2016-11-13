@@ -48,7 +48,8 @@ class DeviceResource extends AbstractResourceListener
             $data->name,
             $data->description,
             $remoteAddress->getIpAddress(),
-            $this->getEvent()->getRequest()->getServer('HTTP_USER_AGENT')
+            $this->getEvent()->getRequest()->getServer('HTTP_USER_AGENT'),
+            $data->public_key
         );
 
         $activationCode = Rand::getString(32, implode('', array_merge(
