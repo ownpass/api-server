@@ -1,6 +1,6 @@
 {
-    "name": "ownpass/ownpass",
-    "description": "The OwnPass application providing an API and interface to manage credentials.",
+    "name": "ownpass/api-server",
+    "description": "The OwnPass application providing an API to manage OwnPass.",
     "type": "project",
     "license": "proprietary",
     "keywords": [
@@ -9,11 +9,11 @@
         "management",
         "own"
     ],
-    "homepage": "http://github.com/ownpass",
+    "homepage": "http://ownpass.io",
     "support": {
         "irc": "irc://irc.freenode.net/ownpass",
-        "source": "https://github.com/ownpass/ownpass",
-        "issues": "https://github.com/ownpass/ownpass/issues"
+        "source": "https://github.com/ownpass/api-server",
+        "issues": "https://github.com/ownpass/api-server/issues"
     },
     "config": {
         "optimize-autoloader": true,
