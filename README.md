@@ -14,7 +14,7 @@ as an interface for the accounts to manage their credentials.
 ### From source (command line)
 
 1. Clone the repository to a directory that is accessible by your webserver: `https://github.com/ownpass/api-server.git`
-2. Enter the directory: `cd ownpass`
+2. Enter the directory: `cd api-server`
 3. Install composer dependencies: `composer install --no-dev -o`
 4. Copy `config/autoload/apigility.local.php.dist` to `config/autoload/apigility.local.php` and fill in the correct settings.
 5. Copy `config/autoload/doctrine.local.php.dist` to `config/autoload/doctrine.local.php` and fill in the correct settings.
