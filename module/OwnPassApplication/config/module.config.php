@@ -251,7 +251,7 @@ return [
             ],
             'route_name' => 'own-pass-application.rpc.ping',
             'device_guard' => [
-                'GET' => true,
+                'GET' => false,
             ],
             'role_guard' => [
                 'GET' => ['user', 'admin'],
