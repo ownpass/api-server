@@ -15,7 +15,6 @@
         <field name="remoteAddress" type="string" />
         <field name="userAgent" type="string" />
         <field name="activationCode" type="string" nullable="true" length="32" />
-        <field name="publicKey" type="text" />
 
         <many-to-one target-entity="OwnPassUser\Entity\Account" field="account" orphan-removal="true">
             <join-column on-delete="CASCADE" />

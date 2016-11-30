@@ -22,13 +22,6 @@ return [
                 'name' => 'description',
                 'description' => 'The description of the client.',
             ],
-            2 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [],
-                'name' => 'public_key',
-                'description' => 'The public key that belongs to the device.',
-            ],
         ],
         'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Validator' => [
             0 => [

@@ -57,12 +57,7 @@ class Device
      */
     private $activationCode;
 
-    /**
-     * @var string
-     */
-    private $publicKey;
-
-    public function __construct(Account $account, $name, $description, $remoteAddress, $userAgent, $publicKey)
+    public function __construct(Account $account, $name, $description, $remoteAddress, $userAgent)
     {
         $this->id = Uuid::uuid4();
         $this->account = $account;
@@ -71,7 +66,6 @@ class Device
         $this->description = $description;
         $this->remoteAddress = $remoteAddress;
         $this->userAgent = $userAgent;
-        $this->publicKey = $publicKey;
     }
 
     /**
@@ -162,15 +156,5 @@ class Device
     public function setActivationCode($activationCode)
     {
         $this->activationCode = $activationCode;
-    }
-
-    /**
-     * Gets the value of the "publicKey" field.
-     *
-     * @return string
-     */
-    public function getPublicKey()
-    {
-        return $this->publicKey;
     }
 }
