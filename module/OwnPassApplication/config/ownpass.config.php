@@ -16,22 +16,6 @@ return [
     'controllers' => [
         'factories' => [
             Controller\Api::class => Controller\Service\ApiFactory::class,
-            Controller\KeyManagerCli::class => Controller\Service\KeyManagerCliFactory::class,
-        ],
-    ],
-    'console' => [
-        'router' => [
-            'routes' => [
-                'generate-keys' => [
-                    'options' => [
-                        'route' => 'ownpass:generate-keys',
-                        'defaults' => [
-                            'controller' => Controller\KeyManagerCli::class,
-                            'action' => 'generate',
-                        ],
-                    ],
-                ],
-            ],
         ],
     ],
     'doctrine' => [
@@ -92,7 +76,6 @@ return [
     'service_manager' => [
         'factories' => [
             Listener\EmailNotification::class => Listener\Service\EmailNotificationFactory::class,
-            TaskService\KeyManager::class => TaskService\Service\KeyManagerFactory::class,
             TaskService\Notification::class => TaskService\Service\NotificationFactory::class,
         ],
         'invokables' => [
