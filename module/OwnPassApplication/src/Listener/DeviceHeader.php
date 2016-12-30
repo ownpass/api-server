@@ -34,6 +34,12 @@ class DeviceHeader extends AbstractListenerAggregate
     public function onRoute(MvcEvent $event)
     {
         $config = $event->getApplication()->getServiceManager()->get('config');
+
+        // When the device id is not required, we can skip this guard.
+        if (!$config['ownpass_security']['device_id_required']) {
+            return null;
+        }
+
         $routeMatch = $event->getRouteMatch();
         $controllerFqcn = $routeMatch->getParam('controller');
 

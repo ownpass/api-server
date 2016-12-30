@@ -10,6 +10,7 @@
 return [
     'ownpass_security' => [
         'control_panel_url' => 'http://your-own-pass-control-panel',
+        'device_id_required' => true,
     ],
     'ownpass_email' => [
         'from_address' => '',

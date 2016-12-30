@@ -10,6 +10,7 @@
 return [
     'ownpass_security' => [
         'control_panel_url' => '',
+        'device_id_required' => true,
     ],
     'translator' => [
         'locale' => 'en-US',

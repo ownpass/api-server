@@ -240,17 +240,10 @@ return [
                 'required' => true,
                 'validators' => [],
                 'filters' => [],
-                'name' => 'identity',
-                'description' => 'The identity that was entered.',
+                'name' => 'credentials',
+                'description' => 'The credentials that were entered but encrypted.',
             ],
             3 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [],
-                'name' => 'credential',
-                'description' => 'The credential that was entered.',
-            ],
-            4 => [
                 'required' => false,
                 'validators' => [],
                 'filters' => [
@@ -266,7 +259,7 @@ return [
                 'name' => 'title',
                 'description' => 'The title of the page.',
             ],
-            5 => [
+            4 => [
                 'required' => false,
                 'validators' => [],
                 'filters' => [
@@ -387,17 +380,10 @@ return [
                 'required' => true,
                 'validators' => [],
                 'filters' => [],
-                'name' => 'identity',
-                'description' => 'The identity that was entered.',
+                'name' => 'credentials',
+                'description' => 'The credentials that were entered but encrypted.',
             ],
             2 => [
-                'required' => true,
-                'validators' => [],
-                'filters' => [],
-                'name' => 'credential',
-                'description' => 'The credential that was entered.',
-            ],
-            3 => [
                 'required' => false,
                 'validators' => [],
                 'filters' => [
@@ -413,7 +399,7 @@ return [
                 'name' => 'title',
                 'description' => 'The title of the page.',
             ],
-            4 => [
+            3 => [
                 'required' => false,
                 'validators' => [],
                 'filters' => [

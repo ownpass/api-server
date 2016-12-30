@@ -40,9 +40,10 @@ class UserCredentialResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        /** @var Account $account */
         $account = $this->entityManager->find(Account::class, $this->getAccountId());
 
-        $credential = new Credential($account, $data->raw_url, $data->identity, $data->credential);
+        $credential = new Credential($account, $data->raw_url, $data->credentials);
 
         if (isset($data->title)) {
             $credential->setTitle($data->title);

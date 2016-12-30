@@ -49,7 +49,7 @@ class CredentialResource extends AbstractResourceListener
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Account not found.');
         }
 
-        $credential = new Credential($account, $data->raw_url, $data->identity, $data->credential);
+        $credential = new Credential($account, $data->raw_url, $data->credentials);
 
         if (isset($data->title)) {
             $credential->setTitle($data->title);

@@ -16,20 +16,18 @@ class CredentialEntity
 {
     public $id;
     public $account;
+    public $credentials;
     public $title;
     public $description;
-    public $identity;
-    public $credential;
     public $urlRaw;
 
     public function __construct(Credential $credential)
     {
         $this->id = $credential->getId();
         $this->account = new AccountEntity($credential->getAccount());
+        $this->credentials = $credential->getCredentials();
         $this->title = $credential->getTitle();
         $this->description = $credential->getDescription();
-        $this->identity = $credential->getIdentity();
-        $this->credential = $credential->getCredential();
         $this->urlRaw = $credential->getUrlRaw();
     }
 }

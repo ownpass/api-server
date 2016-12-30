@@ -38,6 +38,11 @@ class Credential
     private $updateDate;
 
     /**
+     * @var string
+     */
+    private $credentials;
+
+    /**
      * @var string|null
      */
     private $title;
@@ -82,24 +87,13 @@ class Credential
      */
     private $urlFragment;
 
-    /**
-     * @var string
-     */
-    private $identity;
-
-    /**
-     * @var string
-     */
-    private $credential;
-
-    public function __construct(Account $account, $urlRaw, $identity, $credential)
+    public function __construct(Account $account, $urlRaw, $credentials)
     {
         $this->id = Uuid::uuid4();
         $this->account = $account;
         $this->creationDate = new DateTimeImmutable();
         $this->updateDate = new DateTimeImmutable();
-        $this->identity = $identity;
-        $this->credential = $credential;
+        $this->credentials = $credentials;
 
         $this->setUrlRaw($urlRaw);
     }
@@ -134,6 +128,14 @@ class Credential
     public function getUpdateDate()
     {
         return $this->updateDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCredentials()
+    {
+        return $this->credentials;
     }
 
     /**
@@ -256,21 +258,5 @@ class Credential
     public function getUrlFragment()
     {
         return $this->urlFragment;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentity()
-    {
-        return $this->identity;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCredential()
-    {
-        return $this->credential;
     }
 }
