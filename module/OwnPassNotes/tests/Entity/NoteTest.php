@@ -129,10 +129,10 @@ class NoteTest extends PHPUnit_Framework_TestCase
         // ...
 
         // Act
-        $this->note->setBody([]);
+        $this->note->setBody('test');
 
         // Assert
-        $this->assertInternalType('array', $this->note->getBody());
-        $this->assertEquals([], $this->note->getBody());
+        $this->assertInternalType('string', $this->note->getBody());
+        $this->assertEquals('test', $this->note->getBody());
     }
 }

@@ -26,8 +26,7 @@ class CredentialTest extends PHPUnit_Framework_TestCase
         $this->credential = new Credential(
             $this->account,
             'http://domain.com/path?query#fragment',
-            'identity',
-            'credential'
+            'credentials'
         );
     }
 
@@ -341,32 +340,17 @@ class CredentialTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OwnPassCredential\Entity\Credential::getIdentity
+     * @covers OwnPassCredential\Entity\Credential::getCredentials
      */
-    public function testGetIdentity()
+    public function testGetCredentials()
     {
         // Arrange
         // ...
 
         // Act
-        $result = $this->credential->getIdentity();
+        $result = $this->credential->getCredentials();
 
         // Assert
-        $this->assertEquals('identity', $result);
-    }
-
-    /**
-     * @covers OwnPassCredential\Entity\Credential::getCredential
-     */
-    public function testGetCredential()
-    {
-        // Arrange
-        // ...
-
-        // Act
-        $result = $this->credential->getCredential();
-
-        // Assert
-        $this->assertEquals('credential', $result);
+        $this->assertEquals('credentials', $result);
     }
 }

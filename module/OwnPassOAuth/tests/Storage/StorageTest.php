@@ -168,22 +168,7 @@ class StorageTest extends PHPUnit_Framework_TestCase
     /**
      * @covers OwnPassOAuth\Storage\Storage::scopeExists
      */
-    public function testScopeExistsWithValidScope()
-    {
-        // Arrange
-        $storage = new Storage($this->entityManager, $this->crypter);
-
-        // Act
-        $result = $storage->scopeExists('admin');
-
-        // Assert
-        $this->assertTrue($result);
-    }
-
-    /**
-     * @covers OwnPassOAuth\Storage\Storage::scopeExists
-     */
-    public function testScopeExistsWithInvalidScope()
+    public function testScopeExistsReturnsFalse()
     {
         // Arrange
         $storage = new Storage($this->entityManager, $this->crypter);

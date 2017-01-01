@@ -48,7 +48,9 @@ class Note
     private $name;
 
     /**
-     * @var array
+     * An encrypted string.
+     *
+     * @var string
      */
     private $body;
 
@@ -125,7 +127,7 @@ class Note
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getBody()
     {
@@ -133,9 +135,9 @@ class Note
     }
 
     /**
-     * @param array $body
+     * @param string $body
      */
-    public function setBody(array $body)
+    public function setBody($body)
     {
         $this->body = $body;
     }

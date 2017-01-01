@@ -39,14 +39,20 @@ class OwnPass implements ValidatableAdapterInterface
     private $credential;
 
     /**
+     * @var string
+     */
+    private $directory;
+
+    /**
      * Initializes a new instance of this class.
      *
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager, PasswordInterface $crypter)
+    public function __construct(EntityManagerInterface $entityManager, PasswordInterface $crypter, $directory)
     {
         $this->entityManager = $entityManager;
         $this->crypter = $crypter;
+        $this->directory = $directory;
     }
 
     /**
@@ -59,10 +65,12 @@ class OwnPass implements ValidatableAdapterInterface
 
     /**
      * @param string $identity
+     * @return ValidatableAdapterInterface
      */
     public function setIdentity($identity)
     {
         $this->identity = $identity;
+        return $this;
     }
 
     /**
@@ -75,17 +83,19 @@ class OwnPass implements ValidatableAdapterInterface
 
     /**
      * @param string $credential
+     * @return ValidatableAdapterInterface
      */
     public function setCredential($credential)
     {
         $this->credential = $credential;
+        return $this;
     }
 
     public function authenticate()
     {
         $identityRepository = $this->entityManager->getRepository(Identity::class);
         $identities = $identityRepository->findBy([
-            'directory' => 'username',
+            'directory' => $this->directory,
             'identity' => $this->getIdentity(),
         ]);
 
@@ -95,6 +105,7 @@ class OwnPass implements ValidatableAdapterInterface
             return new Result(Result::FAILURE_IDENTITY_AMBIGUOUS, $this->getIdentity(), []);
         }
 
+        /** @var Identity $identity */
         $identity = $identities[0];
 
         /** @var Account $account */

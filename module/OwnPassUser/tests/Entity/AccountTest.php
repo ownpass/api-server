@@ -14,7 +14,7 @@ use OwnPassUser\Entity\Account;
 use PHPUnit_Framework_TestCase;
 use Ramsey\Uuid\UuidInterface;
 
-class DeviceTest extends PHPUnit_Framework_TestCase
+class AccountTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @covers OwnPassUser\Entity\Account::__construct
@@ -23,7 +23,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetId()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getId();
@@ -39,7 +39,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetCreationDate()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getCreationDate();
@@ -55,7 +55,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetUpdateDate()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getUpdateDate();
@@ -71,7 +71,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetName()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getName();
@@ -86,7 +86,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testSetName()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $account->setName('other');
@@ -98,13 +98,16 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     /**
      * @covers OwnPassUser\Entity\Account::__construct
      * @covers OwnPassUser\Entity\Account::getCredential
+     * @covers OwnPassUser\Entity\Account::setCredential
      */
-    public function testGetCredential()
+    public function testSetGetCredential()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
+        $account->setCredential('credential');
+
         $result = $account->getCredential();
 
         // Assert
@@ -117,7 +120,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testSetCredential()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $account->setCredential('other');
@@ -133,7 +136,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetEmailAddress()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getEmailAddress();
@@ -148,7 +151,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testSetEmailAddress()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $account->setEmailAddress('other');
@@ -164,7 +167,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetRole()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getRole();
@@ -179,7 +182,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testSetRole()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $account->setRole(Account::ROLE_ADMIN);
@@ -195,7 +198,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetTfaType()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getTfaType();
@@ -210,7 +213,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testSetTfaType()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $account->setTfaType('sms');
@@ -226,7 +229,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testGetTfaCode()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $result = $account->getTfaCode();
@@ -241,7 +244,7 @@ class DeviceTest extends PHPUnit_Framework_TestCase
     public function testSetTfaCode()
     {
         // Arrange
-        $account = new Account('name', 'credential', 'email');
+        $account = new Account('name', 'email');
 
         // Act
         $account->setTfaCode('code');
