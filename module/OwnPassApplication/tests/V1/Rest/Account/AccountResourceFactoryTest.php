@@ -11,6 +11,7 @@ namespace OwnPassApplicationTest\V1\Rest\Account;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Interop\Container\ContainerInterface;
+use OwnPassApplication\TaskService\Notification;
 use OwnPassApplication\V1\Rest\Account\AccountResource;
 use OwnPassApplication\V1\Rest\Account\AccountResourceFactory;
 use PHPUnit_Framework_TestCase;
@@ -28,10 +29,12 @@ class AccountResourceFactoryTest extends PHPUnit_Framework_TestCase
 
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMockForAbstractClass();
         $crypter = $this->getMockBuilder(PasswordInterface::class)->getMockForAbstractClass();
+        $notificationTaskService = $this->getMockBuilder(Notification::class)->disableOriginalConstructor()->getMockForAbstractClass();
 
         $container = $this->getMockBuilder(ContainerInterface::class)->getMockForAbstractClass();
         $container->expects($this->at(0))->method('get')->willReturn($entityManager);
         $container->expects($this->at(1))->method('get')->willReturn($crypter);
+        $container->expects($this->at(2))->method('get')->willReturn($notificationTaskService);
 
         // Act
         $result = $factory($container, '', null);

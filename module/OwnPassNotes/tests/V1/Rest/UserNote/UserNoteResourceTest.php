@@ -107,9 +107,16 @@ class UserNoteResourceTest extends PHPUnit_Framework_TestCase
 
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->willReturn($note);
-        $entityManager->expects($this->once())->method('remove');
-        $entityManager->expects($this->once())->method('flush');
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Note::class),
+            $this->equalTo(null),
+        ])->willReturn($note);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
+            $this->equalTo(Account::class),
+            $this->equalTo('identity'),
+        ])->willReturn($account);
+        $entityManager->expects($this->at(2))->method('remove');
+        $entityManager->expects($this->at(3))->method('flush');
 
         $event = new ResourceEvent();
         $event->setIdentity($this->identity);
@@ -122,6 +129,43 @@ class UserNoteResourceTest extends PHPUnit_Framework_TestCase
 
         // Assert
         $this->assertTrue($result);
+    }
+
+    /**
+     * @covers OwnPassNotes\V1\Rest\UserNote\UserNoteResource::__construct
+     * @covers OwnPassNotes\V1\Rest\UserNote\UserNoteResource::delete
+     */
+    public function testDeleteWithWrongAccount()
+    {
+        // Arrange
+        $account = new Account('', '', '', '');
+        $accountWrong = new Account('', '', '', '');
+        $note = new Note($account);
+
+        $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
+        $entityManager = $entityManagerBuilder->getMock();
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Note::class),
+            $this->equalTo(null),
+        ])->willReturn($note);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
+            $this->equalTo(Account::class),
+            $this->equalTo('identity'),
+        ])->willReturn($accountWrong);
+        $entityManager->expects($this->never())->method('remove');
+        $entityManager->expects($this->never())->method('flush');
+
+        $event = new ResourceEvent();
+        $event->setIdentity($this->identity);
+        $event->setName('delete');
+
+        $resource = new UserNoteResource($entityManager);
+
+        // Act
+        $result = $resource->dispatch($event);
+
+        // Assert
+        $this->assertInstanceOf(ApiProblem::class, $result);
     }
 
     /**
@@ -163,7 +207,14 @@ class UserNoteResourceTest extends PHPUnit_Framework_TestCase
 
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->willReturn($note);
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Note::class),
+            $this->equalTo(null),
+        ])->willReturn($note);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
+            $this->equalTo(Account::class),
+            $this->equalTo('identity'),
+        ])->willReturn($account);
 
         $event = new ResourceEvent();
         $event->setIdentity($this->identity);
@@ -176,6 +227,41 @@ class UserNoteResourceTest extends PHPUnit_Framework_TestCase
 
         // Assert
         $this->assertInstanceOf(UserNoteEntity::class, $result);
+    }
+
+    /**
+     * @covers OwnPassNotes\V1\Rest\UserNote\UserNoteResource::__construct
+     * @covers OwnPassNotes\V1\Rest\UserNote\UserNoteResource::fetch
+     */
+    public function testFetchWithWrongAccount()
+    {
+        // Arrange
+        $account = new Account('', '', '', '');
+        $accountWrong = new Account('', '', '', '');
+        $note = new Note($account);
+
+        $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
+        $entityManager = $entityManagerBuilder->getMock();
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Note::class),
+            $this->equalTo(null),
+        ])->willReturn($note);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
+            $this->equalTo(Account::class),
+            $this->equalTo('identity'),
+        ])->willReturn($accountWrong);
+
+        $event = new ResourceEvent();
+        $event->setIdentity($this->identity);
+        $event->setName('fetch');
+
+        $resource = new UserNoteResource($entityManager);
+
+        // Act
+        $result = $resource->dispatch($event);
+
+        // Assert
+        $this->assertNull($result);
     }
 
     /**
@@ -244,7 +330,14 @@ class UserNoteResourceTest extends PHPUnit_Framework_TestCase
 
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->willReturn($note);
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Note::class),
+            $this->equalTo('id'),
+        ])->willReturn($note);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
+            $this->equalTo(Account::class),
+            $this->equalTo('identity'),
+        ])->willReturn($account);
 
         $data = new stdClass();
         $data->type = 'type';
@@ -264,5 +357,47 @@ class UserNoteResourceTest extends PHPUnit_Framework_TestCase
 
         // Assert
         $this->assertInstanceOf(UserNoteEntity::class, $result);
+    }
+
+    /**
+     * @covers OwnPassNotes\V1\Rest\UserNote\UserNoteResource::__construct
+     * @covers OwnPassNotes\V1\Rest\UserNote\UserNoteResource::update
+     */
+    public function testUpdateWrongAccount()
+    {
+        // Arrange
+        $account = new Account('', '', '', '');
+        $accountWrong = new Account('', '', '', '');
+        $note = new Note($account);
+
+        $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
+        $entityManager = $entityManagerBuilder->getMock();
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Note::class),
+            $this->equalTo('id'),
+        ])->willReturn($note);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
+            $this->equalTo(Account::class),
+            $this->equalTo('identity'),
+        ])->willReturn($accountWrong);
+
+        $data = new stdClass();
+        $data->type = 'type';
+        $data->name = 'name';
+        $data->body = [];
+
+        $event = new ResourceEvent();
+        $event->setIdentity($this->identity);
+        $event->setName('update');
+        $event->setParam('id', 'id');
+        $event->setParam('data', $data);
+
+        $resource = new UserNoteResource($entityManager);
+
+        // Act
+        $result = $resource->dispatch($event);
+
+        // Assert
+        $this->assertInstanceOf(ApiProblem::class, $result);
     }
 }

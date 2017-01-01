@@ -17,8 +17,13 @@ class AccountResourceFactory
 {
     public function __invoke($services)
     {
+        /** @var EntityManager $entityManager */
         $entityManager = $services->get(EntityManager::class);
+
+        /** @var PasswordInterface $crypter */
         $crypter = $services->get(PasswordInterface::class);
+
+        /** @var Notification $notificationTaskService */
         $notificationTaskService = $services->get(Notification::class);
 
         return new AccountResource($entityManager, $crypter, $notificationTaskService);

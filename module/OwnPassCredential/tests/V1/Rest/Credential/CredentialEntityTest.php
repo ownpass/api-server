@@ -25,7 +25,7 @@ class CredentialEntityTest extends PHPUnit_Framework_TestCase
     {
         // Arrange
         $account = new Account('', '', '', '');
-        $credential = new Credential($account, 'url', 'identity', 'credential');
+        $credential = new Credential($account, 'url', 'encrypted');
 
         // Act
         $entity = new CredentialEntity($credential);
@@ -34,7 +34,6 @@ class CredentialEntityTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(UuidInterface::class, $entity->id);
         $this->assertInstanceOf(AccountEntity::class, $entity->account);
         $this->assertEquals('url', $entity->urlRaw);
-        $this->assertEquals('identity', $entity->identity);
-        $this->assertEquals('credential', $entity->credential);
+        $this->assertEquals('encrypted', $entity->credentials);
     }
 }

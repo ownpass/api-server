@@ -61,8 +61,7 @@ class UserCredentialResourceTest extends PHPUnit_Framework_TestCase
 
         $data = new stdClass();
         $data->raw_url = 'http://domain.com';
-        $data->identity = 'username';
-        $data->credential = 'password';
+        $data->credentials = 'encrypted';
         $data->title = 'title';
         $data->description = 'description';
 
@@ -90,17 +89,16 @@ class UserCredentialResourceTest extends PHPUnit_Framework_TestCase
         $account = new Account('', '', '', '');
         $credential = new Credential($account, '', '', '');
 
-        $repositoryBuilder = $this->getMockBuilder(ObjectRepository::class);
-        $repository = $repositoryBuilder->getMockForAbstractClass();
-        $repository->expects($this->once())->method('findOneBy')->willReturn($credential);
-
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->with(
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Credential::class),
+            $this->equalTo('id'),
+        ])->willReturn($credential);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
             $this->equalTo(Account::class),
-            $this->equalTo('identity')
-        )->willReturn($account);
-        $entityManager->expects($this->once())->method('getRepository')->willReturn($repository);
+            $this->equalTo('identity'),
+        ])->willReturn($account);
         $entityManager->expects($this->once())->method('remove');
         $entityManager->expects($this->once())->method('flush');
 
@@ -122,22 +120,57 @@ class UserCredentialResourceTest extends PHPUnit_Framework_TestCase
      * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::__construct
      * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::delete
      */
-    public function testDeleteWithException()
+    public function testDeleteInvalidId()
     {
         // Arrange
         $account = new Account('', '', '', '');
 
-        $repositoryBuilder = $this->getMockBuilder(ObjectRepository::class);
-        $repository = $repositoryBuilder->getMockForAbstractClass();
-        $repository->expects($this->once())->method('findOneBy')->willThrowException(new Exception());
+        $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
+        $entityManager = $entityManagerBuilder->getMock();
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Credential::class),
+            $this->equalTo('id'),
+        ])->willReturn(null);
+        $entityManager->expects($this->never())->method('remove');
+        $entityManager->expects($this->never())->method('flush');
+
+        $event = new ResourceEvent();
+        $event->setIdentity($this->identity);
+        $event->setName('delete');
+        $event->setParam('id', 'id');
+
+        $resource = new UserCredentialResource($entityManager);
+
+        // Act
+        $result = $resource->dispatch($event);
+
+        // Assert
+        $this->assertInstanceOf(ApiProblem::class, $result);
+    }
+
+    /**
+     * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::__construct
+     * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::delete
+     */
+    public function testDeleteWrongAccount()
+    {
+        // Arrange
+        $account = new Account('', '', '', '');
+        $accountWrong = new Account('', '', '', '');
+        $credential = new Credential($account, '', '', '');
 
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->with(
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Credential::class),
+            $this->equalTo('id'),
+        ])->willReturn($credential);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
             $this->equalTo(Account::class),
-            $this->equalTo('identity')
-        )->willReturn($account);
-        $entityManager->expects($this->once())->method('getRepository')->willReturn($repository);
+            $this->equalTo('identity'),
+        ])->willReturn($accountWrong);
+        $entityManager->expects($this->never())->method('remove');
+        $entityManager->expects($this->never())->method('flush');
 
         $event = new ResourceEvent();
         $event->setIdentity($this->identity);
@@ -163,17 +196,16 @@ class UserCredentialResourceTest extends PHPUnit_Framework_TestCase
         $account = new Account('', '', '', '');
         $credential = new Credential($account, '', '', '');
 
-        $repositoryBuilder = $this->getMockBuilder(ObjectRepository::class);
-        $repository = $repositoryBuilder->getMockForAbstractClass();
-        $repository->expects($this->once())->method('findOneBy')->willReturn($credential);
-
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->with(
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Credential::class),
+            $this->equalTo('id'),
+        ])->willReturn($credential);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
             $this->equalTo(Account::class),
-            $this->equalTo('identity')
-        )->willReturn($account);
-        $entityManager->expects($this->once())->method('getRepository')->willReturn($repository);
+            $this->equalTo('identity'),
+        ])->willReturn($account);
 
         $event = new ResourceEvent();
         $event->setIdentity($this->identity);
@@ -193,23 +225,58 @@ class UserCredentialResourceTest extends PHPUnit_Framework_TestCase
      * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::__construct
      * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::fetch
      */
-    public function testFetchWithException()
+    public function testFetchWithoutAccount()
     {
         // Arrange
         $account = new Account('', '', '', '');
         $credential = new Credential($account, '', '', '');
 
-        $repositoryBuilder = $this->getMockBuilder(ObjectRepository::class);
-        $repository = $repositoryBuilder->getMockForAbstractClass();
-        $repository->expects($this->once())->method('findOneBy')->willThrowException(new Exception());
+        $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
+        $entityManager = $entityManagerBuilder->getMock();
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Credential::class),
+            $this->equalTo('id'),
+        ])->willReturn($credential);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
+            $this->equalTo(Account::class),
+            $this->equalTo('identity'),
+        ])->willReturn(null);
+
+        $event = new ResourceEvent();
+        $event->setIdentity($this->identity);
+        $event->setName('fetch');
+        $event->setParam('id', 'id');
+
+        $resource = new UserCredentialResource($entityManager);
+
+        // Act
+        $result = $resource->dispatch($event);
+
+        // Assert
+        $this->assertNull($result);
+    }
+
+    /**
+     * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::__construct
+     * @covers OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource::fetch
+     */
+    public function testFetchWrongAccount()
+    {
+        // Arrange
+        $account = new Account('', '', '', '');
+        $accountWrong = new Account('', '', '', '');
+        $credential = new Credential($account, '', '', '');
 
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->with(
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Credential::class),
+            $this->equalTo('id'),
+        ])->willReturn($credential);
+        $entityManager->expects($this->at(1))->method('find')->withConsecutive([
             $this->equalTo(Account::class),
-            $this->equalTo('identity')
-        )->willReturn($account);
-        $entityManager->expects($this->once())->method('getRepository')->willReturn($repository);
+            $this->equalTo('identity'),
+        ])->willReturn($accountWrong);
 
         $event = new ResourceEvent();
         $event->setIdentity($this->identity);
@@ -234,17 +301,12 @@ class UserCredentialResourceTest extends PHPUnit_Framework_TestCase
         // Arrange
         $account = new Account('', '', '', '');
 
-        $repositoryBuilder = $this->getMockBuilder(ObjectRepository::class);
-        $repository = $repositoryBuilder->getMockForAbstractClass();
-        $repository->expects($this->once())->method('findOneBy')->willReturn(null);
-
         $entityManagerBuilder = $this->getMockBuilder(EntityManagerInterface::class);
         $entityManager = $entityManagerBuilder->getMock();
-        $entityManager->expects($this->once())->method('find')->with(
-            $this->equalTo(Account::class),
-            $this->equalTo('identity')
-        )->willReturn($account);
-        $entityManager->expects($this->once())->method('getRepository')->willReturn($repository);
+        $entityManager->expects($this->at(0))->method('find')->withConsecutive([
+            $this->equalTo(Credential::class),
+            $this->equalTo('id'),
+        ])->willReturn(null);
 
         $event = new ResourceEvent();
         $event->setIdentity($this->identity);

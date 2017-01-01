@@ -101,7 +101,10 @@ class UserCredentialResource extends AbstractResourceListener
         }
 
         /** @var Account $account */
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        $account = $this->getAccount($this->entityManager, $this->getAccountId());
+        if (!$account) {
+            return null;
+        }
 
         if ($credential->getAccount() !== $account) {
             return null;

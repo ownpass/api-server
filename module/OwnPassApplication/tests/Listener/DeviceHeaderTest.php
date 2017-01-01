@@ -61,9 +61,9 @@ class DeviceHeaderTest extends PHPUnit_Framework_TestCase
         $eventsMockBuilder = $this->getMockBuilder(EventManagerInterface::class);
         $events = $eventsMockBuilder->getMockForAbstractClass();
         $events->expects($this->once())->method('attach')->with(
-            $this->equalTo(MvcEvent::EVENT_DISPATCH),
-            $this->equalTo([$this->deviceHeader, 'onDispatch']),
-            $this->equalTo(-1)
+            $this->equalTo(MvcEvent::EVENT_ROUTE),
+            $this->equalTo([$this->deviceHeader, 'onRoute']),
+            $this->equalTo(-10)
         );
 
         // Act

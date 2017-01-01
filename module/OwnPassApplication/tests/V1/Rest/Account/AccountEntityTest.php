@@ -28,8 +28,8 @@ class AccountEntityTest extends PHPUnit_Framework_TestCase
 
         // Assert
         $this->assertEquals($account->getId(), $entity->id);
-        $this->assertEquals($account->getCreationDate(), $entity->creationDate);
-        $this->assertEquals($account->getUpdateDate(), $entity->updateDate);
+        $this->assertEquals($account->getCreationDate(), $entity->creation_date);
+        $this->assertEquals($account->getUpdateDate(), $entity->update_date);
         $this->assertEquals($account->getRole(), $entity->role);
         $this->assertEquals($account->getName(), $entity->name);
     }
