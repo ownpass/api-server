@@ -55,6 +55,12 @@ class UserNoteResource extends AbstractResourceListener
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
 
+        /** @var Account $account */
+        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        if ($note->getAccount() !== $account) {
+            return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
+        }
+
         $this->entityManager->remove($note);
         $this->entityManager->flush();
 
@@ -66,6 +72,12 @@ class UserNoteResource extends AbstractResourceListener
         /** @var Note $note */
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
+            return null;
+        }
+
+        /** @var Account $account */
+        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        if ($note->getAccount() !== $account) {
             return null;
         }
 
@@ -92,6 +104,12 @@ class UserNoteResource extends AbstractResourceListener
         /** @var Note $note */
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
+            return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
+        }
+
+        /** @var Account $account */
+        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        if ($note->getAccount() !== $account) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
 

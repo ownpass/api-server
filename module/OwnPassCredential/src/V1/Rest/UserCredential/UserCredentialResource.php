@@ -67,21 +67,16 @@ class UserCredentialResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
-
-        $repository = $this->entityManager->getRepository(Credential::class);
-
-        try {
-            /** @var Credential $credential */
-            $credential = $repository->findOneBy([
-                'account' => $account,
-                'id' => $id,
-            ]);
-        } catch (Exception $e) {
-            $credential = null;
+        /** @var Credential $credential */
+        $credential = $this->findEntity($this->entityManager, Credential::class, $id);
+        if (!$credential) {
+            return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
 
-        if (!$credential) {
+        /** @var Account $account */
+        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+
+        if ($credential->getAccount() !== $account) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
 
@@ -99,21 +94,16 @@ class UserCredentialResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
-
-        $repository = $this->entityManager->getRepository(Credential::class);
-
-        try {
-            /** @var Credential $credential */
-            $credential = $repository->findOneBy([
-                'account' => $account,
-                'id' => $id,
-            ]);
-        } catch (Exception $e) {
-            $credential = null;
+        /** @var Credential $credential */
+        $credential = $this->findEntity($this->entityManager, Credential::class, $id);
+        if (!$credential) {
+            return null;
         }
 
-        if (!$credential) {
+        /** @var Account $account */
+        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+
+        if ($credential->getAccount() !== $account) {
             return null;
         }
 
