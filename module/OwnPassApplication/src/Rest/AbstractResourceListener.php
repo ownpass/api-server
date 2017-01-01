@@ -16,6 +16,17 @@ use ZF\Rest\AbstractResourceListener as BaseAbstractResourceListener;
 
 abstract class AbstractResourceListener extends BaseAbstractResourceListener
 {
+    protected function findEntity(EntityManagerInterface $entityManager, $fqcn, $id)
+    {
+        try {
+            $entity = $entityManager->find($fqcn, $id);
+        } catch (Exception $e) {
+            $entity = null;
+        }
+
+        return $entity;
+    }
+
     protected function getAccountId()
     {
         if (!$this->getIdentity()) {
@@ -29,12 +40,6 @@ abstract class AbstractResourceListener extends BaseAbstractResourceListener
 
     public function getAccount(EntityManagerInterface $entityManager, $id)
     {
-        try {
-            $account = $entityManager->find(Account::class, $id);
-        } catch (Exception $e) {
-            $account = null;
-        }
-
-        return $account;
+        return $this->findEntity($entityManager, Account::class, $id);
     }
 }

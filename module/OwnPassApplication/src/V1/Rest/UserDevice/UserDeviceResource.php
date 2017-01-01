@@ -12,7 +12,6 @@ namespace OwnPassApplication\V1\Rest\UserDevice;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use DoctrineModule\Paginator\Adapter\Selectable;
-use Exception;
 use OwnPassApplication\Entity\Device;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassApplication\TaskService\Notification;
@@ -47,7 +46,7 @@ class UserDeviceResource extends AbstractResourceListener
     public function create($data)
     {
         /** @var Account $account */
-        $account = $this->entityManager->find(Account::class, $this->getAccountId());
+        $account = $this->findEntity($this->entityManager, Account::class, $this->getAccountId());
 
         $remoteAddress = new RemoteAddress();
 
@@ -77,12 +76,16 @@ class UserDeviceResource extends AbstractResourceListener
 
     public function fetch($id)
     {
-        try {
-            $device = $this->entityManager->find(Device::class, $id);
-            if (!$device) {
-                return null;
-            }
-        } catch (Exception $e) {
+        /** @var Device $device */
+        $device = $this->findEntity($this->entityManager, Device::class, $id);
+        if (!$device) {
+            return null;
+        }
+
+        /** @var Account $account */
+        $account = $this->findEntity($this->entityManager, Account::class, $this->getAccountId());
+
+        if ($device->getAccount() !== $account) {
             return null;
         }
 
