@@ -11,6 +11,7 @@ namespace OwnPassNotes\V1\Rest\UserNote;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use DoctrineModule\Paginator\Adapter\Selectable;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassNotes\Entity\Note;
@@ -32,6 +33,7 @@ class UserNoteResource extends AbstractResourceListener
 
     public function create($data)
     {
+        /** @var Account $account */
         $account = $this->entityManager->find(Account::class, $this->getAccountId());
 
         $note = new Note($account);
@@ -40,26 +42,28 @@ class UserNoteResource extends AbstractResourceListener
         $note->setBody($data->body);
 
         $this->entityManager->persist($note);
-        $this->entityManager->flush($note);
+        $this->entityManager->flush();
 
         return new UserNoteEntity($note);
     }
 
     public function delete($id)
     {
+        /** @var Note $note */
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
         }
 
         $this->entityManager->remove($note);
-        $this->entityManager->flush($note);
+        $this->entityManager->flush();
 
         return true;
     }
 
     public function fetch($id)
     {
+        /** @var Note $note */
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
             return null;
@@ -72,6 +76,7 @@ class UserNoteResource extends AbstractResourceListener
     {
         $account = $this->entityManager->find(Account::class, $this->getAccountId());
 
+        /** @var EntityRepository $repository */
         $repository = $this->entityManager->getRepository(Note::class);
 
         $criteria = Criteria::create();
@@ -84,6 +89,7 @@ class UserNoteResource extends AbstractResourceListener
 
     public function update($id, $data)
     {
+        /** @var Note $note */
         $note = $this->entityManager->find(Note::class, $id);
         if (!$note) {
             return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
@@ -94,7 +100,7 @@ class UserNoteResource extends AbstractResourceListener
         $note->setBody($data->body);
 
         $this->entityManager->persist($note);
-        $this->entityManager->flush($note);
+        $this->entityManager->flush();
 
         return new UserNoteEntity($note);
     }

@@ -16,7 +16,7 @@ return [
                 'description' => 'The name of the client.',
             ],
             1 => [
-                'required' => true,
+                'required ' => true,
                 'validators' => [],
                 'filters' => [],
                 'name' => 'description',
@@ -41,6 +41,15 @@ return [
                     'route' => '/device[/:device_id]',
                     'defaults' => [
                         'controller' => 'OwnPassApplication\\V1\\Rest\\Device\\Controller',
+                    ],
+                ],
+            ],
+            'own-pass-application.rest.user-device' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/user/device[/:user_device_id]',
+                    'defaults' => [
+                        'controller' => 'OwnPassApplication\\V1\\Rest\\UserDevice\\Controller',
                     ],
                 ],
             ],
@@ -69,6 +78,7 @@ return [
     'service_manager' => [
         'factories' => [
             \OwnPassApplication\V1\Rest\Device\DeviceResource::class => \OwnPassApplication\V1\Rest\Device\DeviceResourceFactory::class,
+            \OwnPassApplication\V1\Rest\UserDevice\UserDeviceResource::class => \OwnPassApplication\V1\Rest\UserDevice\UserDeviceResourceFactory::class,
         ],
     ],
     'zf-versioning' => [
@@ -76,6 +86,7 @@ return [
             0 => 'own-pass-application.rest.device',
             1 => 'own-pass-application.rpc.device-activate',
             2 => 'own-pass-application.rpc.ping',
+            3 => 'own-pass-application.rest.user-device',
         ],
     ],
     'zf-rest' => [
@@ -84,10 +95,29 @@ return [
             'route_name' => 'own-pass-application.rest.device',
             'route_identifier_name' => 'device_id',
             'collection_name' => 'device',
+            'entity_http_methods' => [],
+            'collection_http_methods' => [],
+            'entity_device_guard' => [],
+            'entity_role_guard' => [],
+            'collection_device_guard' => [],
+            'collection_role_guard' => [],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \OwnPassApplication\V1\Rest\Device\DeviceEntity::class,
+            'collection_class' => \OwnPassApplication\V1\Rest\Device\DeviceCollection::class,
+            'service_name' => 'Device',
+        ],
+        'OwnPassApplication\\V1\\Rest\\UserDevice\\Controller' => [
+            'listener' => \OwnPassApplication\V1\Rest\UserDevice\UserDeviceResource::class,
+            'route_name' => 'own-pass-application.rest.user-device',
+            'route_identifier_name' => 'user_device_id',
+            'collection_name' => 'user_device',
             'entity_http_methods' => [
                 0 => 'GET',
-                1 => 'PUT',
-                2 => 'DELETE',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
             ],
             'collection_http_methods' => [
                 0 => 'GET',
@@ -98,7 +128,8 @@ return [
             ],
             'entity_role_guard' => [
                 'GET' => [
-                    0 => 'admin',
+                    'user',
+                    'admin',
                 ],
             ],
             'collection_device_guard' => [
@@ -107,16 +138,17 @@ return [
             ],
             'collection_role_guard' => [
                 'GET' => [
-                    0 => 'admin',
+                    'user',
+                    'admin',
                 ],
                 'POST' => null,
             ],
             'collection_query_whitelist' => [],
             'page_size' => 25,
             'page_size_param' => null,
-            'entity_class' => \OwnPassApplication\V1\Rest\Device\DeviceEntity::class,
-            'collection_class' => \OwnPassApplication\V1\Rest\Device\DeviceCollection::class,
-            'service_name' => 'Device',
+            'entity_class' => \OwnPassApplication\V1\Rest\UserDevice\UserDeviceEntity::class,
+            'collection_class' => \OwnPassApplication\V1\Rest\UserDevice\UserDeviceCollection::class,
+            'service_name' => 'UserDevice',
         ],
     ],
     'zf-content-negotiation' => [
@@ -124,6 +156,7 @@ return [
             'OwnPassApplication\\V1\\Rest\\Device\\Controller' => 'HalJson',
             'OwnPassApplication\\V1\\Rpc\\DeviceActivate\\Controller' => 'Json',
             'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => 'Json',
+            'OwnPassApplication\\V1\\Rest\\UserDevice\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'OwnPassApplication\\V1\\Rest\\Device\\Controller' => [
@@ -141,6 +174,11 @@ return [
                 1 => 'application/json',
                 2 => 'application/*+json',
             ],
+            'OwnPassApplication\\V1\\Rest\\UserDevice\\Controller' => [
+                0 => 'application/vnd.own-pass-application.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'OwnPassApplication\\V1\\Rest\\Device\\Controller' => [
@@ -152,6 +190,10 @@ return [
                 1 => 'application/json',
             ],
             'OwnPassApplication\\V1\\Rpc\\Ping\\Controller' => [
+                0 => 'application/vnd.own-pass-application.v1+json',
+                1 => 'application/json',
+            ],
+            'OwnPassApplication\\V1\\Rest\\UserDevice\\Controller' => [
                 0 => 'application/vnd.own-pass-application.v1+json',
                 1 => 'application/json',
             ],
@@ -169,6 +211,18 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'own-pass-application.rest.device',
                 'route_identifier_name' => 'device_id',
+                'is_collection' => true,
+            ],
+            \OwnPassApplication\V1\Rest\UserDevice\UserDeviceEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'own-pass-application.rest.user-device',
+                'route_identifier_name' => 'user_device_id',
+                'hydrator' => \Zend\Hydrator\ObjectProperty::class,
+            ],
+            \OwnPassApplication\V1\Rest\UserDevice\UserDeviceCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'own-pass-application.rest.user-device',
+                'route_identifier_name' => 'user_device_id',
                 'is_collection' => true,
             ],
         ],
@@ -247,7 +301,10 @@ return [
                 'GET' => false,
             ],
             'role_guard' => [
-                'GET' => ['user', 'admin'],
+                'GET' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
             ],
         ],
     ],

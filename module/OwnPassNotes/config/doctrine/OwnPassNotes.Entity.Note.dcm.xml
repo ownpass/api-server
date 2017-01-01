@@ -16,7 +16,7 @@
 
         <field name="type" type="string" />
         <field name="name" type="string" />
-        <field name="body" type="array" />
+        <field name="body" type="text" />
 
         <many-to-one target-entity="OwnPassUser\Entity\Account" field="account" orphan-removal="true">
             <join-column on-delete="CASCADE" />

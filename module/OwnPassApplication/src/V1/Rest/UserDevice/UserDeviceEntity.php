@@ -7,10 +7,10 @@
  * @license https://raw.githubusercontent.com/ownpass/api-server/master/LICENSE MIT
  */
 
-namespace OwnPassApplication\V1\Rest\Device;
+namespace OwnPassApplication\V1\Rest\UserDevice;
 
-use OwnPassApplication\Rest\AbstractResourceListener;
+use OwnPassApplication\V1\Rest\Device\DeviceEntity;
 
-class DeviceResource extends AbstractResourceListener
+class UserDeviceEntity extends DeviceEntity
 {
 }

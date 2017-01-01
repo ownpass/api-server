@@ -32,7 +32,9 @@ return [
     'zf-mvc-auth' => [
         'authentication' => [
             'map' => [
+                'OwnPassApplication\\V1' => 'oauth2',
                 'OwnPassCredential\\V1' => 'oauth2',
+                'OwnPassNote\\V1' => 'oauth2',
                 'OwnPassUser\\V1' => 'oauth2',
             ],
         ],

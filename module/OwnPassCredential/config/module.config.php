@@ -51,35 +51,19 @@ return [
             'route_name' => 'own-pass-credential.rest.credential',
             'route_identifier_name' => 'credential_id',
             'collection_name' => 'credential',
-            'entity_http_methods' => [
-                0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
-            ],
+            'entity_http_methods' => [],
             'collection_http_methods' => [
-                0 => 'GET',
-                1 => 'POST',
+                0 => 'POST',
             ],
-            'entity_device_guard' => [
-                'DELETE' => true,
-                'GET' => true,
-                'PATCH' => true,
-                'PUT' => true,
-            ],
-            'entity_role_guard' => [
-                'DELETE' => ['admin'],
-                'GET' => ['admin'],
-                'PATCH' => ['admin'],
-                'PUT' => ['admin'],
-            ],
+            'entity_device_guard' => [],
+            'entity_role_guard' => [],
             'collection_device_guard' => [
-                'GET' => true,
                 'POST' => true,
             ],
             'collection_role_guard' => [
-                'GET' => ['admin'],
-                'POST' => ['admin'],
+                'POST' => [
+                    0 => 'admin',
+                ],
             ],
             'collection_query_whitelist' => [],
             'page_size' => 25,
@@ -108,17 +92,32 @@ return [
                 'PUT' => true,
             ],
             'entity_role_guard' => [
-                'DELETE' => ['user', 'admin'],
-                'GET' => ['user', 'admin'],
-                'PUT' => ['user', 'admin'],
+                'DELETE' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
+                'GET' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
+                'PUT' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
             ],
             'collection_device_guard' => [
                 'GET' => true,
                 'POST' => true,
             ],
             'collection_role_guard' => [
-                'GET' => ['user', 'admin'],
-                'POST' => ['user', 'admin'],
+                'GET' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
+                'POST' => [
+                    0 => 'user',
+                    1 => 'admin',
+                ],
             ],
             'collection_query_whitelist' => [
                 0 => 'host',

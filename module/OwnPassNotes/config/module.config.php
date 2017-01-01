@@ -40,31 +40,16 @@ return [
             'route_name' => 'own-pass-notes.rest.note',
             'route_identifier_name' => 'note_id',
             'collection_name' => 'note',
-            'entity_http_methods' => [
-                0 => 'GET',
-                1 => 'PUT',
-                2 => 'DELETE',
-            ],
+            'entity_http_methods' => [],
             'collection_http_methods' => [
-                0 => 'GET',
-                1 => 'POST',
+                0 => 'POST',
             ],
-            'entity_device_guard' => [
-                'DELETE' => true,
-                'GET' => true,
-                'PUT' => true,
-            ],
-            'entity_role_guard' => [
-                'DELETE' => ['admin'],
-                'GET' => ['admin'],
-                'PUT' => ['admin'],
-            ],
+            'entity_device_guard' => [],
+            'entity_role_guard' => [],
             'collection_device_guard' => [
-                'GET' => true,
                 'POST' => true,
             ],
             'collection_role_guard' => [
-                'GET' => ['admin'],
                 'POST' => ['admin'],
             ],
             'collection_query_whitelist' => [],
@@ -87,6 +72,24 @@ return [
             'collection_http_methods' => [
                 0 => 'GET',
                 1 => 'POST',
+            ],
+            'entity_device_guard' => [
+                'DELETE' => true,
+                'GET' => true,
+                'PUT' => true,
+            ],
+            'entity_role_guard' => [
+                'DELETE' => ['user', 'admin'],
+                'GET' => ['user', 'admin'],
+                'PUT' => ['user', 'admin'],
+            ],
+            'collection_device_guard' => [
+                'GET' => true,
+                'POST' => true,
+            ],
+            'collection_role_guard' => [
+                'GET' => ['user', 'admin'],
+                'POST' => ['user', 'admin'],
             ],
             'collection_query_whitelist' => [],
             'page_size' => 25,
@@ -221,7 +224,7 @@ return [
                     ],
                 ],
                 'name' => 'body',
-                'description' => 'The body of the note.',
+                'description' => 'The encrypted body of the note.',
             ],
         ],
         'OwnPassNotes\\V1\\Rest\\UserNote\\Validator' => [

@@ -9,13 +9,9 @@
 
 namespace OwnPassCredential\V1\Rest\Credential;
 
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
-use DoctrineModule\Paginator\Adapter\Selectable;
-use Exception;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassCredential\Entity\Credential;
-use OwnPassUser\Entity\Account;
 use ZF\ApiProblem\ApiProblem;
 use ZF\ApiProblem\ApiProblemResponse;
 
@@ -39,7 +35,7 @@ class CredentialResource extends AbstractResourceListener
     /**
      * Create a resource
      *
-     * @param  mixed $data
+     * @param mixed $data
      * @return ApiProblem|mixed
      */
     public function create($data)
@@ -60,59 +56,8 @@ class CredentialResource extends AbstractResourceListener
         }
 
         $this->entityManager->persist($credential);
-        $this->entityManager->flush($credential);
-
-        return new CredentialEntity($credential);
-    }
-
-    /**
-     * Delete a resource
-     *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
-     */
-    public function delete($id)
-    {
-        $credential = $this->entityManager->find(Credential::class, $id);
-        if (!$credential) {
-            return new ApiProblem(ApiProblemResponse::STATUS_CODE_404, 'Entity not found.');
-        }
-
-        $this->entityManager->remove($credential);
         $this->entityManager->flush();
 
-        return true;
-    }
-
-    /**
-     * Fetch a resource
-     *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
-     */
-    public function fetch($id)
-    {
-        $credential = $this->entityManager->find(Credential::class, $id);
-
-        if (!$credential) {
-            return null;
-        }
-
         return new CredentialEntity($credential);
-    }
-
-    /**
-     * Fetch all or a subset of resources
-     *
-     * @param  array $params
-     * @return ApiProblem|mixed
-     */
-    public function fetchAll($params = [])
-    {
-        $repository = $this->entityManager->getRepository(Credential::class);
-
-        $adapter = new Selectable($repository);
-
-        return new CredentialCollection($adapter);
     }
 }

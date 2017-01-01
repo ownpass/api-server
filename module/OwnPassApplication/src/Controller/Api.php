@@ -24,7 +24,7 @@ class Api extends AbstractActionController
 
     public function indexAction()
     {
-        if (false && class_exists(AdminModule::class, false)) {
+        if (class_exists(AdminModule::class, false)) {
             return $this->redirect()->toRoute('zf-apigility/ui');
         }
 
