@@ -10,7 +10,7 @@
 namespace OwnPassApplication\V1\Rest\Device;
 
 use OwnPassApplication\Entity\Device;
-use OwnPassUser\V1\Rest\Account\AccountEntity;
+use OwnPassApplication\V1\Rest\Account\AccountEntity;
 
 class DeviceEntity
 {

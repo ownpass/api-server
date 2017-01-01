@@ -11,8 +11,8 @@ namespace OwnPassNotesTest\V1\Rest\Note;
 
 use OwnPassNotes\Entity\Note;
 use OwnPassNotes\V1\Rest\Note\NoteEntity;
-use OwnPassUser\Entity\Account;
-use OwnPassUser\V1\Rest\Account\AccountEntity;
+use OwnPassApplication\Entity\Account;
+use OwnPassApplication\V1\Rest\Account\AccountEntity;
 use PHPUnit_Framework_TestCase;
 use Ramsey\Uuid\UuidInterface;
 

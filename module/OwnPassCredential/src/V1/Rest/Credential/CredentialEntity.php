@@ -10,7 +10,7 @@
 namespace OwnPassCredential\V1\Rest\Credential;
 
 use OwnPassCredential\Entity\Credential;
-use OwnPassUser\V1\Rest\Account\AccountEntity;
+use OwnPassApplication\V1\Rest\Account\AccountEntity;
 
 class CredentialEntity
 {

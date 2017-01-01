@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityRepository;
 use DoctrineModule\Paginator\Adapter\Selectable;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassNotes\Entity\Note;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use ZF\ApiProblem\ApiProblem;
 use ZF\ApiProblem\ApiProblemResponse;
 

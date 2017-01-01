@@ -12,7 +12,7 @@ namespace OwnPassNotesTest\V1\Rest\UserNote;
 use OwnPassNotes\Entity\Note;
 use OwnPassNotes\V1\Rest\UserNote\UserNoteCollection;
 use OwnPassNotes\V1\Rest\UserNote\UserNoteEntity;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use PHPUnit_Framework_TestCase;
 use Zend\Paginator\Adapter\ArrayAdapter;
 

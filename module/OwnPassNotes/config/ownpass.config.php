@@ -16,7 +16,7 @@ return [
                 'class' => 'Doctrine\\ORM\\Mapping\\Driver\\XmlDriver',
                 'cache' => 'array',
                 'paths' => [
-                    __DIR__ . '/doctrine',
+                    __DIR__ . '/../doctrine',
                 ],
             ],
             'orm_default' => [

@@ -11,8 +11,8 @@ namespace OwnPassCredentialTest\V1\Rest\UserCredential;
 
 use OwnPassCredential\Entity\Credential;
 use OwnPassCredential\V1\Rest\UserCredential\UserCredentialEntity;
-use OwnPassUser\Entity\Account;
-use OwnPassUser\V1\Rest\Account\AccountEntity;
+use OwnPassApplication\Entity\Account;
+use OwnPassApplication\V1\Rest\Account\AccountEntity;
 use PHPUnit_Framework_TestCase;
 use Ramsey\Uuid\UuidInterface;
 

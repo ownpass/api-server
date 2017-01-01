@@ -11,7 +11,7 @@ namespace OwnPassNotes\Entity;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 

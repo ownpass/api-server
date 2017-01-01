@@ -11,7 +11,7 @@ namespace OwnPassApplicationTest\Entity;
 
 use DateTimeInterface;
 use OwnPassApplication\Entity\Device;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use PHPUnit_Framework_TestCase;
 use Ramsey\Uuid\UuidInterface;
 

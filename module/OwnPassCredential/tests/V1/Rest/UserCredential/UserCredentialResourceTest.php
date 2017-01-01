@@ -17,7 +17,7 @@ use OwnPassCredential\Entity\Credential;
 use OwnPassCredential\V1\Rest\UserCredential\UserCredentialCollection;
 use OwnPassCredential\V1\Rest\UserCredential\UserCredentialEntity;
 use OwnPassCredential\V1\Rest\UserCredential\UserCredentialResource;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 use Zend\Stdlib\Parameters;

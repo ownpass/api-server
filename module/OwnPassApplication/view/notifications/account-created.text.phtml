@@ -1,0 +1,16 @@
+<?php
+
+/** @var \OwnPassApplication\Entity\Account $account */
+$account = $this->account;
+
+?>
+
+Hi <?php echo $this->escapeHtml($account->getName()); ?>,
+
+Somebody created an account for you. In order to start using OwnPass, please activate your account by clicking
+the link below
+
+Activation link: <?php echo $this->escapeHtml($this->activationLink); ?>
+Activation code: <?php echo $this->escapeHtml($account->getActivationCode()); ?>
+
+This e-mail has been automatically generated.

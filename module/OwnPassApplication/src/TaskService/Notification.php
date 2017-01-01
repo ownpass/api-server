@@ -11,8 +11,8 @@ namespace OwnPassApplication\TaskService;
 
 use OwnPassApplication\Entity\Device;
 use OwnPassApplication\Event\Notification as NotificationEvent;
-use OwnPassUser\Entity\Account;
-use OwnPassUser\Entity\Identity;
+use OwnPassApplication\Entity\Account;
+use OwnPassApplication\Entity\Identity;
 use Zend\EventManager\EventManagerInterface;
 
 class Notification

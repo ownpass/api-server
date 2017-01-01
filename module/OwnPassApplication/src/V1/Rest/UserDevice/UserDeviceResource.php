@@ -15,7 +15,7 @@ use DoctrineModule\Paginator\Adapter\Selectable;
 use OwnPassApplication\Entity\Device;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassApplication\TaskService\Notification;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use Zend\Http\PhpEnvironment\RemoteAddress;
 use Zend\Math\Rand;
 

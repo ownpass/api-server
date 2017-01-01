@@ -15,7 +15,7 @@ use OwnPassNotes\Entity\Note;
 use OwnPassNotes\V1\Rest\Note\NoteCollection;
 use OwnPassNotes\V1\Rest\Note\NoteEntity;
 use OwnPassNotes\V1\Rest\Note\NoteResource;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 use ZF\ApiProblem\ApiProblem;

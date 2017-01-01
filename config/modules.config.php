@@ -40,6 +40,4 @@ return [
     'OwnPassApplication',
     'OwnPassCredential',
     'OwnPassNotes',
-    'OwnPassOAuth',
-    'OwnPassUser',
 ];

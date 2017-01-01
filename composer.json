@@ -54,18 +54,14 @@
         "psr-4": {
             "OwnPassApplication\\": "module/OwnPassApplication/src/",
             "OwnPassCredential\\": "module/OwnPassCredential/src/",
-            "OwnPassOAuth\\": "module/OwnPassOAuth/src/",
-            "OwnPassNotes\\": "module/OwnPassNotes/src/",
-            "OwnPassUser\\": "module/OwnPassUser/src/"
+            "OwnPassNotes\\": "module/OwnPassNotes/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "OwnPassApplicationTest\\": "module/OwnPassApplication/tests/",
             "OwnPassCredentialTest\\": "module/OwnPassCredential/tests/",
-            "OwnPassNotesTest\\": "module/OwnPassNotes/tests/",
-            "OwnPassOAuthTest\\": "module/OwnPassOAuth/tests/",
-            "OwnPassUserTest\\": "module/OwnPassUser/tests/"
+            "OwnPassNotesTest\\": "module/OwnPassNotes/tests/"
         },
         "files": [
             "src/Apigility/constants.php"

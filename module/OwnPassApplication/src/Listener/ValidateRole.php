@@ -10,7 +10,7 @@
 namespace OwnPassApplication\Listener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use RuntimeException;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;

@@ -12,7 +12,7 @@ namespace OwnPassCredentialTest\V1\Rest\Credential;
 use OwnPassCredential\Entity\Credential;
 use OwnPassCredential\V1\Rest\Credential\CredentialCollection;
 use OwnPassCredential\V1\Rest\Credential\CredentialEntity;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use PHPUnit_Framework_TestCase;
 use Zend\Paginator\Adapter\ArrayAdapter;
 

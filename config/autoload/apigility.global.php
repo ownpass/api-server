@@ -22,7 +22,7 @@ return [
     'service_manager' => [
         'factories' => [
             \ZF\OAuth2\Service\OAuth2Server::class => \ZF\MvcAuth\Factory\NamedOAuth2ServerFactory::class,
-            \OwnPassOAuth\Storage\Storage::class => \OwnPassOAuth\Storage\Service\StorageFactory::class,
+            \OwnPassApplication\Storage\Storage::class => \OwnPassApplication\Storage\Service\StorageFactory::class,
         ],
     ],
     'zf-configuration' => [
@@ -35,7 +35,6 @@ return [
                 'OwnPassApplication\\V1' => 'oauth2',
                 'OwnPassCredential\\V1' => 'oauth2',
                 'OwnPassNote\\V1' => 'oauth2',
-                'OwnPassUser\\V1' => 'oauth2',
             ],
         ],
     ],
@@ -53,6 +52,6 @@ return [
             'always_issue_new_refresh_token' => true,
             'unset_refresh_token_after_use' => true,
         ],
-        'storage' => \OwnPassOAuth\Storage\Storage::class,
+        'storage' => \OwnPassApplication\Storage\Storage::class,
     ],
 ];

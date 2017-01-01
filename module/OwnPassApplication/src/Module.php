@@ -19,6 +19,7 @@ use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ConsoleBannerProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\Mvc\MvcEvent;
@@ -31,6 +32,7 @@ class Module implements
     BootstrapListenerInterface,
     ConfigProviderInterface,
     ConsoleBannerProviderInterface,
+    ConsoleUsageProviderInterface,
     InitProviderInterface
 {
     public function getConfig()
@@ -44,6 +46,16 @@ class Module implements
     public function getConsoleBanner(AdapterInterface $console)
     {
         return 'OwnPass';
+    }
+
+    public function getConsoleUsage(AdapterInterface $console)
+    {
+        return [
+            'ownpass:account:create [--name=] [--role=] [--email=] [--username=] [--force]' =>
+                'Create a new user account.',
+            'ownpass:oauth:create-application [--name=] [--client=] [--secret=] [--force]' =>
+                'Create a new OAuth application.',
+        ];
     }
 
     public function init(ModuleManagerInterface $manager)

@@ -15,7 +15,7 @@ use DoctrineModule\Paginator\Adapter\Selectable;
 use Exception;
 use OwnPassApplication\Rest\AbstractResourceListener;
 use OwnPassCredential\Entity\Credential;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use ZF\ApiProblem\ApiProblem;
 use ZF\ApiProblem\ApiProblemResponse;
 use ZF\Rest\ResourceEvent;

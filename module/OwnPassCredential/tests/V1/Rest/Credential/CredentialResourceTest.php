@@ -16,7 +16,7 @@ use OwnPassCredential\Entity\Credential;
 use OwnPassCredential\V1\Rest\Credential\CredentialCollection;
 use OwnPassCredential\V1\Rest\Credential\CredentialEntity;
 use OwnPassCredential\V1\Rest\Credential\CredentialResource;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 use ZF\ApiProblem\ApiProblem;

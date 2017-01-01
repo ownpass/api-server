@@ -10,7 +10,7 @@
 namespace OwnPassNotes\V1\Rest\Note;
 
 use OwnPassNotes\Entity\Note;
-use OwnPassUser\V1\Rest\Account\AccountEntity;
+use OwnPassApplication\V1\Rest\Account\AccountEntity;
 
 class NoteEntity
 {

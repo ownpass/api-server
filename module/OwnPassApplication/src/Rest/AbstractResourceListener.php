@@ -11,7 +11,7 @@ namespace OwnPassApplication\Rest;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use OwnPassUser\Entity\Account;
+use OwnPassApplication\Entity\Account;
 use ZF\Rest\AbstractResourceListener as BaseAbstractResourceListener;
 
 abstract class AbstractResourceListener extends BaseAbstractResourceListener

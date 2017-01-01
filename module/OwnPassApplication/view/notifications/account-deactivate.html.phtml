@@ -1,0 +1,32 @@
+<?php
+
+$this->layout('layout/email');
+
+/** @var \OwnPassApplication\Entity\Account $account */
+$account = $this->account;
+
+$activationLink = $this->opControlPanelUrl() . '/recover/activate/' . $this->escapeUrl($account->getActivationCode());
+
+?>
+
+<p>
+    Hi <?php echo $this->escapeHtml($account->getName()); ?>,
+</p>
+
+<p>
+    You or somebody else requested access to your account. In order to reset your password, follow the link below or
+    copy the activation code in your device. If you did not request access, you can safely ignore this e-mail.
+</p>
+
+<ul>
+    <li>
+        <strong>Activation link:</strong> <a href="<?php echo $activationLink; ?>">Click here</a>
+    </li>
+    <li>
+        <strong>Activation code:</strong> <?php echo $this->escapeHtml($account->getActivationCode()); ?>
+    </li>
+</ul>
+
+<p>
+    This e-mail has been automatically generated.
+</p>
