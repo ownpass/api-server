@@ -16,7 +16,8 @@ return [
     'email_account_deactivate_subject' => 'Your OwnPass account has been deactivated',
 
     'oAuthAuthorizeFormTitle' => 'Authorize',
-    'oAuthAuthorizeFormDescription' => 'Are you sure you want to authorize this application to have access to your account?',
+    'oAuthAuthorizeFormDescription' =>
+        'Are you sure you want to authorize this application to have access to your account?',
     'oAuthAuthorizeFormYes' => 'Yes',
     'oAuthAuthorizeFormNo' => 'No',
 ];

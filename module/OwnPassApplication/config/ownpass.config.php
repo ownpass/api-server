@@ -254,16 +254,26 @@ return [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
-            'own-pass-application/authenticate/login' => __DIR__ . '/../view/own-pass-application/authenticate/login.phtml',
-            'own-pass-application/o-auth/authorize' => __DIR__ . '/../view/own-pass-application/o-auth/authorize.phtml',
-            'notifications/account-activate.html.phtml' => __DIR__ . '/../view/notifications/account-activate.html.phtml',
-            'notifications/account-activate.text.phtml' => __DIR__ . '/../view/notifications/account-activate.text.phtml',
-            'notifications/account-created.html.phtml' => __DIR__ . '/../view/notifications/account-created.html.phtml',
-            'notifications/account-created.text.phtml' => __DIR__ . '/../view/notifications/account-created.text.phtml',
-            'notifications/account-deactivate.html.phtml' => __DIR__ . '/../view/notifications/account-deactivate.html.phtml',
-            'notifications/account-deactivate.text.phtml' => __DIR__ . '/../view/notifications/account-deactivate.text.phtml',
-            'notifications/account-welcome.html.phtml' => __DIR__ . '/../view/notifications/account-welcome.html.phtml',
-            'notifications/account-welcome.text.phtml' => __DIR__ . '/../view/notifications/account-welcome.text.phtml',
+            'own-pass-application/authenticate/login' =>
+                __DIR__ . '/../view/own-pass-application/authenticate/login.phtml',
+            'own-pass-application/o-auth/authorize' =>
+                __DIR__ . '/../view/own-pass-application/o-auth/authorize.phtml',
+            'notifications/account-activate.html.phtml' =>
+                __DIR__ . '/../view/notifications/account-activate.html.phtml',
+            'notifications/account-activate.text.phtml' =>
+                __DIR__ . '/../view/notifications/account-activate.text.phtml',
+            'notifications/account-created.html.phtml' =>
+                __DIR__ . '/../view/notifications/account-created.html.phtml',
+            'notifications/account-created.text.phtml' =>
+                __DIR__ . '/../view/notifications/account-created.text.phtml',
+            'notifications/account-deactivate.html.phtml' =>
+                __DIR__ . '/../view/notifications/account-deactivate.html.phtml',
+            'notifications/account-deactivate.text.phtml' =>
+                __DIR__ . '/../view/notifications/account-deactivate.text.phtml',
+            'notifications/account-welcome.html.phtml' =>
+                __DIR__ . '/../view/notifications/account-welcome.html.phtml',
+            'notifications/account-welcome.text.phtml' =>
+                __DIR__ . '/../view/notifications/account-welcome.text.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',

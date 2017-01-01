@@ -29,7 +29,9 @@ class AccountResourceFactoryTest extends PHPUnit_Framework_TestCase
 
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)->getMockForAbstractClass();
         $crypter = $this->getMockBuilder(PasswordInterface::class)->getMockForAbstractClass();
-        $notificationTaskService = $this->getMockBuilder(Notification::class)->disableOriginalConstructor()->getMockForAbstractClass();
+        $notificationTaskService = $this->getMockBuilder(Notification::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
 
         $container = $this->getMockBuilder(ContainerInterface::class)->getMockForAbstractClass();
         $container->expects($this->at(0))->method('get')->willReturn($entityManager);
