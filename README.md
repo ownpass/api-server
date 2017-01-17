@@ -58,7 +58,7 @@ You can also find us on IRC. We're on the Freenode network in the channel #ownpa
 All rights reserved. The application is free to use but the rights of the source code are with the OwnPass team.
 
 [ico-version]: https://img.shields.io/packagist/v/ownpass/api-server.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-proprietary-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/ownpass/api-server/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/ownpass/api-server.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/ownpass/api-server.svg?style=flat-square
