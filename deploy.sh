@@ -31,5 +31,6 @@ rm *.dist
 rm *.xml
 
 # Create an archive of the working directory.
+echo "Creating archive api-server-$TRAVIS_BRANCH.tar.gz..."
 cd "$CURRENT_DIR/build"
 tar -cvzf "api-server-$TRAVIS_BRANCH.tar.gz" "ownpass-api-server"
