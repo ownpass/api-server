@@ -16,6 +16,12 @@ cache:
     - $HOME/.composer/cache/
     - vendor/
 
+env:
+  global:
+  - secure: QSSjAwslgmdJJAlaHLkf6+v2fNgvNrwhDPCEfKKC6808k8FXT5zDa3aoZk6vXrbbSeyk2UWshqATDgkIlr8K7pWdP5zE4Ch7qcipgkF9LDbCjK5YBZzGNnu6ksYU2aU4ELCIHzwJ7y8poLZxKGy67UdasATyN5sVmlDUedt0KMthioCiKrSiRZR3dU3MXII6G0AWrKK8wg7stHT9WfoshLgRE8lvY/ii3qvrZOEzxjM2ytbCabPh0E2tG6sHjJtE4Pb1GvlpcXwz9VI3LtRvkG6KjQzF/LrRntb2Hf8csuTw6cGLPjuL/+eTgQ1U9SblSqITI9X/wefeLPCWKZJT3CPp3+oIvWEyvL8eKvvJHQ+3t6Bd1zq3wUbwHpoRTbd7uQ7CTs/GRTzwhALAenZR7xFglI+jdWsoLpyX2oX54+CyK8KXZS6G8C5hNNTKfKt/hpszopuGRPO6RHsnrxBh6msQfuwxaKKxb4j9KGDcacy86Bb7eIghSBkzW4j7JYiUB8M/jODCv48xoeuc/rE0JViImDneScRhtuiJWnTbkq4EXaxlwClmgQm3JYOE9aOqTHedDIHqeXHclpfxHry6MdgnG0RWFqgj1uMtKeDeizOQ4o+GxA+38ZBAxbj9DK08EEnwccSHsbIYd/8TwWC9vjh7ADGY0oLkKahDfKRDZPg=
+  - secure: 0O4+C7N5VP6kcJjax4VNM6xlatQg9VIgcgBRV9O9dw67FcKk+eVL0EdMY57dBtWiB6AL3xRFLig70caaw74nbCKLci7lo3i2e3GZJ+e3K93qQIZMM3xZLbRnjBHu1E7W9gumK+oDggfvqIMcE3WRww5URaPZs+j6SsZAV1UY6lYe31fIF8n8Ro6iw/Hh1lsa0t2UWzAOVlIsI8yVBzhcktsYwY496S/N5w2xU2LMfhHxCC1HjwR/lpohjwek+k+a63GxeQvoLUUgBtGSpMVZkvEX7eEz+V+D4nWEoKMR2p82LcR1qLN3s9ShiaO7Hj8lvf5Ix7F7OeynryLAtOOsYekHH1HKMD51Mm1BFQhIY69KaAqQqQmmiAeOhFQsOEgvAhBPiBtAvDDN6A3K+jWRQ40ggOqxJ2de8MILGLaMIVhn22iOfr6pz5PXc84O3auaIwUK3FMm76nlfvDl9EEx/vXFFzz1qAyl3sOdujdqGfyM2oEhlkuM1lpr+9Qsb0WFamqOLo1CCc2/KbzpGIUxrGEo+bKohPvOLq0XeZ3OcavCXs4brNLoFDen+Vsjubk4IM6WE9LsdFpYWjfb4YblqP76RwoWISKbpRjRF8Rd+q6JPIFEV/jlJnS5YZX5eq5LQagQ5qFIeItFMvwHei5eyZizRq5mcduiR0kPmq3obnw=
+  - secure: dseU2y/F+w0AmW3q/bX7azlzvEX95jCZuw+Ro6Nd+9nGqAaLARTtxZMHhle2Lh1PzZfiIfzs4AL+AQW56qLJ613gmY/V16ty8s6Rur/mXhdHLGEJ9U4wm4vqxegIEzd5qC4YaMlhziEfcCb2KzDySuzuSU6bKR3jhjOBJA56WOk5MtNZ4OWbtg0xAS4OeKnXAt019pefWC9UGvzRSadV15n5nciVh0KLoXMIswdhrHRmkOGpqiQkW1ynbDDG9yRNXnu8XJjPXNSH/Msvg/N1+RPTKiL08YNJlHg4A+V/S5pfnC+tqThtndFfp7SLO377EtUaNQfRYl5MvmekhCbx1iV1UPBz4ZPHLOWZMKs8siCb9LwIfi5s9hkNMCUQKPK9oQugPXOj7IUgTNu7R4Up/+bRM0Fyynx/jlbs43bnDVg0PmDH9DekbPfX0OLqyDxov0LyvJs45yDjsijBd0PGALN2aNoYoW6u3QNsJUjX0UjsCu+OCdp5sdEhBjlL49fzWcAUeaS4unZdkdJsd+CKZrPWIZL0xICOPqiJMhCherYYaPf5muIDvmYE2lxCFfJqAelWgjRwhLTJJd6bCrjIqAx9gFPx1no6WBmbfNrk6Sx9NZAeuiowWOX7jQ8kIfcmpZ0l4MsYfueLrj1R25d/l9ocsfXzSY7OQHZdrrghsxc=
+
 services:
   - mysql
 
@@ -49,6 +55,10 @@ script:
 
 after_script:
   - if [[ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '7.0' ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
+
+after_success:
+- ./deploy.sh
+- curl --ftp-create-dirs -T api-server-$TRAVIS_BRANCH.tar.gz -u $FTP_USER:$FTP_PASSWORD ftp://$FTP_SERVER
 
 notifications:
   email: false

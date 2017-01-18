@@ -32,4 +32,4 @@ rm *.xml
 
 # Create an archive of the working directory.
 cd "$CURRENT_DIR/build"
-tar -cvzf "ownpass-api-server.tgz" "ownpass-api-server"
+tar -cvzf "api-server-$TRAVIS_BRANCH.tar.gz" "ownpass-api-server"
