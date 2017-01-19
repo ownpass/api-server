@@ -1,9 +1,9 @@
 language: php
 
 php:
-  - 7.0
-  - 7.1
-  - hhvm
+- 7.0
+- 7.1
+- hhvm
 
 # This triggers builds to run on the new TravisCI infrastructure.
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
@@ -12,46 +12,47 @@ sudo: false
 ## Cache composer
 cache:
   directories:
-    - $HOME/.composer/cache/
-    - vendor/
+  - $HOME/.composer/cache/
+  - vendor/
 
 env:
   global:
-  - secure: QSSjAwslgmdJJAlaHLkf6+v2fNgvNrwhDPCEfKKC6808k8FXT5zDa3aoZk6vXrbbSeyk2UWshqATDgkIlr8K7pWdP5zE4Ch7qcipgkF9LDbCjK5YBZzGNnu6ksYU2aU4ELCIHzwJ7y8poLZxKGy67UdasATyN5sVmlDUedt0KMthioCiKrSiRZR3dU3MXII6G0AWrKK8wg7stHT9WfoshLgRE8lvY/ii3qvrZOEzxjM2ytbCabPh0E2tG6sHjJtE4Pb1GvlpcXwz9VI3LtRvkG6KjQzF/LrRntb2Hf8csuTw6cGLPjuL/+eTgQ1U9SblSqITI9X/wefeLPCWKZJT3CPp3+oIvWEyvL8eKvvJHQ+3t6Bd1zq3wUbwHpoRTbd7uQ7CTs/GRTzwhALAenZR7xFglI+jdWsoLpyX2oX54+CyK8KXZS6G8C5hNNTKfKt/hpszopuGRPO6RHsnrxBh6msQfuwxaKKxb4j9KGDcacy86Bb7eIghSBkzW4j7JYiUB8M/jODCv48xoeuc/rE0JViImDneScRhtuiJWnTbkq4EXaxlwClmgQm3JYOE9aOqTHedDIHqeXHclpfxHry6MdgnG0RWFqgj1uMtKeDeizOQ4o+GxA+38ZBAxbj9DK08EEnwccSHsbIYd/8TwWC9vjh7ADGY0oLkKahDfKRDZPg=
-  - secure: 0O4+C7N5VP6kcJjax4VNM6xlatQg9VIgcgBRV9O9dw67FcKk+eVL0EdMY57dBtWiB6AL3xRFLig70caaw74nbCKLci7lo3i2e3GZJ+e3K93qQIZMM3xZLbRnjBHu1E7W9gumK+oDggfvqIMcE3WRww5URaPZs+j6SsZAV1UY6lYe31fIF8n8Ro6iw/Hh1lsa0t2UWzAOVlIsI8yVBzhcktsYwY496S/N5w2xU2LMfhHxCC1HjwR/lpohjwek+k+a63GxeQvoLUUgBtGSpMVZkvEX7eEz+V+D4nWEoKMR2p82LcR1qLN3s9ShiaO7Hj8lvf5Ix7F7OeynryLAtOOsYekHH1HKMD51Mm1BFQhIY69KaAqQqQmmiAeOhFQsOEgvAhBPiBtAvDDN6A3K+jWRQ40ggOqxJ2de8MILGLaMIVhn22iOfr6pz5PXc84O3auaIwUK3FMm76nlfvDl9EEx/vXFFzz1qAyl3sOdujdqGfyM2oEhlkuM1lpr+9Qsb0WFamqOLo1CCc2/KbzpGIUxrGEo+bKohPvOLq0XeZ3OcavCXs4brNLoFDen+Vsjubk4IM6WE9LsdFpYWjfb4YblqP76RwoWISKbpRjRF8Rd+q6JPIFEV/jlJnS5YZX5eq5LQagQ5qFIeItFMvwHei5eyZizRq5mcduiR0kPmq3obnw=
-  - secure: dseU2y/F+w0AmW3q/bX7azlzvEX95jCZuw+Ro6Nd+9nGqAaLARTtxZMHhle2Lh1PzZfiIfzs4AL+AQW56qLJ613gmY/V16ty8s6Rur/mXhdHLGEJ9U4wm4vqxegIEzd5qC4YaMlhziEfcCb2KzDySuzuSU6bKR3jhjOBJA56WOk5MtNZ4OWbtg0xAS4OeKnXAt019pefWC9UGvzRSadV15n5nciVh0KLoXMIswdhrHRmkOGpqiQkW1ynbDDG9yRNXnu8XJjPXNSH/Msvg/N1+RPTKiL08YNJlHg4A+V/S5pfnC+tqThtndFfp7SLO377EtUaNQfRYl5MvmekhCbx1iV1UPBz4ZPHLOWZMKs8siCb9LwIfi5s9hkNMCUQKPK9oQugPXOj7IUgTNu7R4Up/+bRM0Fyynx/jlbs43bnDVg0PmDH9DekbPfX0OLqyDxov0LyvJs45yDjsijBd0PGALN2aNoYoW6u3QNsJUjX0UjsCu+OCdp5sdEhBjlL49fzWcAUeaS4unZdkdJsd+CKZrPWIZL0xICOPqiJMhCherYYaPf5muIDvmYE2lxCFfJqAelWgjRwhLTJJd6bCrjIqAx9gFPx1no6WBmbfNrk6Sx9NZAeuiowWOX7jQ8kIfcmpZ0l4MsYfueLrj1R25d/l9ocsfXzSY7OQHZdrrghsxc=
+  - secure: OliQged4wBQu29XsHEiiRcf8LOebsrBMtiODUkkiAFUEz12vJOCxcAU3uPzjwD5Bn4NmqjLt8vSpZtPbtt7TATYaPs84YaxKFuX71g4JEprxc/TwC18jILZ3tJZIX9eQN4giOewv1wUkjrOOOF4+6rW/wWriqG3IRWcRaxGGcGVg7Cth6yoC63MgtvmRaEtlCOR0CDtWKLZJiPDMj/3h7dgCLmuGuhRkjXv+FqEyA4UX+SSmsAbTzmNioaDqbf9MT83qDbpA1aMY7ljO/KUectVPSejMvIwnAAUsKWtKzb/iqpxY/ybYb9B1FpMqf0QvRA2LVFp4x+wKIGVKFyY9AaF/zGgD1DaNTvHHTELxNHhn+xriny72QPx85/XybfUYRiV3vWt4ZUrhj5yV5GJzIdP/g1GLgPbCwP9/MaKiic4zAQ9J2LLoJZ52BPl6Bnk8qn7oAlQDHGNmfA5ceyP2/FshYu3V367Pkj6hFPi2KIQoxge/m5yOVJMTN27N4C3hxg4VvruwI7sX0IQV5OI0ls+kB8lpDmeYF/H+9SQMM2x0BDg75dRw9CwWkb24u7+cBYSRSSU6Hs25yXTbC0r1pw/8U9JbxhdeamRRJv7uzrIOPJvrfDE7cSVqThfUSGArJ00VdD0ZVk0wX+Fz2loe/e6ArbWFYIoyO89xCAFti78=
+  - secure: dQ2u1r8Th5JohyABHm+BR+OenObLmMsI2ZiKKk5PWA9I8X1rMkq/SGJEwABP5Xz4mAvUn7+dDYHnzj/fiXqriujTp/rQPOPjRnVsontSheYKbGs6xhsrXUIhU2fKwEhJHYrrHv87k63n0qYHDQUyR2ky0fy0yMxvfwW+jqAr2Mv3qFB0XqlUTHWbjQhPYnZL1gKhKbweazEfi/oHwceNHTvGCU0qoyCLsNrhIyjPdEyaKl0aAcO0/SjTlPFES4XmAxQ1prOUisNO08uBtIDB28cQ4Diz5zGVxNVeU+Ckz5k4FXMNE53g/JA4reCzUlVR0K4Dt2dW8hY0NcMwuwnFieByHT6Y5COJbiS5pRzgjYZVqhaDYIJrd48Xw7hgG5Raq3BDTSAFcc857QG1ti4e5yYSNx4eCWDyIniMOrGJ9a9I4cXtFJr1CZuG5Dfe9nENsuXo1yG0AZYGGT4ar9WucQWorilzZpE58MKdWG50Dw1mCuRDdirF7Qtkk3WMd5S2rm44v4ggU87C3rJBFWeCM9uAjZRd3OX5qqf03AWFfyhsshpFxjlSqxtWOijqQmveSEK0xuTAtZS5SLql/HeH68HXawGhqtNq1pTk05PrbWufwbH54DUECn8HjmoKUp9xg1Lp1MyyEPKncr0HwlGMtGQ3lOEBmz7iY8dPKNKTuqs=
+  - secure: n9eoS23TaMR/yAoo57kZ6qJXRdhaYBVCQR8ztbr7pncJS2PEkVf94r1qmmM8+wT2OLmPhgwkoJ5Kba6qoNf50nNfJViMYZ6HvCXEmKNpxNJ2lxBPG0ArXvDgKVqDTnbWBxcdk0LlQ/bH/fV7+zwiOWfOARImFs544LrNDqyQ6XBtD/AWMdVmYI1EcL3XBe1GXPmcYZvgZYzJWSpBFMoeqmH1fWtb9csAaNNG8IHtqWQiWF9hTgu/X/UUKXu7dUuMhJTMUQLQqKM4Sog/n1rCtCJEqhlx4KkJmx5BYlV7WDg1w6xYfRQbyNexqOIkZ+OhGqZwmUL6oVmgjRdkzV491qYL1/WH7xoTbCXHFtsEEJQXF2Oz0cnOKNOXHBX6p/5YP/d1YxK4J09RrlD2aSWQRYcOAX+JJcNrV7wAj88O5nXdFWNXkXKMuwHJP03B/M44bx5xXBXBcLIiwnJiTuxnZoRpXQZ8d7fDEVq4vBfeWPM72PzKhea+08Z4pRtoxEjfqn0P7E7CDb9hvImeGydAI/NoW7or85iAaonh5N4WMSak7kkQj0k91qMaqTsPPh6v6AJAcitrddNJ8cGnZCC7t4pVjHNy3K7sPU7zP0KaK/+2Tz6KeEkKP+AhpzfIKEs48pOYK2I2dvFR0gkoMH3pb8TFERO1wiV7EjdViAVfaLw=
 
 services:
-  - mysql
+- mysql
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
-  - travis_retry composer global require "phpunit/phpunit=5.5.*"
-  - travis_retry composer global require "squizlabs/php_codesniffer=*"
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - travis_retry mysql -u root -e 'CREATE DATABASE IF NOT EXISTS ownpass;'
-  - cp config/autoload/apigility.local.php.dist config/autoload/apigility.local.php
-  - cp config/autoload/doctrine.local.php.dist config/autoload/doctrine.local.php
-  - cp config/autoload/ownpass.local.php.dist config/autoload/ownpass.local.php
-  - sed -i "s|'username' => ''|'username' => 'root'|" config/autoload/apigility.local.php
-  - sed -i "s|'user' => ''|'user' => 'root'|" config/autoload/doctrine.local.php
-  - sed -i "s|'password' => ''|'password' => 'ownpass'|" config/autoload/ownpass.local.php
-  - php public/index.php orm:schema-tool:drop --force
-  - php public/index.php orm:schema-tool:create
-  - php public/index.php orm:validate-schema
+- travis_retry composer self-update
+- travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+- travis_retry composer global require "phpunit/phpunit=5.5.*"
+- travis_retry composer global require "squizlabs/php_codesniffer=*"
+- export PATH="$HOME/.composer/vendor/bin:$PATH"
+- travis_retry mysql -u root -e 'CREATE DATABASE IF NOT EXISTS ownpass;'
+- cp config/autoload/apigility.local.php.dist config/autoload/apigility.local.php
+- cp config/autoload/doctrine.local.php.dist config/autoload/doctrine.local.php
+- cp config/autoload/ownpass.local.php.dist config/autoload/ownpass.local.php
+- sed -i "s|'username' => ''|'username' => 'root'|" config/autoload/apigility.local.php
+- sed -i "s|'user' => ''|'user' => 'root'|" config/autoload/doctrine.local.php
+- sed -i "s|'password' => ''|'password' => 'ownpass'|" config/autoload/ownpass.local.php
+- php public/index.php orm:schema-tool:drop --force
+- php public/index.php orm:schema-tool:create
+- php public/index.php orm:validate-schema
 
 script:
-  - phpcs
-  - phpunit --coverage-text --coverage-clover=coverage.clover
+- phpcs
+- phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
-  - if [[ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '7.0' ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
+- if [[ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '7.0' ]]; then php
+  vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
 
 after_success:
-  - if [[ $TRAVIS_PHP_VERSION == '7.0' ]]; then ./deploy.sh; fi
-  - if [[ $TRAVIS_PHP_VERSION == '7.0' ]]; then curl --ftp-create-dirs -T build/api-server-$TRAVIS_BRANCH.tar.gz -u $FTP_USER:$FTP_PASSWORD ftp://$FTP_SERVER; fi
+- if [[ $TRAVIS_PHP_VERSION == '7.0' ]]; then ./deploy.sh; fi
+- if [[ $TRAVIS_PHP_VERSION == '7.0' ]]; then curl --ftp-create-dirs -T build/api-server-$TRAVIS_BRANCH.tar.gz -u $FTP_USER:$FTP_PASS ftp://$FTP_HOST; fi
 
 notifications:
   email: false
-  irc: "irc.freenode.org#ownpass"
+  irc: irc.freenode.org#ownpass
